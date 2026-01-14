@@ -2,6 +2,6 @@
     "project_id": "lauras-mercantile",
     "current_status": "success",
     "latest_artifact_url": "https://github.com/slate22/lauras-mercantile-theme/tree/stage",
-    "next_recommended_step": "Verify changes on WP Engine staging (merc22stg).",
-    "notes": "Implemented Mega Menu fix (verified), Home Page copy fix (React rebuild on stage), Woo Shop layout and Single Product layout styles, and removed Woo sidebar. Created STYLEGUIDE.md."
+    "next_recommended_step": "Verify footer columns and title change.",
+    "notes": "Renamed footer 'Shop' section to 'Information' and split the menu links into 2 columns."
 }

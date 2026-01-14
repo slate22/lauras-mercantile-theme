@@ -483,6 +483,17 @@ a:hover {
   gap: 10px;
 }
 
+.lm-footer-menu--cols {
+  grid-template-columns: repeat(2, 1fr);
+  column-gap: 24px;
+}
+
+@media (max-width: 500px) {
+  .lm-footer-menu--cols {
+    grid-template-columns: 1fr;
+  }
+}
+
 .lm-footer-menu a {
   text-decoration: none;
 }

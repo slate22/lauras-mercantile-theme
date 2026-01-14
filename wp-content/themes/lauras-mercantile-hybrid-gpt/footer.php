@@ -25,12 +25,12 @@
       </div>
 
       <div class="lm-footer-col">
-        <h3>Shop</h3>
+        <h3>Information</h3>
         <?php
         wp_nav_menu([
           'theme_location' => 'footer', // Using 'footer' as that is what is registered in functions.php
           'container'      => false,
-          'menu_class'     => 'lm-footer-menu',
+          'menu_class'     => 'lm-footer-menu lm-footer-menu--cols',
           'fallback_cb'    => false,
         ]);
         ?>

@@ -14,7 +14,7 @@
   <div class="lm-shell">
     <div class="lm-header-inner">
       <a class="lm-brand" href="<?php echo esc_url(home_url('/')); ?>">
-        <img src="<?php echo get_stylesheet_directory_uri(); ?>/assets/images/logo.png" alt="Laura's Mercantile" style="height: 72px; width: auto; display: block;" />
+        <img src="<?php echo get_stylesheet_directory_uri(); ?>/assets/images/logo.png" alt="Laura's Mercantile" style="height: 72px; width: auto; mix-blend-mode: multiply; display: block;" />
       </a>
 
       <nav class="lm-nav" aria-label="Primary">

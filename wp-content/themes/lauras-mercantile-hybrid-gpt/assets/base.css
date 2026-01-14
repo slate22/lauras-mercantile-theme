@@ -447,7 +447,7 @@ a:hover {
 
 .lm-footer-grid {
   display: grid;
-  grid-template-columns: 2fr 1fr 1fr;
+  grid-template-columns: 1.5fr 2.5fr 1fr;
   gap: 28px;
   align-items: start;
 }
@@ -484,7 +484,7 @@ a:hover {
 }
 
 .lm-footer-menu--cols {
-  grid-template-columns: repeat(2, 1fr);
+  grid-template-columns: repeat(3, 1fr);
   column-gap: 24px;
 }
 
@@ -496,6 +496,7 @@ a:hover {
 
 .lm-footer-menu a {
   text-decoration: none;
+  font-size: 14px;
 }
 
 .lm-footer-menu a:hover {

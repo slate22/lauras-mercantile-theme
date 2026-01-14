@@ -2,6 +2,6 @@
     "project_id": "lauras-mercantile",
     "current_status": "success",
     "latest_artifact_url": "https://github.com/slate22/lauras-mercantile-theme/tree/stage",
-    "next_recommended_step": "Verify footer columns and title change.",
-    "notes": "Renamed footer 'Shop' section to 'Information' and split the menu links into 2 columns."
+    "next_recommended_step": "Verify footer 3-column layout and text size.",
+    "notes": "Updated footer to 3 columns, adjusted grid proportions, and reduced font size for better legibility."
 }

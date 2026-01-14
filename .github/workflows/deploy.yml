@@ -1,4 +1,4 @@
-name: Deploy theme to WP Engine
+name: Deploy theme via rsync (WP Engine)
 
 on:
   push:
@@ -10,10 +10,22 @@ jobs:
     steps:
       - uses: actions/checkout@v4
 
-      - name: Deploy to WP Engine
-        uses: wpengine/github-action-wpe-site-deploy@v3
+      - name: Start SSH agent and add key
+        uses: webfactory/ssh-agent@v0.9.0
         with:
-          WPE_SSHG_KEY_PRIVATE: ${{ secrets.WPE_SSHG_KEY_PRIVATE }}
-          WPE_ENV: ${{ github.ref_name == 'main' && secrets.WPE_ENV_PROD || secrets.WPE_ENV_STAGE }}
-          SRC_PATH: "wp-content/themes/lauras-mercantile-hybrid-enhanced 3/"
-          REMOTE_PATH: "wp-content/themes/lauras-mercantile-hybrid-enhanced 3/"
+          ssh-private-key: ${{ secrets.WPE_SSH_PRIVATE_KEY }}
+
+      - name: Add WP Engine host key
+        run: |
+          mkdir -p ~/.ssh
+          ssh-keyscan -H ${{ github.ref_name == 'main' && 'merc22.ssh.wpengine.net' || 'merc22stg.ssh.wpengine.net' }} >> ~/.ssh/known_hosts
+
+      - name: Rsync theme to WP Engine
+        env:
+          SSH_USER: ${{ github.ref_name == 'main' && secrets.WPE_SSH_USER_PROD || secrets.WPE_SSH_USER_STAGE }}
+          SSH_HOST: ${{ github.ref_name == 'main' && 'merc22.ssh.wpengine.net' || 'merc22stg.ssh.wpengine.net' }}
+        run: |
+          rsync -az --delete \
+            -e "ssh -o StrictHostKeyChecking=yes" \
+            "wp-content/themes/lauras-mercantile-hybrid-enhanced 3/" \
+            "${SSH_USER}@${SSH_HOST}:sites/${SSH_USER}/wp-content/themes/lauras-mercantile-hybrid-enhanced\ 3/"

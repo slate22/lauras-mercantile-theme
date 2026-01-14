@@ -1,0 +1,36 @@
+name: Deploy theme to WP Engine (stage)
+
+on:
+  push:
+    branches: [ "stage" ]
+
+jobs:
+  deploy-stage:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Write SSH key
+        run: |
+          mkdir -p ~/.ssh
+          echo "${{ secrets.WPE_SSH_PRIVATE_KEY }}" > ~/.ssh/id_ed25519
+          chmod 600 ~/.ssh/id_ed25519
+
+      - name: Add WP Engine host key
+        run: |
+          ssh-keyscan -H merc22stg.ssh.wpengine.net >> ~/.ssh/known_hosts
+
+      - name: Test SSH to WP Engine (stage)
+        run: |
+          ssh -i ~/.ssh/id_ed25519 -o StrictHostKeyChecking=yes -o IdentitiesOnly=yes \
+            merc22stg@merc22stg.ssh.wpengine.net \
+            "echo 'SSH from GitHub works'; pwd; ls /sites"
+
+      - name: Rsync theme to WP Engine (stage)
+        run: |
+          rsync -az --delete \
+            -e "ssh -i ~/.ssh/id_ed25519 -o StrictHostKeyChecking=yes -o IdentitiesOnly=yes" \
+            "wp-content/themes/lauras-mercantile-hybrid-enhanced 3/" \
+            "merc22stg@merc22stg.ssh.wpengine.net:/sites/merc22stg/wp-content/themes/lauras-mercantile-hybrid-enhanced 3/"

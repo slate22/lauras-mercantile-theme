@@ -214,7 +214,8 @@ a:hover{ text-decoration:underline; }
   list-style:none;
   position:absolute;
   left:0;
-  top:calc(100% + 10px);
+  top:100%;
+  transform: translateY(10px);
   min-width:240px;
   max-width: calc(100vw - 36px);
   margin:0;

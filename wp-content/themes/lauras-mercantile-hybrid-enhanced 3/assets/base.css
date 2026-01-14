@@ -373,3 +373,9 @@ a:hover{ text-decoration:underline; }
     grid-template-columns: 1fr;
   }
 }
+
+/* Staging override: ensure mega-menu has no hover gap */
+.lm-menu .sub-menu{
+  top:100% !important;
+  transform: translateY(10px);
+}

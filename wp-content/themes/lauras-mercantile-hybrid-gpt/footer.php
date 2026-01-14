@@ -40,14 +40,13 @@
       <!-- Column 2: Information -->
       <div class="lm-footer-col">
         <h4 class="lm-footer-heading">Information</h4>
-        <?php
-        wp_nav_menu([
-          'theme_location' => 'footer',
-          'container'      => false,
-          'menu_class'     => 'lm-footer-menu',
-          'fallback_cb'    => false,
-        ]);
-        ?>
+        <ul class="lm-footer-menu">
+           <li><a href="/shop">Shop All</a></li>
+           <li><a href="/lab-results">Lab Results</a></li>
+           <li><a href="/education-center">Education</a></li>
+           <li><a href="/blog">Wellness Blog</a></li>
+           <li><a href="/wholesale">Wholesale</a></li>
+        </ul>
       </div>
 
       <!-- Column 3: Company -->
@@ -58,6 +57,11 @@
            <li><a href="/meet-laura">Meet Laura</a></li>
            <li><a href="/contact">Contact Us</a></li>
            <li><a href="/faq">FAQs</a></li>
+           <li><a href="/press">Press</a></li>
+           <li><a href="/shipping-policy">Shipping</a></li>
+           <li><a href="/refund-policy">Refunds</a></li>
+           <li><a href="/payment-policy">Payment Policy</a></li>
+           <li><a href="/privacy-policy">Privacy Policy</a></li>
         </ul>
       </div>
 
@@ -80,7 +84,6 @@
     <div class="lm-shell lm-footer-bottom-inner">
       <p class="lm-copyright">&copy; <?php echo date('Y'); ?> Laura’s Mercantile. All rights reserved.</p>
       <ul class="lm-footer-meta-menu">
-          <li><a href="/privacy-policy">Privacy Policy</a></li>
           <li><a href="/terms-of-service">Terms of Service</a></li>
       </ul>
     </div>

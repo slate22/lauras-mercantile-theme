@@ -562,3 +562,173 @@ woocommerce-page,
                 grid-template-columns: 1fr !important;
             }
         }
+/* WooCommerce layout + styling (ported from style.css) */
+woocommerce-page,
+.woocommerce-page .woocommerce {
+    --color-primary: #2c3e23;
+    --color-accent: #d4a574;
+    --font-serif: 'Libre Baskerville', serif;
+    --font-sans: 'Montserrat', sans-serif;
+    font-family: var(--font-sans);
+    color: var(--color-primary);
+}
+
+.woocommerce-page h1,
+.woocommerce-page h2,
+.woocommerce-page h3 {
+    font-family: var(--font-serif);
+    color: var(--color-primary);
+}
+
+/* Buttons */
+.woocommerce button.button.alt,
+.woocommerce a.button.alt,
+.woocommerce #respond input#submit.alt {
+    background-color: #2c3e23 !important;
+    color: white !important;
+    border-radius: 4px;
+    text-transform: uppercase !important;
+    font-weight: 600 !important;
+    padding: 12px 24px !important;
+    border: none !important;
+}
+
+.woocommerce button.button.alt:hover,
+.woocommerce a.button.alt:hover {
+    background-color: #1a2515 !important;
+}
+
+/* Product grid */
+ul.products {
+    display: grid !important;
+    grid-template-columns: repeat(4, 1fr) !important;
+    gap: 30px !important;
+    padding: 20px 0 !important;
+}
+
+@media (max-width: 1024px) {
+    ul.products {
+        grid-template-columns: repeat(3, 1fr) !important;
+    }
+}
+
+@media (max-width: 768px) {
+    ul.products {
+        grid-template-columns: repeat(2, 1fr) !important;
+    }
+}
+
+@media (max-width: 480px) {
+    ul.products {
+        grid-template-columns: 1fr !important;
+    }
+}
+
+ul.products li.product {
+    background: #fdfaf4;
+    border-radius: 8px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    border: 1px solid #eee;
+    padding-bottom: 20px;
+    display: flex !important;
+    flex-direction: column !important;
+}
+
+ul.products li.product:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+}
+
+ul.products li.product img {
+    margin: 0 auto 15px !important;
+    border-radius: 8px 8px 0 0;
+    width: 100% !important;
+    height: auto !important;
+    aspect-ratio: 1/1;
+    object-fit: cover;
+}
+
+ul.products li.product .woocommerce-loop-product__title {
+    font-family: 'Libre Baskerville', serif;
+    font-size: 1.1rem;
+    margin: 0 15px 5px;
+}
+
+ul.products li.product .price {
+    margin: 0 15px 10px;
+    font-weight: 600;
+}
+
+ul.products li.product .button {
+    margin: auto 15px 0 !important;
+    width: calc(100% - 30px) !important;
+    background-color: #2c3e23 !important;
+    color: white !important;
+    text-align: center !important;
+    padding: 12px !important;
+    border-radius: 4px !important;
+    font-weight: 600 !important;
+    font-size: 0.95rem !important;
+}
+
+/* Single product layout */
+.single-product div.product {
+    max-width: 1200px !important;
+    margin: 0 auto !important;
+    padding: 60px 20px !important;
+    display: grid !important;
+    grid-template-columns: minmax(0, 1.1fr) minmax(0, 1fr);
+    gap: 40px;
+    align-items: flex-start;
+}
+
+@media (max-width: 900px) {
+    .single-product div.product {
+        grid-template-columns: 1fr;
+    }
+}
+
+/* Left column: product images */
+.single-product div.product .woocommerce-product-gallery,
+.single-product div.product .images,
+.single-product .product-images {
+    width: 100% !important;
+    max-width: 480px !important;
+    margin: 0 auto !important;
+}
+
+/* Ensure product images scale nicely */
+.single-product div.product .woocommerce-product-gallery img,
+.single-product div.product .images img {
+    width: 100% !important;
+    height: auto !important;
+    object-fit: cover;
+    border-radius: 8px;
+}
+
+/* Right column: summary */
+.single-product .entry-summary {
+    width: 100% !important;
+}
+
+.single-product .entry-summary h1.product_title {
+    font-family: 'Libre Baskerville', serif;
+    font-size: 2rem;
+    margin-bottom: 10px;
+}
+
+.single-product .entry-summary .price {
+    font-size: 1.2rem;
+    font-weight: 600;
+    margin-bottom: 20px;
+}
+
+.single-product .entry-summary .single_add_to_cart_button {
+    background-color: #2c3e23 !important;
+    color: white !important;
+    padding: 12px 24px !important;
+    border-radius: 4px !important;
+    text-transform: uppercase !important;
+    font-weight: 600 !important;
+}

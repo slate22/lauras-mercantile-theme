@@ -66,7 +66,10 @@ function lm_enqueue_app_assets() {
   ];
 
   // Prefer Vite manifest build if present; otherwise fall back to bundled app.js/app.css (uses wp.element).
-  $manifest_path = $theme_path . '/assets/dist/manifest.json';
+  $manifest_path = $theme_path . '/assets/dist/.vite/manifest.json';
+  if (!file_exists($manifest_path)) {
+    $manifest_path = $theme_path . '/assets/dist/manifest.json';
+  }
   if (file_exists($manifest_path)) {
     $manifest = json_decode(file_get_contents($manifest_path), true);
     if (is_array($manifest)) {
@@ -108,3 +111,12 @@ function lm_theme_setup() {
   ]);
 }
 add_action('after_setup_theme', 'lm_theme_setup');
+
+// Remove WooCommerce sidebar on shop and product archive pages
+add_action('wp', function () {
+  if (function_exists('is_woocommerce')) {
+    if (is_shop() || is_product_category() || is_product_tag()) {
+      remove_action('woocommerce_sidebar', 'woocommerce_get_sidebar', 10);
+    }
+  }
+});

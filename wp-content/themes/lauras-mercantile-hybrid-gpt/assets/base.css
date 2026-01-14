@@ -1394,3 +1394,86 @@ ul.products li.product .button {
     align-items: flex-start;
   }
 }
+
+/* Founder / "Meet Laura" Section Layout */
+.lm-founder {
+  margin: 60px 0;
+  padding: 0 18px;
+}
+
+.lm-founder-card {
+  max-width: 1100px;
+  margin: 0 auto;
+  background: var(--lm-card);
+  border-radius: var(--lm-radius);
+  border: 1px solid var(--lm-border);
+  overflow: hidden;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  align-items: center;
+}
+
+.lm-founder-media {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  min-height: 400px;
+  /* Ensure height if empty */
+}
+
+.lm-founder-media img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+
+.lm-founder-body {
+  padding: 40px;
+}
+
+.lm-founder-eyebrow {
+  font-weight: 700;
+  text-transform: uppercase;
+  color: var(--lm-sage);
+  font-size: 13px;
+  letter-spacing: 0.08em;
+  margin-bottom: 20px;
+}
+
+.lm-founder-title {
+  font-family: var(--lm-serif);
+  font-size: 32px;
+  margin: 0 0 20px;
+  line-height: 1.15;
+}
+
+.lm-founder-text {
+  font-size: 17px;
+  line-height: 1.6;
+  margin-bottom: 30px;
+  color: rgba(43, 42, 40, 0.85);
+}
+
+.lm-founder-actions {
+  display: flex;
+  gap: 16px;
+  flex-wrap: wrap;
+}
+
+@media (max-width: 900px) {
+  .lm-founder-card {
+    grid-template-columns: 1fr;
+    text-align: center;
+  }
+
+  .lm-founder-media {
+    min-height: 300px;
+    height: 300px;
+    /* Constrain height on mobile */
+  }
+
+  .lm-founder-actions {
+    justify-content: center;
+  }
+}

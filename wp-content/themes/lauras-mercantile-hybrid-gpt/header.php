@@ -14,8 +14,7 @@
   <div class="lm-shell">
     <div class="lm-header-inner">
       <a class="lm-brand" href="<?php echo esc_url(home_url('/')); ?>">
-        <span class="lm-brand-mark" aria-hidden="true"></span>
-        <span>Laura’s Mercantile</span>
+        <img src="<?php echo get_stylesheet_directory_uri(); ?>/assets/images/logo.png" alt="Laura's Mercantile" style="height: 48px; width: auto;" />
       </a>
 
       <nav class="lm-nav" aria-label="Primary">

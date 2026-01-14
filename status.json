@@ -1,7 +1,7 @@
 {
     "project_id": "lauras-mercantile",
     "current_status": "success",
-    "latest_artifact_url": "https://github.com/slate22/lauras-mercantile-theme/tree/stage",
-    "next_recommended_step": "Verify logo integration on staging.",
-    "notes": "Fixed 'busted' logo (checkerboard issue). Generated a clean logo on a pure white background and applied 'mix-blend-mode: multiply' to achieve perfect transparency on the header."
+    "latest_artifact_url": "https://github.com/slate22/lauras-mercantile-theme/tree/main",
+    "next_recommended_step": "Monitor GitHub Actions for successful deployment and verify production site.",
+    "notes": "Pushed latest changes to 'main' branch, including the removal of the 'Shop By Health Benefit' row, footer layout updates, and logo fixes."
 }

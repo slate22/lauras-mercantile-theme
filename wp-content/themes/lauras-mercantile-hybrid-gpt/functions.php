@@ -113,10 +113,10 @@ function lm_theme_setup() {
 add_action('after_setup_theme', 'lm_theme_setup');
 
 // Remove WooCommerce sidebar on shop and product archive pages
+// Completely remove WooCommerce sidebar on shop and product-related pages
 add_action('wp', function () {
-  if (function_exists('is_woocommerce')) {
-    if (is_shop() || is_product_category() || is_product_tag()) {
-      remove_action('woocommerce_sidebar', 'woocommerce_get_sidebar', 10);
+    if (function_exists('is_woocommerce') && (is_woocommerce() || is_shop() || is_product_category() || is_product_tag())) {
+        remove_action('woocommerce_sidebar', 'woocommerce_get_sidebar', 10);
+        add_filter('is_active_sidebar', '__return_false');
     }
-  }
 });

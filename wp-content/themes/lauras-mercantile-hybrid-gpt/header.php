@@ -46,7 +46,7 @@
       </nav>
 
       <div class="lm-actions">
-        <a class="lm-icon-btn" href="<?php echo esc_url(home_url('/search/')); ?>" aria-label="Search">
+        <a class="lm-icon-btn" href="<?php echo esc_url( home_url( '/' ) ); ?>?s=" aria-label="Search">
           <svg width="20" height="20" viewBox="0 0 24 24" fill="none"><path d="M10.5 18a7.5 7.5 0 1 1 0-15 7.5 7.5 0 0 1 0 15Z" stroke="currentColor" stroke-width="1.8"/><path d="M16.5 16.5 21 21" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg>
         </a>
         <a class="lm-icon-btn" href="<?php echo function_exists('wc_get_cart_url') ? esc_url(wc_get_cart_url()) : esc_url(home_url('/cart/')); ?>" aria-label="Cart">

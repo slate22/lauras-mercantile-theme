@@ -1,65 +1,84 @@
 
 <footer class="lm-footer">
-  <!-- Newsletter band -->
+  <!-- Newsletter Section -->
   <section class="lm-footer-newsletter">
     <div class="lm-container lm-footer-newsletter-inner">
       <div class="lm-footer-newsletter-copy">
-        <h2>Join the Mercantile Community</h2>
-        <p>Subscribe for wellness tips, exclusive offers, and farm updates.</p>
+        <h2>From the Farm to Your Inbox</h2>
+        <p>Sign up for wellness tips, exclusive farm updates, and 15% off your first order.</p>
       </div>
       <form class="lm-footer-newsletter-form" action="#" method="post">
         <label class="screen-reader-text" for="lm-footer-email">Email address</label>
-        <input id="lm-footer-email" type="email" name="email" placeholder="Enter your email address" required />
-        <button type="submit" class="lm-btn--accent">Subscribe</button>
+        <input id="lm-footer-email" type="email" name="email" placeholder="email@example.com" required />
+        <button type="submit" class="lm-btn--accent">Get the Discount</button>
       </form>
     </div>
   </section>
 
-  <!-- Main footer columns -->
+  <!-- Main Footer Content -->
   <section class="lm-footer-main">
     <div class="lm-container lm-footer-grid">
+      <!-- Column 1: Brand & Bio -->
       <div class="lm-footer-col lm-footer-brand">
-        <h3>Laura’s Mercantile</h3>
-        <p>Restoring the earth and healing bodies with regenerative hemp farming in Winchester, Kentucky.</p>
-        <!-- social links here -->
+        <div class="lm-footer-logo-wrap">
+          <h3 class="lm-footer-brand-name">Laura’s Mercantile</h3>
+        </div>
+        <p class="lm-footer-bio">Restoring the earth and healing bodies with regenerative hemp farming in the heart of Winchester, Kentucky.</p>
+        <div class="lm-footer-social">
+          <a href="#" aria-label="Facebook" class="lm-social-link">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z"></path></svg>
+          </a>
+          <a href="#" aria-label="Instagram" class="lm-social-link">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="2" width="20" height="20" rx="5" ry="5"></rect><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"></path><line x1="17.5" y1="6.5" x2="17.51" y2="6.5"></line></svg>
+          </a>
+          <a href="#" aria-label="Twitter" class="lm-social-link">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M23 3a10.9 10.9 0 0 1-3.14 1.53 4.48 4.48 0 0 0-7.86 3v1A10.66 10.66 0 0 1 3 4s-4 9 5 13a11.64 11.64 0 0 1-7 2c9 5 20 0 20-11.5a4.5 4.5 0 0 0-.08-.83A7.72 7.72 0 0 0 23 3z"></path></svg>
+          </a>
+        </div>
       </div>
 
+      <!-- Column 2: Information -->
       <div class="lm-footer-col">
-        <h3>Information</h3>
+        <h4 class="lm-footer-heading">Information</h4>
         <?php
         wp_nav_menu([
-          'theme_location' => 'footer', // Using 'footer' as that is what is registered in functions.php
+          'theme_location' => 'footer',
           'container'      => false,
-          'menu_class'     => 'lm-footer-menu lm-footer-menu--cols',
+          'menu_class'     => 'lm-footer-menu',
           'fallback_cb'    => false,
         ]);
         ?>
       </div>
 
-      <div class="lm-footer-col lm-footer-company-contact">
-        <div class="lm-footer-company">
-          <h3>Company</h3>
-           <!-- Placeholder for company menu if needed, using primary for now or empty -->
-           <ul class="lm-footer-menu">
-             <li><a href="/our-approach">Our Approach</a></li>
-             <li><a href="/meet-laura">Meet Laura</a></li>
-           </ul>
-        </div>
-        <div class="lm-footer-contact">
-          <h3>Contact</h3>
-          <p>
-            <a href="mailto:support@laurasmercantile.com">support@laurasmercantile.com</a><br/>
-            Mt. Folly Farm<br/>
-            Winchester, KY 40391
-          </p>
-        </div>
+      <!-- Column 3: Company -->
+      <div class="lm-footer-col">
+        <h4 class="lm-footer-heading">Company</h4>
+        <ul class="lm-footer-menu">
+           <li><a href="/our-approach">Our Approach</a></li>
+           <li><a href="/meet-laura">Meet Laura</a></li>
+           <li><a href="/contact">Contact Us</a></li>
+           <li><a href="/faq">FAQs</a></li>
+        </ul>
+      </div>
+
+      <!-- Column 4: Contact -->
+      <div class="lm-footer-col lm-footer-contact">
+        <h4 class="lm-footer-heading">Visit Us</h4>
+        <p>
+          Mt. Folly Farm<br/>
+          Winchester, KY 40391
+        </p>
+        <p class="lm-footer-contact-links">
+          <a href="mailto:support@laurasmercantile.com">support@laurasmercantile.com</a>
+        </p>
       </div>
     </div>
   </section>
 
+  <!-- Bottom Bar -->
   <section class="lm-footer-bottom">
     <div class="lm-container lm-footer-bottom-inner">
-      <p>&copy; <?php echo date('Y'); ?> Laura’s Mercantile. All rights reserved.</p>
+      <p class="lm-copyright">&copy; <?php echo date('Y'); ?> Laura’s Mercantile. All rights reserved.</p>
       <ul class="lm-footer-meta-menu">
           <li><a href="/privacy-policy">Privacy Policy</a></li>
           <li><a href="/terms-of-service">Terms of Service</a></li>

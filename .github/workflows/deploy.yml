@@ -2,7 +2,7 @@ name: Deploy theme via rsync (WP Engine)
 
 on:
   push:
-    branches: [ "stage", "main" ]
+    branches: ["stage", "main"]
 
 jobs:
   deploy:
@@ -27,5 +27,5 @@ jobs:
         run: |
           rsync -az --delete \
             -e "ssh -o StrictHostKeyChecking=yes" \
-            "wp-content/themes/lauras-mercantile-hybrid-enhanced 3/" \
-            "${SSH_USER}@${SSH_HOST}:sites/${SSH_USER}/wp-content/themes/lauras-mercantile-hybrid-enhanced\ 3/"
+            "wp-content/themes/lauras-mercantile-hybrid-gpt/" \
+            "${SSH_USER}@${SSH_HOST}:sites/${SSH_USER}/wp-content/themes/lauras-mercantile-hybrid-gpt/"

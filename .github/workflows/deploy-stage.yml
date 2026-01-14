@@ -32,5 +32,5 @@ jobs:
         run: |
           rsync -az --delete \
             -e "ssh -i ~/.ssh/id_ed25519 -o StrictHostKeyChecking=yes -o IdentitiesOnly=yes" \
-            "wp-content/themes/lauras-mercantile-hybrid-enhanced 3/" \
-            "merc22stg@merc22stg.ssh.wpengine.net:/sites/merc22stg/wp-content/themes/lauras-mercantile-hybrid-enhanced 3/"
+            "wp-content/themes/lauras-mercantile-hybrid-gpt/" \
+            "merc22stg@merc22stg.ssh.wpengine.net:/sites/merc22stg/wp-content/themes/lauras-mercantile-hybrid-gpt/"

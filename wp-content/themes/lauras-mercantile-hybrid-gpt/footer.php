@@ -2,7 +2,7 @@
 <footer class="lm-footer">
   <!-- Newsletter Section -->
   <section class="lm-footer-newsletter">
-    <div class="lm-container lm-footer-newsletter-inner">
+    <div class="lm-shell lm-footer-newsletter-inner">
       <div class="lm-footer-newsletter-copy">
         <h2>From the Farm to Your Inbox</h2>
         <p>Sign up for wellness tips, exclusive farm updates, and 15% off your first order.</p>
@@ -17,7 +17,7 @@
 
   <!-- Main Footer Content -->
   <section class="lm-footer-main">
-    <div class="lm-container lm-footer-grid">
+    <div class="lm-shell lm-footer-grid">
       <!-- Column 1: Brand & Bio -->
       <div class="lm-footer-col lm-footer-brand">
         <div class="lm-footer-logo-wrap">
@@ -77,7 +77,7 @@
 
   <!-- Bottom Bar -->
   <section class="lm-footer-bottom">
-    <div class="lm-container lm-footer-bottom-inner">
+    <div class="lm-shell lm-footer-bottom-inner">
       <p class="lm-copyright">&copy; <?php echo date('Y'); ?> Laura’s Mercantile. All rights reserved.</p>
       <ul class="lm-footer-meta-menu">
           <li><a href="/privacy-policy">Privacy Policy</a></li>

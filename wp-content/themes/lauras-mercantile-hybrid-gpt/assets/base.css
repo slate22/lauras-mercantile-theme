@@ -1222,9 +1222,6 @@ ul.products li.product .button {
 }
 
 .lm-footer-newsletter-inner {
-  max-width: var(--lm-max);
-  margin: 0 auto;
-  padding: 0 24px;
   display: flex;
   justify-content: space-between;
   align-items: center;
@@ -1303,9 +1300,6 @@ ul.products li.product .button {
 }
 
 .lm-footer-grid {
-  max-width: var(--lm-max);
-  margin: 0 auto;
-  padding: 0 24px;
   display: grid;
   grid-template-columns: 2fr 1fr 1fr 1.2fr;
   gap: 60px;
@@ -1415,9 +1409,6 @@ ul.products li.product .button {
 }
 
 .lm-footer-bottom-inner {
-  max-width: var(--lm-max);
-  margin: 0 auto;
-  padding: 0 24px;
   display: flex;
   justify-content: space-between;
   align-items: center;

@@ -216,7 +216,7 @@
         ),
 
         h('h2', { className:'lm-section-title', style:{ marginTop:44 } }, 'Botanical Wellness From the Farm'),
-        h('div', { className:'lm-kicker' }, 'CBD and mushrooms to support sleep, inflammation, energy, and focus — naturally sourced.'),
+        h('div', { className:'lm-kicker' }, 'CBD and mushrooms to support sleep, reducing inflammation, energy, and focus — naturally sourced.'),
         h('div', { style:{ marginTop:18, textAlign:'center' } },
           h('a', { className:'lm-btn', href: LM.shopUrl || '/shop/' }, 'Explore the Shop')
         )

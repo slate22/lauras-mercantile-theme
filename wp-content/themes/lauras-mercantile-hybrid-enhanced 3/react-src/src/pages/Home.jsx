@@ -93,7 +93,7 @@ export default function Home(){
         </section>
 
         <h2 className="lm-section-title" style={{marginTop:44}}>Botanical Wellness From the Farm</h2>
-        <div className="lm-kicker">CBD and mushrooms to support sleep, inflammation, energy, and focus — naturally sourced.</div>
+        <div className="lm-kicker">CBD and mushrooms to support sleep, reducing inflammation, energy, and focus — naturally sourced.</div>
 
         <div style={{marginTop:18, textAlign:'center'}}>
           <a className="lm-btn" href={lm.shopUrl || '/shop/'}>Explore the Shop</a>

@@ -20,7 +20,6 @@ function HardRedirect({ to }) {
 export default function App() {
   return (
     <>
-      <SiteHeader />
       <Routes>
         <Route path="/" element={<Home />} />
 
@@ -54,7 +53,6 @@ export default function App() {
 
         <Route path="*" element={<Navigate to="/" replace />} />
       </Routes>
-      <SiteFooter />
     </>
   );
 }

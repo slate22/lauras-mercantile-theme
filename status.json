@@ -3,5 +3,5 @@
     "current_status": "success",
     "latest_artifact_url": "https://github.com/slate22/lauras-mercantile-theme/tree/stage",
     "next_recommended_step": "Monitor the consolidated 'Deploy theme via rsync' workflow to ensure the absolute path fix resolve the 'Cannot access install' error.",
-    "notes": "Updated homepage copy and consolidated CI/CD workflows. Fixed a missing leading slash in the rsync destination path which was likely causing the 404/Connection Closed error on WP Engine staging."
+    "notes": "Still debugging the WP Engine deployment issue. Attempting a relative path in rsync (omitting the /sites/ prefix) as many jailed SSH environments land directly in the site root. Headline update is queued."
 }

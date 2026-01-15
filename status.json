@@ -2,6 +2,6 @@
     "project_id": "lauras-mercantile",
     "current_status": "success",
     "latest_artifact_url": "https://github.com/slate22/lauras-mercantile-theme/tree/stage",
-    "next_recommended_step": "Monitor the consolidated 'Deploy theme via rsync' workflow to ensure the absolute path fix resolve the 'Cannot access install' error.",
-    "notes": "Refining CI/CD: Explicitly mapped WPE_ENV to 'merc22' or 'merc22stg' in the rsync path. The 'Cannot access install' error indicates the destination path must exactly match the site environment name, regardless of the SSH username used."
+    "next_recommended_step": "Check the 'Diagnostic - List Sites' step in the GitHub Action logs to see reachable server paths.",
+    "notes": "CI/CD is proving exceptionally difficult due to WP Engine gateway restrictions. Added a diagnostic 'ssh ls' step to determine if the issue is authentication or path-related."
 }

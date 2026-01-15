@@ -28,4 +28,4 @@ jobs:
           rsync -az --delete \
             -e "ssh -o StrictHostKeyChecking=yes" \
             "wp-content/themes/lauras-mercantile-hybrid-gpt/" \
-            "${SSH_USER}@${SSH_HOST}:/sites/${SSH_USER}/wp-content/themes/lauras-mercantile-hybrid-gpt/"
+            "${SSH_USER}@${SSH_HOST}:wp-content/themes/lauras-mercantile-hybrid-gpt/"

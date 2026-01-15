@@ -8,7 +8,7 @@ export default function Home() {
       <div className="lm-shell">
         <section className="lm-hero">
           <div className="lm-hero-left">
-            <h1 className="lm-h1">Powered by Nature.<br />Proven by Science.<br />Pioneering Longevity.</h1>
+            <h1 className="lm-h1">Powered by Nature. Proven by Science. Pioneering Longevity.</h1>
             <p className="lm-lede">Laura changed the way American eats by introducing no-antibiotic, no growth hormone beef to a national audience while championing regenerative agriculture. Now in her 60s, her drive and vitality are proof that choosing integrity in food and farming leads to a longer, stronger life.</p>
             <div style={{ marginTop: 18, display: 'flex', gap: 12, flexWrap: 'wrap' }}>
               <a className="lm-btn" href={lm.shopUrl || '/shop/'}>Shop Now</a>

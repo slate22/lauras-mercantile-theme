@@ -2,6 +2,6 @@
     "project_id": "lauras-mercantile",
     "current_status": "success",
     "latest_artifact_url": "https://github.com/slate22/lauras-mercantile-theme/tree/stage",
-    "next_recommended_step": "Consider adding the newly processed logo-final.png to the git index and deploying the latest theme refinements to staging.",
-    "notes": "Workspace sync completed. Updated the homepage hero title to 'Powered by Nature. Proven by Science. Pioneering Longevity.' as requested, ensuring it replaced the previous headline and is removed from the subsequent paragraph for a cleaner, more focused layout."
+    "next_recommended_step": "Monitor the consolidated 'Deploy theme via rsync' workflow to ensure the absolute path fix resolve the 'Cannot access install' error.",
+    "notes": "Updated homepage copy and consolidated CI/CD workflows. Fixed a missing leading slash in the rsync destination path which was likely causing the 404/Connection Closed error on WP Engine staging."
 }

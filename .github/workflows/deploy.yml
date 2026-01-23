@@ -20,13 +20,6 @@ jobs:
           mkdir -p ~/.ssh
           ssh-keyscan -H ${{ github.ref_name == 'main' && 'merc22.ssh.wpengine.net' || 'merc22stg.ssh.wpengine.net' }} >> ~/.ssh/known_hosts
 
-      - name: Diagnostic - List Sites
-        env:
-          SSH_USER: ${{ github.ref_name == 'main' && secrets.WPE_SSH_USER_PROD || secrets.WPE_SSH_USER_STAGE }}
-          SSH_HOST: ${{ github.ref_name == 'main' && 'merc22.ssh.wpengine.net' || 'merc22stg.ssh.wpengine.net' }}
-        run: |
-          ssh -o StrictHostKeyChecking=yes ${SSH_USER}@${SSH_HOST} "ls -la /sites || ls -la ."
-
       - name: Rsync theme to WP Engine
         env:
           SSH_USER: ${{ github.ref_name == 'main' && secrets.WPE_SSH_USER_PROD || secrets.WPE_SSH_USER_STAGE }}

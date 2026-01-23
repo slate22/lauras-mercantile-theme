@@ -1295,6 +1295,22 @@ ul.products li.product .button {
     width: 18px;
     height: 18px;
   }
+
+  .lm-brand {
+    order: 1;
+  }
+
+  .lm-nav {
+    order: 2;
+  }
+
+  .lm-menu-toggle {
+    order: 3;
+  }
+
+  .lm-actions {
+    order: 4;
+  }
 }
 
 /* End of base.css */
@@ -1480,11 +1496,22 @@ ul.products li.product .button {
     flex: 1;
     display: flex;
     justify-content: center;
+    order: 2;
   }
 
   .lm-brand a {
     display: flex;
     align-items: center;
+  }
+
+  .lm-nav {
+    order: 1;
+  }
+
+  .lm-menu-toggle {
+    position: relative;
+    z-index: 1002;
+    order: 3;
   }
 
   .lm-actions {
@@ -1493,6 +1520,7 @@ ul.products li.product .button {
     display: flex;
     align-items: center;
     gap: 8px;
+    order: 4;
   }
 
   /* Prevent body scroll when menu is open */

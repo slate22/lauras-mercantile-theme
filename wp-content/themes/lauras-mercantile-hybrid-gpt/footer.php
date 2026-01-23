@@ -92,88 +92,117 @@
 
 <?php wp_footer(); ?>
 <script>
-document.addEventListener('DOMContentLoaded', function() {
-  const toggle = document.getElementById('lm-menu-toggle');
-  const nav = document.getElementById('lm-nav');
-  
-  if (!toggle || !nav) return;
-
-  // Close menu when clicking outside
-  function closeMenuOnOutsideClick(e) {
-    if (!nav.contains(e.target) && !toggle.contains(e.target)) {
-      closeMenu();
+(function() {
+  // Wait for DOM to be fully loaded
+  function initMobileMenu() {
+    const toggle = document.getElementById('lm-menu-toggle');
+    const nav = document.getElementById('lm-nav');
+    
+    console.log('Mobile menu init:', { toggle: !!toggle, nav: !!nav });
+    
+    if (!toggle || !nav) {
+      console.log('Mobile menu elements not found, retrying...');
+      return false;
     }
-  }
 
-  // Close menu when pressing Escape key
-  function closeMenuOnEscape(e) {
-    if (e.key === 'Escape') {
-      closeMenu();
-    }
-  }
-
-  // Function to close menu
-  function closeMenu() {
-    nav.classList.remove('is-open');
-    document.body.classList.remove('menu-open');
-    toggle.setAttribute('aria-expanded', 'false');
-    
-    // Reset to hamburger icon
-    toggle.innerHTML = '<span class="lm-menu-toggle-icon"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 6h16M4 12h16M4 18h16" /></svg></span><span class="lm-menu-toggle-text">Menu</span>';
-    
-    // Remove event listeners
-    document.removeEventListener('click', closeMenuOnOutsideClick);
-    document.removeEventListener('keydown', closeMenuOnEscape);
-  }
-
-  // Function to open menu
-  function openMenu() {
-    nav.classList.add('is-open');
-    document.body.classList.add('menu-open');
-    toggle.setAttribute('aria-expanded', 'true');
-    
-    // Change to close icon
-    toggle.innerHTML = '<span class="lm-menu-toggle-icon"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 6L6 18M6 6l12 12" /></svg></span><span class="lm-menu-toggle-text">Close</span>';
-    
-    // Add event listeners for closing
-    setTimeout(() => {
-      document.addEventListener('click', closeMenuOnOutsideClick);
-      document.addEventListener('keydown', closeMenuOnEscape);
-    }, 100);
-  }
-
-  // Toggle menu
-  toggle.addEventListener('click', function(e) {
-    e.preventDefault();
-    e.stopPropagation();
-    
-    const isOpen = nav.classList.contains('is-open');
-    if (isOpen) {
-      closeMenu();
-    } else {
-      openMenu();
-    }
-  });
-
-  // Close menu when window resizes to desktop size
-  let resizeTimer;
-  window.addEventListener('resize', function() {
-    clearTimeout(resizeTimer);
-    resizeTimer = setTimeout(function() {
-      if (window.innerWidth > 800) {
+    // Close menu when clicking outside
+    function closeMenuOnOutsideClick(e) {
+      if (!nav.contains(e.target) && !toggle.contains(e.target)) {
         closeMenu();
       }
-    }, 250);
-  });
+    }
 
-  // Close menu on navigation link click
-  const navLinks = nav.querySelectorAll('a');
-  navLinks.forEach(link => {
-    link.addEventListener('click', function() {
-      closeMenu();
+    // Close menu when pressing Escape key
+    function closeMenuOnEscape(e) {
+      if (e.key === 'Escape') {
+        closeMenu();
+      }
+    }
+
+    // Function to close menu
+    function closeMenu() {
+      console.log('Closing menu');
+      nav.classList.remove('is-open');
+      document.body.classList.remove('menu-open');
+      toggle.setAttribute('aria-expanded', 'false');
+      
+      // Reset to hamburger icon
+      toggle.innerHTML = '<span class="lm-menu-toggle-icon"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 6h16M4 12h16M4 18h16" /></svg></span><span class="lm-menu-toggle-text">Menu</span>';
+      
+      // Remove event listeners
+      document.removeEventListener('click', closeMenuOnOutsideClick);
+      document.removeEventListener('keydown', closeMenuOnEscape);
+    }
+
+    // Function to open menu
+    function openMenu() {
+      console.log('Opening menu');
+      nav.classList.add('is-open');
+      document.body.classList.add('menu-open');
+      toggle.setAttribute('aria-expanded', 'true');
+      
+      // Change to close icon
+      toggle.innerHTML = '<span class="lm-menu-toggle-icon"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 6L6 18M6 6l12 12" /></svg></span><span class="lm-menu-toggle-text">Close</span>';
+      
+      // Add event listeners for closing
+      setTimeout(() => {
+        document.addEventListener('click', closeMenuOnOutsideClick);
+        document.addEventListener('keydown', closeMenuOnEscape);
+      }, 100);
+    }
+
+    // Toggle menu
+    toggle.addEventListener('click', function(e) {
+      e.preventDefault();
+      e.stopPropagation();
+      
+      const isOpen = nav.classList.contains('is-open');
+      console.log('Toggle clicked, current state:', isOpen);
+      
+      if (isOpen) {
+        closeMenu();
+      } else {
+        openMenu();
+      }
     });
-  });
-});
+
+    // Close menu when window resizes to desktop size
+    let resizeTimer;
+    window.addEventListener('resize', function() {
+      clearTimeout(resizeTimer);
+      resizeTimer = setTimeout(function() {
+        if (window.innerWidth > 800) {
+          closeMenu();
+        }
+      }, 250);
+    });
+
+    // Close menu on navigation link click
+    const navLinks = nav.querySelectorAll('a');
+    navLinks.forEach(link => {
+      link.addEventListener('click', function() {
+        closeMenu();
+      });
+    });
+
+    return true;
+  }
+
+  // Try multiple methods to ensure script runs
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', initMobileMenu);
+  } else {
+    initMobileMenu();
+  }
+
+  // Fallback: try again after a short delay if elements weren't found
+  setTimeout(() => {
+    if (!document.getElementById('lm-menu-toggle') || !document.getElementById('lm-nav')) {
+      console.log('Retrying mobile menu initialization...');
+      initMobileMenu();
+    }
+  }, 1000);
+})();
 </script>
 </body>
 </html>

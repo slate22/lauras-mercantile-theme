@@ -13,15 +13,6 @@
 <header class="lm-header">
   <div class="lm-shell">
     <div class="lm-header-inner">
-      <button class="lm-menu-toggle" aria-label="Toggle menu" id="lm-menu-toggle" aria-expanded="false">
-        <span class="lm-menu-toggle-icon">
-          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-            <path d="M4 6h16M4 12h16M4 18h16" />
-          </svg>
-        </span>
-        <span class="lm-menu-toggle-text">Menu</span>
-      </button>
-
       <a class="lm-brand" href="<?php echo esc_url(home_url('/')); ?>">
         <img src="<?php echo get_stylesheet_directory_uri(); ?>/assets/images/logo.png" alt="Laura's Mercantile" style="height: 84px; width: auto; display: block;" />
       </a>
@@ -52,6 +43,15 @@
           }
         ?>
       </nav>
+
+      <button class="lm-menu-toggle" aria-label="Toggle menu" id="lm-menu-toggle" aria-expanded="false">
+        <span class="lm-menu-toggle-icon">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M4 6h16M4 12h16M4 18h16" />
+          </svg>
+        </span>
+        <span class="lm-menu-toggle-text">Menu</span>
+      </button>
 
       <div class="lm-actions">
         <a class="lm-icon-btn" href="<?php echo esc_url( home_url( '/' ) ); ?>?s=" aria-label="Search">

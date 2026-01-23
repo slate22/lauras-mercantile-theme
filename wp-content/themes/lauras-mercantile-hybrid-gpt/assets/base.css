@@ -1588,3 +1588,72 @@ ul.products li.product .button {
 }
 
 /* End of base.css - consolidated responsive fixes above */
+
+/* ADDITIONAL RESPONSIVE & LAYOUT FIXES */
+@media (max-width: 768px) {
+
+  .woocommerce-checkout .form-row-first,
+  .woocommerce-checkout .form-row-last {
+    width: 100% !important;
+    float: none !important;
+    margin-right: 0 !important;
+  }
+}
+
+/* Fix Related Product Slivers (Cross-sells/Upsells) */
+.woocommerce .cross-sells ul.products,
+.woocommerce .upsells ul.products,
+.woocommerce .related ul.products {
+  display: flex !important;
+  flex-wrap: wrap !important;
+  grid-template-columns: none !important;
+  gap: 20px !important;
+}
+
+.woocommerce .cross-sells ul.products li.product,
+.woocommerce .upsells ul.products li.product,
+.woocommerce .related ul.products li.product {
+  flex: 1 1 240px !important;
+  max-width: 100% !important;
+  min-width: 200px !important;
+  width: auto !important;
+}
+
+/* Ensure no overlap of sticky header on mobile checkout */
+@media (max-width: 800px) {
+  .lm-header {
+    position: relative !important;
+  }
+
+  .lm-brand img {
+    height: 50px !important;
+    width: auto !important;
+  }
+}
+
+/* Checkout Card refinements */
+.woocommerce-checkout #order_review {
+  background: #1a1a1a !important;
+  color: #fff !important;
+  padding: clamp(16px, 3vw, 32px) !important;
+  border-radius: 12px !important;
+  margin-top: 20px !important;
+}
+
+.woocommerce-checkout #order_review table.shop_table {
+  background: transparent !important;
+  color: inherit !important;
+  border: none !important;
+}
+
+.woocommerce-checkout #order_review table.shop_table th,
+.woocommerce-checkout #order_review table.shop_table td {
+  border-bottom: 1px solid rgba(255, 255, 255, 0.1) !important;
+  color: #fff !important;
+  padding: 12px 0 !important;
+}
+
+.woocommerce-checkout #order_review table.shop_table .product-total,
+.woocommerce-checkout #order_review table.shop_table .product-name {
+  text-align: left !important;
+}

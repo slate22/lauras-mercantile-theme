@@ -33,7 +33,7 @@ export default function Home() {
               <h2 className="lm-founder-title">A farmer’s integrity, a scientist’s standard.</h2>
               <p className="lm-founder-text">For decades, Laura has pushed for cleaner food systems—standing up for farmers, demanding transparency, and holding every ingredient to a higher standard. That same integrity guides everything we make: responsibly sourced, clearly labeled, and third-party tested.</p>
               <div className="lm-founder-actions">
-                <Link className="lm-btn" to="/meet-laura">Read Laura’s Story</Link>
+                <Link className="lm-btn" to="/lauras-story-from-lauras-lean-beef-to-full-spectrum-cbd">Read Laura’s Story</Link>
                 <a className="lm-btn secondary" href={lm.shopUrl || '/shop/'}>Explore the Shop</a>
               </div>
             </div>

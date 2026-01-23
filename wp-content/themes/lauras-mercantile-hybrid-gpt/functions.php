@@ -25,9 +25,13 @@ function lm_should_mount_app(): bool {
   if (is_front_page()) return true;
   if (is_page_template('page-react.php')) return true;
 
-  // NOTE: we intentionally do NOT mount React automatically on Woo shop/category/product pages yet.
-  // Those templates are high-impact; once the menu route-map is confirmed we can selectively
-  // convert them. For now, Woo pages render via PHP for maximum stability.
+  // Mount React on story pages too
+  $path = $_SERVER['REQUEST_URI'];
+  if (strpos($path, '/meet-laura') !== false || 
+      strpos($path, '/about-laura') !== false ||
+      strpos($path, '/lauras-story-from-lauras-lean-beef-to-full-spectrum-cbd') !== false) {
+    return true;
+  }
 
   return false;
 }

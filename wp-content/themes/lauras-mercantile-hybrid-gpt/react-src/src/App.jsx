@@ -29,6 +29,9 @@ export default function App() {
         <Route path="/lab-results" element={<LabResultsPage />} />
         <Route path="/education" element={<ContentPage slug="education" titleFallback="Education" />} />
         <Route path="/about-laura" element={<ContentPage slug="about-laura" titleFallback="About Laura" />} />
+        <Route path="/meet-laura" element={<ContentPage slug="lauras-story-from-lauras-lean-beef-to-full-spectrum-cbd" titleFallback="Laura’s Story" />} />
+        <Route path="/lauras-story" element={<ContentPage slug="lauras-story-from-lauras-lean-beef-to-full-spectrum-cbd" titleFallback="Laura’s Story" />} />
+        <Route path="/lauras-story-from-lauras-lean-beef-to-full-spectrum-cbd" element={<ContentPage slug="lauras-story-from-lauras-lean-beef-to-full-spectrum-cbd" titleFallback="Laura’s Story" />} />
 
         {/* Secondary / legacy pages (try by slug) */}
         <Route path="/questions" element={<ContentPage slug="questions" titleFallback="Questions" />} />

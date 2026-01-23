@@ -35,7 +35,7 @@ export default function SiteFooter() {
             <h3>Company</h3>
             <div className="lm-footer-links">
               <a href="/our-approach">Our Approach</a>
-              <a href="/meet-laura">Meet Laura</a>
+              <a href="/lauras-story-from-lauras-lean-beef-to-full-spectrum-cbd">Meet Laura</a>
               <a href="/education">Education</a>
               <a href="/contact-us">Contact Us</a>
             </div>

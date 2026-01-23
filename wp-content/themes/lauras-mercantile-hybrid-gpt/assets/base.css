@@ -1189,14 +1189,166 @@ ul.products li.product .button {
   border-radius: 16px !important;
 }
 
+/* 6. WooCommerce Buttons - Enhanced */
+.woocommerce button.button,
+.woocommerce a.button,
+.woocommerce #respond input#submit,
+.woocommerce input.button,
+.woocommerce button[type="submit"],
+.woocommerce #place_order {
+  background: var(--lm-sage) !important;
+  color: white !important;
+  border: none !important;
+  padding: 16px 24px !important;
+  border-radius: 12px !important;
+  font-weight: 600 !important;
+  font-size: 16px !important;
+  cursor: pointer !important;
+  transition: background-color 0.3s ease, transform 0.2s ease !important;
+  text-transform: none !important;
+  letter-spacing: 0.5px !important;
+}
+
+.woocommerce button.button:hover,
+.woocommerce a.button:hover,
+.woocommerce input.button:hover,
+.woocommerce button[type="submit"]:hover,
+.woocommerce #place_order:hover {
+  background: var(--lm-sage-2) !important;
+  transform: translateY(-2px) !important;
+  box-shadow: 0 4px 12px rgba(44, 62, 35, 0.3) !important;
+}
+
+.woocommerce button.button:disabled,
+.woocommerce a.button:disabled {
+  background: #ccc !important;
+  cursor: not-allowed !important;
+  transform: none !important;
+  box-shadow: none !important;
+}
+
+/* 7. Payment Fields Fix */
+.woocommerce-payment-fields {
+  margin-top: 30px !important;
+}
+
+.woocommerce .payment_box {
+  background: rgba(255, 255, 255, 0.8) !important;
+  padding: 24px !important;
+  border-radius: 12px !important;
+  border: 1px solid var(--lm-border) !important;
+}
+
+/* 8. Checkout Form Improvements */
+.woocommerce-checkout .woocommerce-billing-fields,
+.woocommerce-checkout .woocommerce-shipping-fields {
+  margin-bottom: 30px !important;
+}
+
+.woocommerce-checkout .woocommerce-additional-fields {
+  margin-bottom: 30px !important;
+}
+
 @media (max-width: 1024px) {
   .woocommerce-checkout {
     flex-direction: column !important;
+    gap: 20px !important;
   }
 
   .woocommerce-checkout #order_review {
     max-width: 100% !important;
   }
+}
+
+@media (max-width: 768px) {
+  .woocommerce-checkout {
+    padding: 20px !important;
+  }
+  
+  .woocommerce-checkout #customer_details {
+    flex: 1 1 100% !important;
+  }
+
+  .woocommerce input[type="text"],
+  .woocommerce input[type="email"],
+  .woocommerce input[type="tel"],
+  .woocommerce input[type="password"],
+  .woocommerce textarea,
+  .woocommerce select {
+    padding: 14px !important;
+    font-size: 16px !important;
+  }
+
+  .woocommerce button.button,
+  .woocommerce a.button,
+  .woocommerce #place_order {
+    padding: 14px 20px !important;
+    font-size: 16px !important;
+  }
+}
+
+@media (max-width: 480px) {
+  .woocommerce-checkout {
+    padding: 15px !important;
+  }
+
+  .woocommerce input[type="text"],
+  .woocommerce input[type="email"],
+  .woocommerce input[type="tel"],
+  .woocommerce input[type="password"],
+  .woocommerce textarea,
+  .woocommerce select {
+    padding: 12px !important;
+    font-size: 14px !important;
+  }
+
+  .woocommerce label {
+    font-size: 14px !important;
+  }
+
+  .woocommerce button.button,
+  .woocommerce a.button,
+  .woocommerce #place_order {
+    padding: 12px 16px !important;
+    font-size: 14px !important;
+  }
+}
+
+/* 5. WooCommerce Form Styles - Comprehensive */
+.woocommerce form .form-row {
+  margin-bottom: 20px !important;
+}
+
+.woocommerce input[type="text"],
+.woocommerce input[type="email"],
+.woocommerce input[type="tel"],
+.woocommerce input[type="password"],
+.woocommerce input[type="number"],
+.woocommerce textarea,
+.woocommerce select {
+  width: 100% !important;
+  padding: 12px 16px !important;
+  border: 1px solid var(--lm-border) !important;
+  border-radius: 12px !important;
+  background: rgba(255, 255, 255, 0.75) !important;
+  color: var(--lm-ink) !important;
+  font-size: 16px !important;
+  transition: border-color 0.3s ease, box-shadow 0.3s ease !important;
+}
+
+.woocommerce input:focus,
+.woocommerce textarea:focus,
+.woocommerce select:focus {
+  border-color: var(--lm-sage) !important;
+  outline: none !important;
+  box-shadow: 0 0 0 3px rgba(60, 75, 61, 0.1) !important;
+}
+
+.woocommerce label {
+  display: block !important;
+  margin-bottom: 8px !important;
+  font-weight: 600 !important;
+  color: var(--lm-ink) !important;
 }
 
 /* Stacking Form Fields on Mobile - Ultra Specific Fix */

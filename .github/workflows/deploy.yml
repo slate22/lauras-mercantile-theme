@@ -19,6 +19,15 @@ jobs:
         run: |
           mkdir -p ~/.ssh
           ssh-keyscan -H ${{ github.ref_name == 'main' && 'merc22.ssh.wpengine.net' || 'merc22stg.ssh.wpengine.net' }} >> ~/.ssh/known_hosts
+      - name: Diagnostic SSH - List remote theme directory
+        env:
+          SSH_USER: ${{ github.ref_name == 'main' && secrets.WPE_SSH_USER_PROD || secrets.WPE_SSH_USER_STAGE }}
+          SSH_HOST: ${{ github.ref_name == 'main' && 'merc22.ssh.wpengine.net' || 'merc22stg.ssh.wpengine.net' }}
+        run: |
+          echo "--- SSH Connection Test ---"
+          ssh -o StrictHostKeyChecking=yes ${SSH_USER}@${SSH_HOST} "pwd && ls -la wp-content/themes"
+          echo "--- Ensure target directory exists ---"
+          ssh -o StrictHostKeyChecking=yes ${SSH_USER}@${SSH_HOST} "mkdir -p wp-content/themes/lauras-mercantile-mobile-responsive-rebuild && ls -la wp-content/themes/lauras-mercantile-mobile-responsive-rebuild"
 
       - name: Rsync theme to WP Engine
         env:

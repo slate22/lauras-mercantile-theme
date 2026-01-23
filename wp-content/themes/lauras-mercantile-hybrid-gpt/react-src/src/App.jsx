@@ -7,6 +7,7 @@ import ContentPage from './pages/ContentPage.jsx';
 import Shop from './pages/Shop.jsx';
 import Category from './pages/Category.jsx';
 import Search from './pages/Search.jsx';
+import LabResultsPage from './pages/LabResultsPage.jsx';
 
 const wooRedirects = ['/cart', '/checkout', '/my-account'];
 
@@ -25,7 +26,7 @@ export default function App() {
 
         {/* Top nav content */}
         <Route path="/our-approach" element={<ContentPage slug="our-approach" titleFallback="Our Approach" />} />
-        <Route path="/lab-results" element={<ContentPage slug="lab-results" titleFallback="Lab Results" />} />
+        <Route path="/lab-results" element={<LabResultsPage />} />
         <Route path="/education" element={<ContentPage slug="education" titleFallback="Education" />} />
         <Route path="/about-laura" element={<ContentPage slug="about-laura" titleFallback="About Laura" />} />
 

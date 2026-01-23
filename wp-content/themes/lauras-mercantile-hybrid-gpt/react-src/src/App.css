@@ -1519,3 +1519,191 @@ a:focus-visible {
     flex: 1;
   }
 }
+/* ========================================
+   LAB RESULTS PAGE
+   ======================================== */
+
+.lab-results-page {
+  padding-bottom: 80px;
+}
+
+.lab-results-page .page-header {
+  margin-bottom: 48px;
+  text-align: center;
+}
+
+.lab-results-page .header-divider {
+  width: 60px;
+  height: 3px;
+  background: var(--lm-terracotta);
+  margin: 16px auto 0;
+}
+
+.lab-results-page h2 {
+  font-family: var(--lm-serif);
+  font-size: 28px;
+  color: var(--lm-sage);
+  margin-bottom: 24px;
+  border-bottom: 1px solid var(--lm-border-subtle);
+  padding-bottom: 12px;
+}
+
+.lab-results-page h3 {
+  font-family: var(--lm-serif);
+  font-size: 20px;
+  color: var(--lm-ink);
+  margin: 24px 0 12px;
+}
+
+.coa-search-section {
+  max-width: 800px;
+  margin: 0 auto 48px;
+}
+
+.content-card {
+  background: var(--lm-card);
+  padding: 40px;
+  border: 1px solid var(--lm-border-subtle);
+  border-radius: var(--lm-radius-lg);
+  box-shadow: var(--lm-shadow-sm);
+}
+
+.coa-search-form {
+  display: flex;
+  gap: 12px;
+  margin-top: 24px;
+}
+
+.coa-input {
+  flex: 1;
+  padding: 12px 16px;
+  border: 1px solid var(--lm-border);
+  border-radius: var(--lm-radius);
+  font-family: var(--lm-sans);
+  font-size: 16px;
+  background: white;
+}
+
+.coa-button {
+  padding: 12px 24px;
+  background: var(--lm-sage);
+  color: white;
+  border: none;
+  border-radius: var(--lm-radius);
+  font-weight: 600;
+  cursor: pointer;
+  transition: var(--lm-transition);
+}
+
+.coa-button:hover {
+  background: var(--lm-sage-2);
+  transform: translateY(-1px);
+}
+
+.instructions-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 32px;
+  margin-bottom: 64px;
+}
+
+.instruction-item h3 {
+  margin-top: 0;
+}
+
+.instruction-img, .sample-img {
+  width: 100%;
+  height: auto;
+  border: 1px solid var(--lm-border-subtle);
+  border-radius: var(--lm-radius);
+  box-shadow: var(--lm-shadow-sm);
+  background: white;
+}
+
+.explanation-block {
+  margin-bottom: 48px;
+}
+
+.explanation-block.secondary {
+  background: rgba(60, 75, 61, 0.05);
+  padding: 32px;
+  border: 1px solid var(--lm-border-subtle);
+  border-radius: var(--lm-radius-lg);
+}
+
+.thc-warning {
+  margin-top: 24px;
+  padding: 16px;
+  background: rgba(193, 100, 78, 0.1);
+  border-left: 4px solid var(--lm-terracotta);
+}
+
+.herbal-coas-section {
+  margin: 64px 0;
+}
+
+.herbal-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 24px;
+}
+
+.herbal-card {
+  display: flex;
+  flex-direction: column;
+  padding: 24px;
+  background: var(--lm-card);
+  border: 1px solid var(--lm-border-subtle);
+  border-radius: var(--lm-radius);
+  text-decoration: none;
+  transition: var(--lm-transition);
+  text-align: center;
+}
+
+.herbal-card:hover {
+  transform: translateY(-4px);
+  box-shadow: var(--lm-shadow);
+  border-color: var(--lm-sage);
+}
+
+.herbal-name {
+  font-family: var(--lm-serif);
+  font-size: 18px;
+  font-weight: 600;
+  color: var(--lm-ink);
+  margin-bottom: 8px;
+}
+
+.herbal-action {
+  font-size: 14px;
+  color: var(--lm-sage);
+  font-weight: 600;
+}
+
+.lot-number-guide {
+  margin-top: 64px;
+}
+
+.lot-guide-content ul {
+  list-style: none;
+  padding: 0;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 0 40px;
+}
+
+.lot-guide-content li {
+  padding: 16px 0;
+  border-bottom: 1px solid var(--lm-border-subtle);
+  font-family: var(--lm-sans);
+}
+
+@media (max-width: 800px) {
+  .instructions-grid, .herbal-grid, .lot-guide-content ul {
+    grid-template-columns: 1fr;
+  }
+  
+  .coa-search-form {
+    flex-direction: column;
+  }
+}

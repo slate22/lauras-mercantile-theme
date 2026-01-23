@@ -32,6 +32,14 @@ function lm_should_mount_app(): bool {
   return false;
 }
 
+/** 
+ * Helper to check if current request should render the React app.
+ * Used in index.php to toggle classes and root divs.
+ */
+function lm_is_react_page(): bool {
+  return lm_should_mount_app();
+}
+
 function lm_enqueue_base_styles() {
   $base_css_path = get_stylesheet_directory() . '/assets/base.css';
   if (file_exists($base_css_path)) {

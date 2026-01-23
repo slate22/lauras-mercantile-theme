@@ -95,20 +95,84 @@
 document.addEventListener('DOMContentLoaded', function() {
   const toggle = document.getElementById('lm-menu-toggle');
   const nav = document.getElementById('lm-nav');
-  if (toggle && nav) {
-    toggle.addEventListener('click', function() {
-      const isOpen = nav.classList.toggle('is-open');
-      document.body.classList.toggle('menu-open', isOpen);
-      toggle.setAttribute('aria-expanded', isOpen);
-      
-      // Toggle icon
-      if (isOpen) {
-        toggle.innerHTML = '<svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 6L6 18M6 6l12 12" /></svg>';
-      } else {
-        toggle.innerHTML = '<svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 6h16M4 12h16M4 18h16" /></svg>';
-      }
-    });
+  
+  if (!toggle || !nav) return;
+
+  // Close menu when clicking outside
+  function closeMenuOnOutsideClick(e) {
+    if (!nav.contains(e.target) && !toggle.contains(e.target)) {
+      closeMenu();
+    }
   }
+
+  // Close menu when pressing Escape key
+  function closeMenuOnEscape(e) {
+    if (e.key === 'Escape') {
+      closeMenu();
+    }
+  }
+
+  // Function to close menu
+  function closeMenu() {
+    nav.classList.remove('is-open');
+    document.body.classList.remove('menu-open');
+    toggle.setAttribute('aria-expanded', 'false');
+    
+    // Reset to hamburger icon
+    toggle.innerHTML = '<span class="lm-menu-toggle-icon"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 6h16M4 12h16M4 18h16" /></svg></span><span class="lm-menu-toggle-text">Menu</span>';
+    
+    // Remove event listeners
+    document.removeEventListener('click', closeMenuOnOutsideClick);
+    document.removeEventListener('keydown', closeMenuOnEscape);
+  }
+
+  // Function to open menu
+  function openMenu() {
+    nav.classList.add('is-open');
+    document.body.classList.add('menu-open');
+    toggle.setAttribute('aria-expanded', 'true');
+    
+    // Change to close icon
+    toggle.innerHTML = '<span class="lm-menu-toggle-icon"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 6L6 18M6 6l12 12" /></svg></span><span class="lm-menu-toggle-text">Close</span>';
+    
+    // Add event listeners for closing
+    setTimeout(() => {
+      document.addEventListener('click', closeMenuOnOutsideClick);
+      document.addEventListener('keydown', closeMenuOnEscape);
+    }, 100);
+  }
+
+  // Toggle menu
+  toggle.addEventListener('click', function(e) {
+    e.preventDefault();
+    e.stopPropagation();
+    
+    const isOpen = nav.classList.contains('is-open');
+    if (isOpen) {
+      closeMenu();
+    } else {
+      openMenu();
+    }
+  });
+
+  // Close menu when window resizes to desktop size
+  let resizeTimer;
+  window.addEventListener('resize', function() {
+    clearTimeout(resizeTimer);
+    resizeTimer = setTimeout(function() {
+      if (window.innerWidth > 800) {
+        closeMenu();
+      }
+    }, 250);
+  });
+
+  // Close menu on navigation link click
+  const navLinks = nav.querySelectorAll('a');
+  navLinks.forEach(link => {
+    link.addEventListener('click', function() {
+      closeMenu();
+    });
+  });
 });
 </script>
 </body>

@@ -33,6 +33,7 @@ body {
     radial-gradient(900px 700px at 80% 20%, rgba(255, 255, 255, 0.35), rgba(255, 255, 255, 0) 60%),
     linear-gradient(180deg, #f6f0e9, #efe6db);
   font-family: var(--lm-sans);
+  scroll-behavior: smooth;
 }
 
 /* Layout + typography defaults (WP blocks + Woo templates) */
@@ -190,25 +191,14 @@ main {
 /* Fix for mobile menu wrapping and header overlap */
 @media (max-width: 800px) {
   .lm-header-inner {
-    flex-direction: column;
-    padding: 10px 0;
-    gap: 10px;
-  }
-
-  .lm-nav {
-    width: 100%;
-    overflow-x: auto;
-    padding-bottom: 5px;
-    justify-content: center;
-  }
-
-  .lm-menu {
-    gap: 15px;
-    white-space: nowrap;
+    padding: 12px 16px;
+    justify-content: space-between;
+    /* Keep horizontal layout on mobile */
   }
 
   .lm-brand img {
     height: 50px !important;
+    width: auto !important;
   }
 }
 
@@ -326,6 +316,15 @@ a:hover {
   padding: 10px 16px;
   text-align: center;
   color: var(--lm-muted);
+  position: relative;
+  z-index: 1000;
+}
+
+@media (max-width: 800px) {
+  .lm-topbar {
+    font-size: 10px;
+    padding: 8px 12px;
+  }
 }
 
 .lm-shell {
@@ -425,6 +424,13 @@ a:hover {
 .lm-menu li:hover>.sub-menu,
 .lm-menu li:focus-within>.sub-menu {
   display: block;
+}
+
+/* Hide dropdowns on mobile */
+@media (max-width: 800px) {
+  .lm-menu .sub-menu {
+    display: none !important;
+  }
 }
 
 .lm-menu .sub-menu li {
@@ -1226,12 +1232,68 @@ ul.products li.product .button {
 /* Header & Sticky Prevention on Mobile */
 @media (max-width: 800px) {
   .lm-header {
-    position: relative !important;
+    position: sticky !important;
+    top: 0;
   }
 
   .lm-brand img {
-    height: 50px !important;
+    height: 45px !important;
     width: auto !important;
+  }
+
+  /* Improve spacing for mobile */
+  .lm-actions {
+    gap: 8px;
+  }
+
+  .lm-icon-btn {
+    padding: 6px !important;
+  }
+}
+
+/* Extra small mobile adjustments */
+@media (max-width: 480px) {
+  .lm-header-inner {
+    padding: 10px 12px;
+    gap: 8px;
+  }
+
+  .lm-brand img {
+    height: 38px !important;
+  }
+
+  .lm-menu-toggle {
+    padding: 6px 8px;
+    font-size: 11px;
+    min-width: auto;
+  }
+
+  .lm-menu-toggle svg {
+    width: 16px;
+    height: 16px;
+  }
+
+  .lm-nav a {
+    font-size: 18px;
+    padding: 8px 12px;
+  }
+
+  .lm-nav {
+    padding: 30px 20px;
+    gap: 16px;
+  }
+
+  .lm-actions {
+    gap: 6px;
+  }
+
+  .lm-icon-btn {
+    padding: 4px !important;
+  }
+
+  .lm-icon-btn svg {
+    width: 18px;
+    height: 18px;
   }
 }
 
@@ -1242,44 +1304,116 @@ ul.products li.product .button {
 
 .lm-menu-toggle {
   display: none;
-  background: none;
+  background: rgba(60, 75, 61, 0.05);
   border: none;
   color: var(--lm-ink);
-  padding: 8px;
+  padding: 10px 14px;
   cursor: pointer;
-  z-index: 1000;
-  /* Ensure it stays above EVERYTHING */
+  z-index: 1001;
   position: relative;
-  transition: transform 0.3s ease;
+  transition: all 0.2s ease;
+  border-radius: 12px;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  font-size: 14px;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+
+.lm-menu-toggle:hover {
+  background: rgba(60, 75, 61, 0.1);
+  transform: translateY(-1px);
 }
 
 .lm-menu-toggle:active {
-  transform: scale(0.9);
+  transform: scale(0.95);
+}
+
+.lm-menu-toggle svg {
+  width: 20px;
+  height: 20px;
 }
 
 @media (max-width: 800px) {
-  .lm-menu-toggle {
-    display: flex;
-    align-items: center;
+  .lm-nav {
+    /* Hide desktop nav on mobile, show via overlay when toggled */
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100vh;
+    background: rgba(245, 239, 231, 0.98);
+    backdrop-filter: blur(12px);
+    z-index: 999;
+    flex-direction: column;
     justify-content: center;
-    gap: 8px;
-    padding: 8px 12px;
-    background: rgba(60, 75, 61, 0.05);
-    border-radius: 99px;
-  }
-
-  .lm-menu-toggle-icon {
-    display: flex;
     align-items: center;
+    gap: 32px;
+    padding: 60px 40px;
+
+    /* Hidden by default */
+    opacity: 0;
+    visibility: hidden;
+    transform: translateY(-30px);
+    transition: all 0.3s cubic-bezier(0.165, 0.84, 0.44, 1);
   }
 
-  .lm-menu-toggle-text {
-    font-size: 14px;
-    font-weight: 600;
-    text-transform: uppercase;
-    letter-spacing: 0.05em;
-    color: var(--lm-sage-2);
+  .lm-nav.is-open {
+    opacity: 1;
+    visibility: visible;
+    transform: translateY(0);
   }
+
+  /* Handle the PHP wp_nav_menu structure inside mobile nav */
+  .lm-nav .lm-menu {
+    flex-direction: column;
+    gap: 24px;
+    width: 100%;
+    text-align: center;
+  }
+
+  /* Reset dropdown menus for mobile */
+  .lm-nav .sub-menu {
+    display: none !important;
+  }
+
+  .lm-nav a {
+    font-size: 24px;
+    font-family: var(--lm-serif);
+    font-weight: 600;
+    color: var(--lm-ink);
+    text-decoration: none;
+    transition: all 0.2s ease;
+    padding: 12px 20px;
+    border-radius: 12px;
+  }
+
+  .lm-nav a:hover,
+  .lm-nav a.active {
+    color: var(--lm-sage-2);
+    background: rgba(60, 75, 61, 0.08);
+  }
+
+  /* Ensure actions are above mobile menu overlay */
+  .lm-actions {
+    position: relative;
+    z-index: 1001;
+  }
+
+  /* Prevent body scroll when menu is open */
+  body.menu-open {
+    overflow: hidden;
+  }
+
+  /* Fix z-index issues with header */
+  .lm-header {
+    position: relative;
+    z-index: 1000;
+  }
+}
+}
 
   .lm-nav {
     display: flex;
@@ -1337,17 +1471,28 @@ ul.products li.product .button {
   .lm-header-inner {
     padding: 12px 16px;
     justify-content: space-between;
+    align-items: center;
   }
 
   .lm-brand {
     position: relative;
     z-index: 1001;
-    /* Keep logo visible or above overlay if needed */
+    flex: 1;
+    display: flex;
+    justify-content: center;
+  }
+
+  .lm-brand a {
+    display: flex;
+    align-items: center;
   }
 
   .lm-actions {
     position: relative;
     z-index: 1001;
+    display: flex;
+    align-items: center;
+    gap: 8px;
   }
 
   /* Prevent body scroll when menu is open */

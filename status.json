@@ -1,6 +1,6 @@
 {
     "project_id": "lauras-mercantile-theme",
-    "current_status": "success",
-    "latest_artifact_url": "https://github.com/slate22/lauras-mercantile-theme/commit/HEAD",
-    "next_recommended_step": "Deploy the updated assets/base.css to the staging environment and perform a final mobile cache-cleared verification."
+    "current_status": "working",
+    "latest_artifact_url": "https://github.com/slate22/lauras-mercantile-theme/commit/8342a9b",
+    "next_recommended_step": "Wait for GitHub Action to complete with the fixed rsync path, then verify mobile menu on staging."
 }

@@ -91,5 +91,25 @@
 </footer>
 
 <?php wp_footer(); ?>
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+  const toggle = document.getElementById('lm-menu-toggle');
+  const nav = document.getElementById('lm-nav');
+  if (toggle && nav) {
+    toggle.addEventListener('click', function() {
+      const isOpen = nav.classList.toggle('is-open');
+      document.body.classList.toggle('menu-open', isOpen);
+      toggle.setAttribute('aria-expanded', isOpen);
+      
+      // Toggle icon
+      if (isOpen) {
+        toggle.innerHTML = '<svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 6L6 18M6 6l12 12" /></svg>';
+      } else {
+        toggle.innerHTML = '<svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 6h16M4 12h16M4 18h16" /></svg>';
+      }
+    });
+  }
+});
+</script>
 </body>
 </html>

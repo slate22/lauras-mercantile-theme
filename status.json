@@ -1,7 +1,6 @@
 {
-    "project_id": "lauras-mercantile",
+    "project_id": "lauras-mercantile-theme",
     "current_status": "success",
-    "latest_artifact_url": "https://github.com/slate22/lauras-mercantile-theme/tree/stage",
-    "next_recommended_step": "Check the 'Diagnostic - List Sites' step in the GitHub Action logs to see reachable server paths.",
-    "notes": "CI/CD is proving exceptionally difficult due to WP Engine gateway restrictions. Added a diagnostic 'ssh ls' step to determine if the issue is authentication or path-related."
+    "latest_artifact_url": "https://github.com/slate22/lauras-mercantile-theme/commit/HEAD",
+    "next_recommended_step": "Deploy the updated assets/base.css to the staging environment and perform a final mobile cache-cleared verification."
 }

@@ -31,9 +31,8 @@ jobs:
         env:
           SSH_USER: ${{ github.ref_name == 'main' && secrets.WPE_SSH_USER_PROD || secrets.WPE_SSH_USER_STAGE }}
           SSH_HOST: ${{ github.ref_name == 'main' && 'merc22.ssh.wpengine.net' || 'merc22stg.ssh.wpengine.net' }}
-          WPE_ENV: ${{ github.ref_name == 'main' && 'merc22' || 'merc22stg' }}
         run: |
           rsync -az --delete \
             -e "ssh -o StrictHostKeyChecking=yes" \
             "wp-content/themes/lauras-mercantile-hybrid-gpt/" \
-            "${SSH_USER}@${SSH_HOST}:/sites/${WPE_ENV}/wp-content/themes/lauras-mercantile-hybrid-gpt/"
+            "${SSH_USER}@${SSH_HOST}:wp-content/themes/lauras-mercantile-hybrid-gpt/"

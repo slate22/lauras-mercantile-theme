@@ -27,7 +27,7 @@ jobs:
           echo "--- SSH Connection Test ---"
           ssh -o StrictHostKeyChecking=yes ${SSH_USER}@${SSH_HOST} "pwd && ls -la wp-content/themes"
           echo "--- Ensure target directory exists ---"
-          ssh -o StrictHostKeyChecking=yes ${SSH_USER}@${SSH_HOST} "mkdir -p wp-content/themes/lauras-mercantile-mobile-responsive-rebuild && ls -la wp-content/themes/lauras-mercantile-mobile-responsive-rebuild"
+          ssh -o StrictHostKeyChecking=yes ${SSH_USER}@${SSH_HOST} "mkdir -p wp-content/themes/lauras-mercantile-hybrid-gpt && ls -la wp-content/themes/lauras-mercantile-hybrid-gpt"
 
       - name: Rsync theme to WP Engine
         env:
@@ -36,5 +36,5 @@ jobs:
         run: |
           rsync -az --delete \
             -e "ssh -o StrictHostKeyChecking=yes" \
-            "wp-content/themes/lauras-mercantile-mobile-responsive-rebuild/" \
-            "${SSH_USER}@${SSH_HOST}:wp-content/themes/lauras-mercantile-mobile-responsive-rebuild/"
+            "wp-content/themes/lauras-mercantile-hybrid-gpt/" \
+            "${SSH_USER}@${SSH_HOST}:wp-content/themes/lauras-mercantile-hybrid-gpt/"

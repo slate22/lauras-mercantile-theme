@@ -13,7 +13,19 @@ jobs:
       - name: Create deployment artifact
         run: |
           echo "Creating theme deployment package..."
-          tar -czf lauras-mercantile-hybrid-gpt.tar.gz wp-content/themes/lauras-mercantile-hybrid-gpt/
+          echo "Checking theme structure..."
+          ls -la wp-content/themes/lauras-mercantile-hybrid-gpt/
+          echo "Verifying style.css exists..."
+          if [ -f "wp-content/themes/lauras-mercantile-hybrid-gpt/style.css" ]; then
+            echo "✅ style.css found"
+          else
+            echo "❌ style.css missing - this will cause installation failure!"
+            exit 1
+          fi
+          echo "Creating theme package..."
+          tar -czf lauras-mercantile-hybrid-gpt.tar.gz -C wp-content/themes/ lauras-mercantile-hybrid-gpt/
+          echo "Package contents:"
+          tar -tzf lauras-mercantile-hybrid-gpt.tar.gz
           ls -la lauras-mercantile-hybrid-gpt.tar.gz
 
       - name: Upload artifact for manual deployment

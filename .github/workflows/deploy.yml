@@ -18,14 +18,18 @@ jobs:
           echo "Verifying style.css exists..."
           if [ -f "wp-content/themes/lauras-mercantile-hybrid-gpt/style.css" ]; then
             echo "✅ style.css found"
+            head -10 wp-content/themes/lauras-mercantile-hybrid-gpt/style.css
           else
             echo "❌ style.css missing - this will cause installation failure!"
             exit 1
           fi
-          echo "Creating theme package..."
-          tar -czf lauras-mercantile-hybrid-gpt.tar.gz -C wp-content/themes/ lauras-mercantile-hybrid-gpt/
-          echo "Package contents:"
-          tar -tzf lauras-mercantile-hybrid-gpt.tar.gz
+          echo "Creating proper WordPress theme package..."
+          cd wp-content/themes/
+          tar -czf ../../lauras-mercantile-hybrid-gpt.tar.gz lauras-mercantile-hybrid-gpt/
+          cd ../../
+          echo "Package contents (should start with lauras-mercantile-hybrid-gpt/):"
+          tar -tzf lauras-mercantile-hybrid-gpt.tar.gz | head -20
+          echo "Package size:"
           ls -la lauras-mercantile-hybrid-gpt.tar.gz
 
       - name: Upload artifact for manual deployment

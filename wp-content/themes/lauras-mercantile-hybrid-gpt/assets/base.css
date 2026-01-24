@@ -1070,10 +1070,47 @@ ul.products {
 }
 
 /* Fix narrow strips in cart/related/upsells */
-.woocommerce .cart-collaterals ul.products,
-.woocommerce .related ul.products,
-.woocommerce .upsells ul.products {
+.woocommerce .cart-collaterals ul.products {
   grid-template-columns: repeat(auto-fill, minmax(240px, 1fr)) !important;
+}
+
+.woocommerce .related ul.products,
+.woocommerce .upsells ul.products,
+.woocommerce-page .related ul.products,
+.woocommerce-page .upsells ul.products {
+  display: grid !important;
+  grid-template-columns: repeat(3, minmax(300px, 1fr)) !important;
+  gap: 30px !important;
+  padding: 24px 0 !important;
+  list-style: none !important;
+}
+
+.woocommerce .related ul.products li.product,
+.woocommerce .upsells ul.products li.product,
+.woocommerce-page .related ul.products li.product,
+.woocommerce-page .upsells ul.products li.product {
+  width: 100% !important;
+  margin: 0 !important;
+  float: none !important;
+  min-width: 0 !important;
+}
+
+@media (max-width: 1024px) {
+  .woocommerce .related ul.products,
+  .woocommerce .upsells ul.products,
+  .woocommerce-page .related ul.products,
+  .woocommerce-page .upsells ul.products {
+    grid-template-columns: repeat(2, minmax(280px, 1fr)) !important;
+  }
+}
+
+@media (max-width: 768px) {
+  .woocommerce .related ul.products,
+  .woocommerce .upsells ul.products,
+  .woocommerce-page .related ul.products,
+  .woocommerce-page .upsells ul.products {
+    grid-template-columns: 1fr !important;
+  }
 }
 
 @media (max-width: 600px) {
@@ -1160,33 +1197,220 @@ ul.products li.product .button {
   max-width: 100% !important;
 }
 
-/* 4. Checkout & Cart Layout Fixes */
+/* 4. Checkout Page - Clean Redesign - HIGH PRIORITY */
+body.woocommerce-checkout .woocommerce,
+body.woocommerce-page .woocommerce,
 .woocommerce-checkout {
-  display: flex !important;
-  flex-wrap: wrap !important;
-  gap: 40px !important;
-  margin-bottom: 60px !important;
-  padding: 30px !important;
-  background: white;
-  border-radius: 16px;
-}
-
-.woocommerce-checkout #customer_details {
-  flex: 1 1 600px !important;
-}
-
-.woocommerce-checkout #order_review_heading,
-.woocommerce-checkout #order_review {
-  flex: 0 0 440px !important;
+  max-width: 1200px !important;
+  margin: 0 auto 40px !important;
+  padding: 0 20px !important;
+  display: block !important;
   width: 100% !important;
+}
+
+.woocommerce-checkout .col2-set {
+  display: flex !important;
+  gap: 40px !important;
+  margin-bottom: 40px !important;
+}
+
+.woocommerce-checkout .col-1,
+.woocommerce-checkout .col-2 {
+  flex: 1 !important;
   max-width: 100% !important;
 }
 
-#order_review {
-  background: #1a1a1a !important;
+.woocommerce-checkout #customer_details {
+  background: #ffffff !important;
+  padding: 30px !important;
+  border-radius: 12px !important;
+  border: 1px solid #e1e4e8 !important;
+  margin-bottom: 30px !important;
+}
+
+.woocommerce-checkout .woocommerce-billing-fields,
+.woocommerce-checkout .woocommerce-shipping-fields {
+  margin-bottom: 30px !important;
+}
+
+.woocommerce-checkout .woocommerce-billing-fields h3,
+.woocommerce-checkout .woocommerce-shipping-fields h3 {
+  color: #24292e !important;
+  font-size: 20px !important;
+  font-weight: 600 !important;
+  margin-bottom: 20px !important;
+  border-bottom: 2px solid #f6f8fa !important;
+  padding-bottom: 10px !important;
+}
+
+.woocommerce-checkout .form-row {
+  margin-bottom: 20px !important;
+  padding: 0 !important;
+}
+
+.woocommerce-checkout label {
+  color: #586069 !important;
+  font-weight: 500 !important;
+  font-size: 14px !important;
+  margin-bottom: 8px !important;
+  display: block !important;
+}
+
+.woocommerce-checkout input[type="text"],
+.woocommerce-checkout input[type="email"],
+.woocommerce-checkout input[type="tel"],
+.woocommerce-checkout input[type="password"],
+.woocommerce-checkout select,
+.woocommerce-checkout textarea {
+  width: 100% !important;
+  padding: 12px 16px !important;
+  border: 2px solid #e1e4e8 !important;
+  border-radius: 6px !important;
+  font-size: 16px !important;
+  color: #24292e !important;
+  background: #ffffff !important;
+  transition: border-color 0.2s ease !important;
+  box-sizing: border-box !important;
+}
+
+.woocommerce-checkout input[type="text"]:focus,
+.woocommerce-checkout input[type="email"]:focus,
+.woocommerce-checkout input[type="tel"]:focus,
+.woocommerce-checkout input[type="password"]:focus,
+.woocommerce-checkout select:focus,
+.woocommerce-checkout textarea:focus {
+  border-color: #0366d6 !important;
+  outline: none !important;
+  box-shadow: 0 0 0 3px rgba(3, 102, 214, 0.1) !important;
+}
+
+.woocommerce-checkout .required {
+  color: #d73a49 !important;
+}
+
+.woocommerce-checkout #order_review_heading {
+  background: #ffffff !important;
+  padding: 30px !important;
+  border-radius: 12px !important;
+  border: 1px solid #e1e4e8 !important;
+  margin-bottom: 20px !important;
+}
+
+.woocommerce-checkout #order_review_heading h3 {
+  color: #24292e !important;
+  font-size: 20px !important;
+  font-weight: 600 !important;
+  margin: 0 !important;
+}
+
+.woocommerce-checkout #order_review {
+  background: #ffffff !important;
+  padding: 30px !important;
+  border-radius: 12px !important;
+  border: 1px solid #e1e4e8 !important;
+}
+
+/* Order Review Table Styling */
+.woocommerce-checkout-review-order-table {
+  width: 100% !important;
+  border-collapse: collapse !important;
+  margin-bottom: 20px !important;
+}
+
+.woocommerce-checkout-review-order-table th {
+  text-align: left !important;
+  padding: 12px 16px !important;
+  background: #f6f8fa !important;
+  border-bottom: 2px solid #e1e4e8 !important;
+  color: #24292e !important;
+  font-weight: 600 !important;
+  font-size: 14px !important;
+}
+
+.woocommerce-checkout-review-order-table td {
+  padding: 16px !important;
+  border-bottom: 1px solid #e1e4e8 !important;
+  color: #586069 !important;
+  vertical-align: middle !important;
+}
+
+.woocommerce-checkout-review-order-table .product-name {
+  font-weight: 500 !important;
+  color: #24292e !important;
+}
+
+.woocommerce-checkout-review-order-table .product-name a {
+  color: #0366d6 !important;
+  text-decoration: none !important;
+}
+
+.woocommerce-checkout-review-order-table .product-name a:hover {
+  text-decoration: underline !important;
+}
+
+.woocommerce-checkout-review-order-table .product-total {
+  text-align: right !important;
+  font-weight: 600 !important;
+  color: #24292e !important;
+}
+
+.woocommerce-checkout-review-order-table .cart-subtotal th,
+.woocommerce-checkout-review-order-table .order-total th {
+  background: #f6f8fa !important;
+  border-top: 2px solid #e1e4e8 !important;
+  font-weight: 600 !important;
+  color: #24292e !important;
+}
+
+.woocommerce-checkout-review-order-table .cart-subtotal td,
+.woocommerce-checkout-review-order-table .order-total td {
+  text-align: right !important;
+  font-weight: 600 !important;
+  color: #24292e !important;
+  background: #f6f8fa !important;
+  border-top: 2px solid #e1e4e8 !important;
+}
+
+/* Payment Methods */
+.woocommerce .payment_methods {
+  margin-bottom: 30px !important;
+}
+
+.woocommerce .payment_methods .payment_method {
+  margin-bottom: 15px !important;
+  padding: 20px !important;
+  background: #f6f8fa !important;
+  border: 1px solid #e1e4e8 !important;
+  border-radius: 6px !important;
+}
+
+.woocommerce .payment_methods .payment_method input[type="radio"] {
+  margin-right: 12px !important;
+}
+
+.woocommerce .payment_methods .payment_method label {
+  color: #24292e !important;
+  font-weight: 600 !important;
+  margin-bottom: 12px !important;
+  cursor: pointer !important;
+}
+
+/* Place Order Button */
+#place_order {
+  width: 100% !important;
+  background: #28a745 !important;
   color: white !important;
-  padding: 32px !important;
-  border-radius: 16px !important;
+  border: none !important;
+  padding: 16px 24px !important;
+  border-radius: 6px !important;
+  font-size: 16px !important;
+  font-weight: 600 !important;
+  cursor: pointer !important;
+  transition: background-color 0.2s ease !important;
+}
+
+#place_order:hover {
+  background: #218838 !important;
 }
 
 /* 6. WooCommerce Buttons - Enhanced */
@@ -1232,11 +1456,52 @@ ul.products li.product .button {
   margin-top: 30px !important;
 }
 
+/* Payment Box */
 .woocommerce .payment_box {
-  background: rgba(255, 255, 255, 0.8) !important;
-  padding: 24px !important;
-  border-radius: 12px !important;
-  border: 1px solid var(--lm-border) !important;
+  background: #ffffff !important;
+  color: #24292e !important;
+  padding: 20px !important;
+  border-radius: 6px !important;
+  border: 1px solid #d1d5da !important;
+  margin-top: 15px !important;
+}
+
+.woocommerce .payment_box label {
+  color: #586069 !important;
+  font-weight: 500 !important;
+  margin-bottom: 8px !important;
+  display: block !important;
+}
+
+.woocommerce .payment_box input[type="text"],
+.woocommerce .payment_box input[type="email"],
+.woocommerce .payment_box input[type="tel"],
+.woocommerce .payment_box input[type="password"] {
+  background: #ffffff !important;
+  color: #24292e !important;
+  border: 2px solid #e1e4e8 !important;
+  padding: 12px 16px !important;
+  border-radius: 6px !important;
+  width: 100% !important;
+  margin-bottom: 15px !important;
+  font-size: 16px !important;
+  box-sizing: border-box !important;
+}
+
+.woocommerce .payment_box input[type="text"]:focus,
+.woocommerce .payment_box input[type="email"]:focus,
+.woocommerce .payment_box input[type="tel"]:focus,
+.woocommerce .payment_box input[type="password"]:focus {
+  border-color: #0366d6 !important;
+  outline: none !important;
+  box-shadow: 0 0 0 3px rgba(3, 102, 214, 0.1) !important;
+}
+
+.woocommerce .payment_box input[type="text"]::placeholder,
+.woocommerce .payment_box input[type="email"]::placeholder,
+.woocommerce .payment_box input[type="tel"]::placeholder,
+.woocommerce .payment_box input[type="password"]::placeholder {
+  color: #959da5 !important;
 }
 
 /* 8. Checkout Form Improvements */
@@ -1249,14 +1514,55 @@ ul.products li.product .button {
   margin-bottom: 30px !important;
 }
 
-@media (max-width: 1024px) {
+/* Responsive Design */
+@media (max-width: 768px) {
   .woocommerce-checkout {
+    padding: 0 15px !important;
+  }
+
+  .woocommerce-checkout .col2-set {
     flex-direction: column !important;
     gap: 20px !important;
   }
 
+  .woocommerce-checkout #customer_details,
+  .woocommerce-checkout #order_review_heading,
   .woocommerce-checkout #order_review {
-    max-width: 100% !important;
+    padding: 20px !important;
+  }
+
+  .woocommerce-checkout input[type="text"],
+  .woocommerce-checkout input[type="email"],
+  .woocommerce-checkout input[type="tel"],
+  .woocommerce-checkout input[type="password"],
+  .woocommerce-checkout select,
+  .woocommerce-checkout textarea {
+    font-size: 16px !important;
+  }
+
+  .woocommerce-checkout-review-order-table {
+    font-size: 14px !important;
+  }
+
+  .woocommerce-checkout-review-order-table th,
+  .woocommerce-checkout-review-order-table td {
+    padding: 12px 8px !important;
+  }
+}
+
+@media (max-width: 480px) {
+  .woocommerce-checkout {
+    padding: 0 10px !important;
+  }
+
+  .woocommerce-checkout #customer_details,
+  .woocommerce-checkout #order_review_heading,
+  .woocommerce-checkout #order_review {
+    padding: 15px !important;
+  }
+
+  .woocommerce-checkout-review-order-table {
+    font-size: 13px !important;
   }
 }
 
@@ -1679,4 +1985,151 @@ ul.products li.product .button {
   body.menu-open {
     overflow: hidden;
   }
+}
+
+/* HOME PAGE PROMOTIONAL BANNER */
+body.home .lm-hero-section::before,
+body.home .hero::before,
+body.home main::before,
+body.home::before {
+  content: "🍄 Take 20% off Functional Mushrooms and Functional Chocolates. No Coupon Needed. 🍄";
+  display: block !important;
+  background: #28a745 !important;
+  color: white !important;
+  padding: 15px 20px !important;
+  text-align: center !important;
+  font-weight: 600 !important;
+  font-size: 18px !important;
+  margin: 0 0 30px 0 !important;
+  border-radius: 0 0 8px 8px !important;
+  box-shadow: 0 4px 12px rgba(40, 167, 69, 0.3) !important;
+  position: relative !important;
+  z-index: 1000 !important;
+}
+
+/* Also add to checkout */
+body.woocommerce-checkout .woocommerce::before,
+body.woocommerce-page .woocommerce::before {
+  content: "🍄 Take 20% off Functional Mushrooms and Functional Chocolates. No Coupon Needed. 🍄";
+  display: block !important;
+  background: #28a745 !important;
+  color: white !important;
+  padding: 15px 20px !important;
+  text-align: center !important;
+  font-weight: 600 !important;
+  font-size: 16px !important;
+  margin-bottom: 30px !important;
+  border-radius: 8px !important;
+  box-shadow: 0 2px 8px rgba(40, 167, 69, 0.3) !important;
+}
+
+/* EMERGENCY CHECKOUT FIXES - LAST RESORT */
+body.woocommerce-checkout .woocommerce,
+body.woocommerce-page .woocommerce,
+.woocommerce-checkout {
+  max-width: 1200px !important;
+  margin: 0 auto 40px !important;
+  padding: 0 20px !important;
+  display: block !important;
+  width: 100% !important;
+  background: #f8f9fa !important;
+}
+
+body.woocommerce-checkout .woocommerce form,
+body.woocommerce-page .woocommerce form {
+  display: flex !important;
+  gap: 40px !important;
+  flex-wrap: wrap !important;
+}
+
+body.woocommerce-checkout .woocommerce form .col2-set,
+body.woocommerce-page .woocommerce form .col2-set {
+  display: flex !important;
+  width: 100% !important;
+  gap: 40px !important;
+}
+
+body.woocommerce-checkout .woocommerce form .col-1,
+body.woocommerce-page .woocommerce form .col-1,
+body.woocommerce-checkout .woocommerce form .col-2,
+body.woocommerce-page .woocommerce form .col-2 {
+  flex: 1 !important;
+  background: white !important;
+  padding: 30px !important;
+  border-radius: 8px !important;
+  border: 1px solid #ddd !important;
+}
+
+body.woocommerce-checkout .woocommerce #customer_details,
+body.woocommerce-page .woocommerce #customer_details {
+  background: white !important;
+  padding: 30px !important;
+  border-radius: 8px !important;
+  border: 1px solid #ddd !important;
+  margin-bottom: 30px !important;
+}
+
+body.woocommerce-checkout .woocommerce #order_review,
+body.woocommerce-page .woocommerce #order_review {
+  background: white !important;
+  padding: 30px !important;
+  border-radius: 8px !important;
+  border: 1px solid #ddd !important;
+  width: 100% !important;
+}
+
+body.woocommerce-checkout .woocommerce #order_review * {
+  color: #333 !important;
+}
+
+body.woocommerce-checkout .woocommerce input,
+body.woocommerce-page .woocommerce input,
+body.woocommerce-checkout .woocommerce textarea,
+body.woocommerce-page .woocommerce textarea,
+body.woocommerce-checkout .woocommerce select,
+body.woocommerce-page .woocommerce select {
+  width: 100% !important;
+  padding: 12px !important;
+  border: 1px solid #ccc !important;
+  border-radius: 4px !important;
+  margin-bottom: 15px !important;
+  color: #333 !important;
+  background: white !important;
+}
+
+body.woocommerce-checkout .woocommerce button,
+body.woocommerce-page .woocommerce button {
+  background: #28a745 !important;
+  color: white !important;
+  padding: 15px 30px !important;
+  border: none !important;
+  border-radius: 4px !important;
+  cursor: pointer !important;
+  font-size: 16px !important;
+}
+
+/* EMERGENCY HOME BANNER - MULTIPLE TARGETS */
+body.home::after {
+  content: "" !important;
+}
+
+body.home::before {
+  content: "🍄 Take 20% off Functional Mushrooms and Functional Chocolates. No Coupon Needed. 🍄" !important;
+  display: block !important;
+  position: fixed !important;
+  top: 0 !important;
+  left: 0 !important;
+  right: 0 !important;
+  background: #28a745 !important;
+  color: white !important;
+  padding: 20px !important;
+  text-align: center !important;
+  font-weight: 700 !important;
+  font-size: 18px !important;
+  z-index: 9999 !important;
+  box-shadow: 0 4px 20px rgba(40, 167, 69, 0.4) !important;
+}
+
+body.home {
+  padding-top: 80px !important;
 }

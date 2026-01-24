@@ -6,7 +6,27 @@ Description: A high-performance hybrid theme. React for marketing, Native WooCom
 Version: 1.75
 */
 
-/* HOME PAGE PROMOTIONAL BANNER - ULTRA AGGRESSIVE TARGETING */
+/* LOGO STYLING - MAKE IT BIGGER */
+.lm-brand img {
+  height: 120px !important;
+  width: auto !important;
+  display: block !important;
+  max-width: none !important;
+}
+
+@media (max-width: 768px) {
+  .lm-brand img {
+    height: 90px !important;
+  }
+}
+
+@media (max-width: 480px) {
+  .lm-brand img {
+    height: 70px !important;
+  }
+}
+
+/* PROMOTIONAL BANNER - MULTIPLE APPROACHES */
 
 /* Multiple targeting approaches for maximum compatibility */
 body.home::before,

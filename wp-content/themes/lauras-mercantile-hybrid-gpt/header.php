@@ -8,13 +8,43 @@
 <body <?php body_class(); ?>>
 <?php wp_body_open(); ?>
 
+<!-- PROMOTIONAL BANNER - JAVASCRIPT FALLBACK -->
+<div id="promo-banner" style="display:none; position: fixed; top: 0; left: 0; right: 0; background: #28a745; color: white; padding: 20px; text-align: center; font-weight: 700; font-size: 18px; z-index: 999999; box-shadow: 0 4px 20px rgba(40, 167, 69, 0.4); font-family: Arial, sans-serif; line-height: 1.4;">
+  🍄 Take 20% off Functional Mushrooms and Functional Chocolates. No Coupon Needed. 🍄
+</div>
+
+<script>
+// Show banner on home page only
+document.addEventListener('DOMContentLoaded', function() {
+  var banner = document.getElementById('promo-banner');
+  var body = document.body;
+  
+  if (banner && body) {
+    // Check if we're on home page
+    if (body.classList.contains('home') || 
+        body.classList.contains('front-page') || 
+        body.classList.contains('page-home') ||
+        window.location.pathname === '/' ||
+        window.location.pathname === '/index.php') {
+      
+      banner.style.display = 'block';
+      
+      // Add body padding to avoid overlap
+      if (body.style.paddingTop === '' || body.style.paddingTop === '0px') {
+        body.style.paddingTop = '80px';
+      }
+    }
+  }
+});
+</script>
+
 <div class="lm-topbar">FREE SHIPPING ON ORDERS OVER $50</div>
 
 <header class="lm-header">
   <div class="lm-shell">
     <div class="lm-header-inner">
       <a class="lm-brand" href="<?php echo esc_url(home_url('/')); ?>">
-        <img src="<?php echo get_stylesheet_directory_uri(); ?>/assets/images/logo.png" alt="Laura's Mercantile" style="height: 84px; width: auto; display: block;" />
+        <img src="<?php echo get_stylesheet_directory_uri(); ?>/assets/images/logo.png" alt="Laura's Mercantile" style="height: 120px; width: auto; display: block;" />
       </a>
 
       <nav class="lm-nav" aria-label="Primary" id="lm-nav">

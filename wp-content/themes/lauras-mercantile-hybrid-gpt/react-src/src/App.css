@@ -13,7 +13,7 @@
 
   --lm-sage: #3c4b3d;
   --lm-sage-2: #2f3c31;
-  --lm-sage-light: #52675 3;
+  --lm-sage-light: #526753;
   --lm-sage-alpha: rgba(60, 75, 61, 0.08);
   --lm-sage-alpha-hover: rgba(60, 75, 61, 0.14);
 
@@ -181,6 +181,7 @@
   box-shadow: var(--lm-shadow);
   transition: var(--lm-transition);
   backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
 }
 
 .lm-card:hover {
@@ -468,6 +469,7 @@
   padding: 32px 28px;
   box-shadow: var(--lm-shadow);
   backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
 }
 
 .lm-content h1,
@@ -532,6 +534,7 @@
   color: var(--lm-muted);
   background: rgba(255, 255, 255, 0.65);
   backdrop-filter: blur(4px);
+  -webkit-backdrop-filter: blur(4px);
 }
 
 /* Enhanced Founder Section */
@@ -553,6 +556,7 @@
   box-shadow: var(--lm-shadow-lg);
   overflow: hidden;
   backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
 }
 
 .lm-founder-media {
@@ -752,6 +756,7 @@ a:focus-visible {
   border-radius: var(--lm-radius-lg);
   box-shadow: var(--lm-shadow);
   backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
 }
 
 .lm-shop-feature {
@@ -1519,6 +1524,7 @@ a:focus-visible {
     flex: 1;
   }
 }
+
 /* ========================================
    LAB RESULTS PAGE
    ======================================== */
@@ -1611,7 +1617,8 @@ a:focus-visible {
   margin-top: 0;
 }
 
-.instruction-img, .sample-img {
+.instruction-img,
+.sample-img {
   width: 100%;
   height: auto;
   border: 1px solid var(--lm-border-subtle);
@@ -1699,10 +1706,13 @@ a:focus-visible {
 }
 
 @media (max-width: 800px) {
-  .instructions-grid, .herbal-grid, .lot-guide-content ul {
+
+  .instructions-grid,
+  .herbal-grid,
+  .lot-guide-content ul {
     grid-template-columns: 1fr;
   }
-  
+
   .coa-search-form {
     flex-direction: column;
   }

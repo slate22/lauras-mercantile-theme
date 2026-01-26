@@ -10,17 +10,130 @@
 
 <!-- PROMOTIONAL BANNER - JAVASCRIPT FALLBACK -->
 <div id="promo-banner" style="display:none; position: fixed; top: 0; left: 0; right: 0; background: #28a745; color: white; padding: 20px; text-align: center; font-weight: 700; font-size: 18px; z-index: 999999; box-shadow: 0 4px 20px rgba(40, 167, 69, 0.4); font-family: Arial, sans-serif; line-height: 1.4;">
-  🍄 Take 20% off Functional Mushrooms and Functional Chocolates. No Coupon Needed. 🍄
+  🍄 CBD Chocolates and Caramels on sale now! No Coupon Needed. 🍄
+</div>
+
+<!-- NEWSLETTER SIGNUP FORM -->
+<div class="lm-newsletter-popup" id="lm-newsletter-popup" style="display:none; position: fixed; top: 50%; left: 50%; transform: translate(-50%, -50%); background: white; padding: 30px; border-radius: 12px; box-shadow: 0 10px 40px rgba(0,0,0,0.2); z-index: 1000000; max-width: 400px; width: 90%;">
+  <div class="newsletter-header">
+    <h3 style="margin: 0 0 15px 0; color: #333; font-size: 20px;">🎉 Get 15% Off!</h3>
+    <p style="margin: 0 0 20px 0; color: #666; line-height: 1.4;">Receive a coupon code for 15% off your order, plus subscribe to our newsletter for news about hemp and CBD legal landscape, news from Mt. Folly, advice about Sleep, reducing inflammation, and brain health.</p>
+  </div>
+  
+  <form id="lm-newsletter-form" class="newsletter-form">
+    <input type="email" name="email" placeholder="Enter your email address" required style="width: 100%; padding: 12px; border: 2px solid #e1e4e8; border-radius: 6px; margin-bottom: 15px; font-size: 16px; box-sizing: border-box;">
+    <button type="submit" class="newsletter-submit" style="width: 100%; background: #28a745; color: white; border: none; padding: 15px; border-radius: 6px; font-weight: 600; font-size: 16px; cursor: pointer; transition: background-color 0.3s ease;">Subscribe & Get Coupon</button>
+  </form>
+  
+  <div class="newsletter-success" style="display:none; background: #d4edda; color: #155724; padding: 15px; border-radius: 6px; text-align: center; margin-top: 15px;">
+    <strong>🎉 Success!</strong> Check your email for your 15% off coupon code!
+  </div>
+  
+  <div class="newsletter-close" style="position: absolute; top: 10px; right: 10px; cursor: pointer; font-size: 20px; color: #999;">×</div>
 </div>
 
 <script>
-// Show banner on home page only
+// Newsletter popup functionality
 document.addEventListener('DOMContentLoaded', function() {
+  var popup = document.getElementById('lm-newsletter-popup');
+  var form = document.getElementById('lm-newsletter-form');
+  var closeBtn = document.querySelector('.newsletter-close');
   var banner = document.getElementById('promo-banner');
   var body = document.body;
   
+  // Show popup on home page after 3 seconds
+  if (body && (body.classList.contains('home') || 
+      body.classList.contains('front-page') || 
+      body.classList.contains('page-home') ||
+      window.location.pathname === '/' ||
+      window.location.pathname === '/index.php')) {
+    
+    setTimeout(function() {
+      if (popup && !localStorage.getItem('lm_newsletter_subscribed')) {
+        popup.style.display = 'block';
+      }
+    }, 3000);
+  }
+  
+  // Close popup
+  if (closeBtn) {
+    closeBtn.addEventListener('click', function() {
+      popup.style.display = 'none';
+    });
+  }
+  
+  // Form submission
+  if (form) {
+    form.addEventListener('submit', function(e) {
+      e.preventDefault();
+      
+      var email = form.querySelector('input[type="email"]').value;
+      var submitBtn = form.querySelector('.newsletter-submit');
+      var successDiv = form.querySelector('.newsletter-success');
+      
+      // Show loading state
+      submitBtn.textContent = 'Subscribing...';
+      submitBtn.disabled = true;
+      
+      // AJAX request to WordPress
+      fetch('<?php echo admin_url('admin-ajax.php'); ?>', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/x-www-form-urlencoded',
+        },
+        body: new URLSearchParams({
+          'action': 'lm_klaviyo_subscribe_newsletter',
+          'email': email,
+          'nonce': '<?php echo wp_create_nonce("newsletter_subscribe"); ?>'
+        })
+      })
+      .then(response => response.json())
+      .then(data => {
+        if (data.success) {
+          // Mark as subscribed
+          localStorage.setItem('lm_newsletter_subscribed', 'true');
+          localStorage.setItem('lm_coupon_code', data.coupon_code);
+          localStorage.setItem('lm_coupon_discount', data.coupon_discount);
+          
+          // Show success message
+          form.style.display = 'none';
+          successDiv.style.display = 'block';
+          
+          // Update any coupon displays on page
+          updateCouponDisplays();
+          
+          // Close popup after 5 seconds
+          setTimeout(function() {
+            popup.style.display = 'none';
+          }, 5000);
+          
+        } else {
+          submitBtn.textContent = 'Try Again';
+          submitBtn.disabled = false;
+        }
+      })
+      .catch(error => {
+        console.error('Newsletter signup error:', error);
+        submitBtn.textContent = 'Try Again';
+        submitBtn.disabled = false;
+      });
+    });
+  }
+  
+  // Update coupon displays throughout the site
+  function updateCouponDisplays() {
+    var couponCode = localStorage.getItem('lm_coupon_code');
+    var couponDiscount = localStorage.getItem('lm_coupon_discount');
+    
+    if (couponCode && couponDiscount) {
+      document.querySelectorAll('.coupon-display').forEach(function(el) {
+        el.textContent = couponCode + ' - ' + couponDiscount + ' OFF';
+      });
+    }
+  }
+  
+  // Show banner on home page only
   if (banner && body) {
-    // Check if we're on home page
     if (body.classList.contains('home') || 
         body.classList.contains('front-page') || 
         body.classList.contains('page-home') ||
@@ -44,7 +157,7 @@ document.addEventListener('DOMContentLoaded', function() {
   <div class="lm-shell">
     <div class="lm-header-inner">
       <a class="lm-brand" href="<?php echo esc_url(home_url('/')); ?>">
-        <img src="<?php echo get_stylesheet_directory_uri(); ?>/assets/images/logo.png" alt="Laura's Mercantile" style="height: 120px; width: auto; display: block;" />
+        <img src="<?php echo get_stylesheet_directory_uri(); ?>/assets/images/logo.png" alt="Laura's Mercantile" style="height: 180px; width: auto; display: block;" />
       </a>
 
       <nav class="lm-nav" aria-label="Primary" id="lm-nav">

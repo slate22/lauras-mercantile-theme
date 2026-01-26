@@ -77,8 +77,11 @@ export default function SiteHeader() {
             </button>
 
             <Link className="lm-brand" to="/" onClick={() => setIsMenuOpen(false)}>
-              <span className="lm-brand-mark" aria-hidden="true" />
-              <span>Laura’s Mercantile</span>
+              <img
+                src={`${lm.assetBase || '/wp-content/themes/lauras-mercantile-hybrid-gpt/assets/'}images/logo.png`}
+                alt="Laura’s Mercantile"
+                style={{ height: '180px', width: 'auto', display: 'block' }}
+              />
             </Link>
 
             <nav className={`lm-nav ${isMenuOpen ? 'is-open' : ''}`} aria-label="Primary">

@@ -2,6 +2,52 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 import ProductCard from '../components/ProductCard.jsx';
 
+
+
+function getCatSlugs(p) {
+  return (p?.categories || [])
+    .map((c) => (c?.slug || '').toLowerCase())
+    .filter(Boolean);
+}
+
+function isBundle(p) {
+  const slug = (p?.slug || '').toLowerCase();
+  const name = (p?.name || '').toLowerCase();
+  const cats = new Set(getCatSlugs(p));
+  return (
+    slug.includes('bundle') ||
+    name.includes('bundle') ||
+    cats.has('bundle') ||
+    cats.has('bundles')
+  );
+}
+
+function rankProduct(p) {
+  const cats = new Set(getCatSlugs(p));
+
+  // 1) CBD oils & tinctures (exclude bundles)
+  if (cats.has('full-spectrum-cbd-oil') && !isBundle(p)) return 1;
+
+  // 2) Functional Chocolates + Caramels
+  if (cats.has('cbd-sweets')) return 2;
+
+  // 3) Functional Mushrooms
+  if (cats.has('functional-mushrooms')) return 3;
+
+  // 4) Onco / Tippens
+  if (cats.has('joe-tippens-protocol-products')) return 4;
+
+  // 5) Everything else (includes dogs + bundles)
+  return 999;
+}
+
+function groupSortProducts(products) {
+  return (products || [])
+    .map((p, idx) => ({ p, idx, r: rankProduct(p) }))
+    .sort((a, b) => (a.r !== b.r ? a.r - b.r : a.idx - b.idx))
+    .map((x) => x.p);
+}
+
 export default function Shop() {
   const [state, setState] = React.useState({ 
     loading: true, 
@@ -20,7 +66,7 @@ export default function Shop() {
           fetch('/wp-json/wc/store/v1/products/categories?per_page=40', { 
             credentials: 'same-origin' 
           }),
-          fetch('/wp-json/wc/store/v1/products?per_page=16&orderby=popularity', { 
+          fetch('/wp-json/wc/store/v1/products?per_page=100&orderby=menu_order&order=asc', { 
             credentials: 'same-origin' 
           }),
         ]);
@@ -39,7 +85,7 @@ export default function Shop() {
             loading: false, 
             error: null, 
             categories, 
-            products 
+            products: groupSortProducts(products) 
           });
         }
       } catch (e) {

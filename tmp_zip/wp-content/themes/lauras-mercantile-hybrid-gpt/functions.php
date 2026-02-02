@@ -100,7 +100,28 @@ function lm_enqueue_app_assets() {
   }
 }
 add_action('wp_enqueue_scripts', 'lm_enqueue_app_assets', 20);
+/**
+ * Homepage-only: editorial Outcomes transformer (post-React).
+ * Safe/fail-open: if the section isn't present, script does nothing.
+ */
+function lm_enqueue_home_outcomes_editorial() {
+  if (!is_front_page()) return;
 
+  $theme_path = get_stylesheet_directory();
+  $theme_uri  = get_stylesheet_directory_uri();
+  $js_path    = $theme_path . '/assets/js/home-outcomes-editorial.js';
+
+  if (file_exists($js_path)) {
+    wp_enqueue_script(
+      'lm-home-outcomes-editorial',
+      $theme_uri . '/assets/js/home-outcomes-editorial.js',
+      array(),
+      filemtime($js_path),
+      true
+    );
+  }
+}
+add_action('wp_enqueue_scripts', 'lm_enqueue_home_outcomes_editorial', 95);
 function lm_theme_setup() {
   add_theme_support('title-tag');
   add_theme_support('post-thumbnails');

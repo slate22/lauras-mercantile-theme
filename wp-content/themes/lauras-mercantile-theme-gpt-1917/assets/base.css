@@ -1,0 +1,6090 @@
+:root {
+  --lm-bg: #f5efe7;
+  --lm-ink: #2b2a28;
+  --lm-muted: #6b6760;
+  --lm-sage: #3c4b3d;
+  --lm-sage-2: #2f3c31;
+  --lm-card: #ffffffcc;
+  --lm-border: rgba(43, 42, 40, 0.12);
+  --lm-shadow: 0 10px 30px rgba(0, 0, 0, 0.08);
+  --lm-radius: 18px;
+  --lm-max: 1200px;
+  --lm-serif: ui-serif, Georgia, "Times New Roman", Times, serif;
+  --lm-sans: ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial, "Apple Color Emoji", "Segoe UI Emoji";
+}
+
+html,
+body {
+  height: 100%;
+}
+
+/* Prevent unexpected horizontal scroll from third‑party blocks/Woo templates */
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+html {
+  overflow-x: hidden;
+}
+
+body {
+  overflow-x: hidden;
+}
+
+body {
+  margin: 0;
+  color: var(--lm-ink);
+  background:
+    radial-gradient(1200px 900px at 20% 10%, rgba(255, 255, 255, 0.55), rgba(255, 255, 255, 0) 60%),
+    radial-gradient(900px 700px at 80% 20%, rgba(255, 255, 255, 0.35), rgba(255, 255, 255, 0) 60%),
+    linear-gradient(180deg, #f6f0e9, #efe6db);
+  font-family: var(--lm-sans);
+}
+
+/* Layout + typography defaults (WP blocks + Woo templates) */
+main {
+  display: block;
+}
+
+.lm-main {
+  max-width: var(--lm-max);
+  margin: 0 auto;
+  /* Add bottom padding so content never collides with footer */
+  padding: 28px 18px 40px;
+}
+
+/* Long-form content pages */
+.lm-main .lm-prose {
+  max-width: 880px;
+  margin: 0 auto 64px;
+}
+
+.lm-main .lm-prose .entry-content {
+  font-size: 1rem;
+  line-height: 1.7;
+}
+
+/* Page/post headers */
+.lm-entry-header {
+  margin: 0 0 18px;
+}
+
+.lm-entry-title {
+  font-family: var(--lm-serif);
+  font-size: clamp(34px, 4vw, 56px);
+  line-height: 1.05;
+  margin: 0;
+}
+
+.lm-prose h1,
+.lm-prose h2,
+.lm-prose h3 {
+  font-family: var(--lm-serif);
+  letter-spacing: 0.01em;
+  line-height: 1.05;
+  margin: 0 0 14px;
+}
+
+.lm-prose h1 {
+  font-size: clamp(34px, 4vw, 56px);
+}
+
+.lm-prose h2 {
+  font-size: clamp(26px, 3vw, 38px);
+  margin-top: 28px;
+}
+
+.lm-prose h3 {
+  font-size: 22px;
+  margin-top: 22px;
+}
+
+.lm-prose p,
+.lm-prose li {
+  font-size: 15px;
+  line-height: 1.7;
+  color: rgba(43, 42, 40, 0.92);
+}
+
+.lm-prose p {
+  margin: 0 0 14px;
+}
+
+.lm-prose>*:last-child {
+  margin-bottom: 0;
+}
+
+.lm-muted {
+  color: rgba(43, 42, 40, 0.70);
+}
+
+/* Archive/search lists */
+.lm-archive-item {
+  padding: 14px 0;
+  border-bottom: 1px solid rgba(43, 42, 40, 0.10);
+}
+
+.lm-archive-item:last-child {
+  border-bottom: 0;
+}
+
+.lm-archive-title {
+  font-family: var(--lm-serif);
+  font-size: 22px;
+  margin: 0 0 8px;
+}
+
+.lm-archive-title a {
+  text-decoration: none;
+}
+
+.lm-archive-title a:hover {
+  text-decoration: underline;
+}
+
+.lm-archive-excerpt {
+  color: rgba(43, 42, 40, 0.85);
+  line-height: 1.7;
+}
+
+.lm-archive-pagination {
+  margin-top: 18px;
+}
+
+/* Gutenberg block spacing and alignment */
+.lm-prose .entry-content>* {
+  max-width: 100%;
+}
+
+.lm-prose .entry-content>*+* {
+  margin-top: 16px;
+}
+
+.lm-prose .alignwide,
+.lm-prose .alignfull {
+  margin-left: 0;
+  margin-right: 0;
+  max-width: 100%;
+}
+
+.lm-prose .wp-block-columns {
+  gap: 18px;
+}
+
+.lm-prose .wp-block-separator {
+  border: 0;
+  border-top: 1px solid var(--lm-border);
+  margin: 22px 0;
+}
+
+.lm-prose blockquote {
+  margin: 18px 0;
+  padding: 14px 16px;
+  border-left: 4px solid rgba(60, 75, 61, 0.35);
+  background: rgba(246, 240, 233, 0.6);
+  border-radius: 12px;
+}
+
+.lm-prose ul,
+.lm-prose ol {
+  padding-left: 22px;
+}
+
+.lm-prose li {
+  margin: 6px 0;
+}
+
+.lm-prose hr {
+  border: 0;
+  border-top: 1px solid var(--lm-border);
+  margin: 22px 0;
+}
+
+
+
+/* Education / blog grid used by legacy [dt_blog_list] shortcode */
+.lm-blog-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+  gap: 24px;
+  margin: 18px 0 32px;
+}
+
+.lm-blog-card {
+  display: flex;
+  flex-direction: column;
+  background: rgba(255, 255, 255, 0.8);
+  border-radius: 18px;
+  box-shadow: var(--lm-shadow);
+  overflow: hidden;
+  border: 1px solid rgba(43, 42, 40, 0.06);
+}
+
+.lm-blog-card-thumb img {
+  display: block;
+  width: 100%;
+  height: auto;
+  object-fit: cover;
+}
+
+.lm-blog-card-body {
+  padding: 16px 18px 18px;
+}
+
+margin: 0 0 8px;
+}
+
+
+.lm-blog-card-title {
+  font-family: var(--lm-serif);
+  font-size: 15px;
+  line-height: 1.35;
+  margin: 0 0 6px;
+}
+
+.lm-blog-card-title a {
+  text-decoration: none;
+}
+
+.lm-blog-card-title a:hover {
+  text-decoration: underline;
+}
+
+.lm-blog-card-meta {
+  font-size: 13px;
+  color: var(--lm-muted);
+  margin: 0 0 10px;
+}
+
+.lm-blog-card-excerpt {
+  margin: 0 0 12px;
+}
+
+.lm-blog-card-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  font-weight: 600;
+  font-size: 14px;
+  color: var(--lm-sage);
+  text-decoration: none;
+}
+
+.lm-blog-card-link:hover {
+  color: var(--lm-sage-2);
+  text-decoration: underline;
+}
+
+
+/* Tables (Woo + WP) */
+.lm-prose table {
+  width: 100%;
+  border-collapse: separate;
+  border-spacing: 0;
+  overflow: hidden;
+  border: 1px solid var(--lm-border);
+  border-radius: 14px;
+  background: rgba(255, 255, 255, 0.55);
+}
+
+.lm-prose th,
+.lm-prose td {
+  padding: 12px 12px;
+  border-bottom: 1px solid rgba(43, 42, 40, 0.10);
+  vertical-align: top;
+}
+
+.lm-prose th {
+  font-weight: 700;
+  text-align: left;
+  background: rgba(246, 240, 233, 0.7);
+}
+
+.lm-prose tr:last-child td {
+  border-bottom: 0;
+}
+
+.lm-prose img {
+  max-width: 100%;
+  height: auto;
+  border-radius: 14px;
+}
+
+.lm-prose a {
+  color: var(--lm-sage);
+  text-decoration: underline;
+  text-decoration-thickness: 1px;
+  text-underline-offset: 3px;
+}
+
+.lm-prose a:hover {
+  color: var(--lm-sage-2);
+}
+
+/* WooCommerce + forms */
+.lm-prose input[type="text"],
+.lm-prose input[type="email"],
+.lm-prose input[type="tel"],
+.lm-prose input[type="password"],
+.lm-prose input[type="number"],
+.lm-prose select,
+.lm-prose textarea {
+  width: 100%;
+  max-width: 560px;
+  padding: 10px 12px;
+  border-radius: 12px;
+  border: 1px solid var(--lm-border);
+  background: rgba(255, 255, 255, 0.75);
+  color: var(--lm-ink);
+}
+
+.lm-prose button,
+.lm-prose .button,
+.lm-prose input[type="submit"] {
+  border: 0;
+  background: var(--lm-sage);
+  color: #fff;
+  padding: 12px 18px;
+  border-radius: 14px;
+  cursor: pointer;
+  font-weight: 600;
+}
+
+/* Woo notices look harsh by default */
+.lm-prose .woocommerce-message,
+.lm-prose .woocommerce-info,
+.lm-prose .woocommerce-error {
+  border: 1px solid rgba(60, 75, 61, 0.22);
+  border-radius: 14px;
+  background: rgba(246, 240, 233, 0.65);
+  color: rgba(43, 42, 40, 0.92);
+  padding: 14px 16px;
+  margin: 0 0 16px;
+}
+
+.lm-prose button:hover,
+.lm-prose .button:hover,
+.lm-prose input[type="submit"]:hover {
+  background: var(--lm-sage-2);
+}
+
+a {
+  color: inherit;
+  text-decoration: none;
+}
+
+a:hover {
+  text-decoration: underline;
+}
+
+.lm-topbar {
+  font-size: 12px;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  padding: 10px 16px;
+  text-align: center;
+  color: var(--lm-muted);
+}
+
+.lm-shell {
+  max-width: var(--lm-max);
+  margin: 0 auto;
+  padding: 0 18px;
+}
+
+.lm-header {
+  position: sticky;
+  top: 0;
+  z-index: 50;
+  background: rgba(246, 240, 233, 0.75);
+  backdrop-filter: blur(10px);
+  border-bottom: 1px solid var(--lm-border);
+}
+
+.lm-header-inner {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  padding: 14px 0;
+}
+
+.lm-brand {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  font-family: var(--lm-serif);
+  font-weight: 600;
+  letter-spacing: 0.02em;
+}
+
+.lm-brand-mark {
+  width: 34px;
+  height: 34px;
+  border-radius: 50%;
+  background: transparent;
+  box-shadow: none;
+}
+
+.lm-nav {
+  display: flex;
+  align-items: center;
+  gap: 20px;
+  font-size: 15px;
+}
+
+/* WP nav menu reset + dropdown */
+.lm-menu {
+  list-style: none;
+  display: flex;
+  align-items: center;
+  gap: 20px;
+  margin: 0;
+  padding: 0;
+}
+
+.lm-menu>li {
+  position: relative;
+}
+
+.lm-menu a {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 6px 4px;
+}
+
+.lm-menu .sub-menu {
+  list-style: none;
+  position: absolute;
+  left: 0;
+  top: 100%;
+  /* Avoid hover "dead zones" that cause dropdown flicker */
+  transform: translateY(0);
+  min-width: 240px;
+  max-width: calc(100vw - 36px);
+  margin: 0;
+  padding: 12px;
+  background: rgba(246, 240, 233, 0.98);
+  border: 1px solid var(--lm-border);
+  border-radius: 16px;
+  box-shadow: 0 18px 50px rgba(0, 0, 0, 0.14);
+  display: none;
+  z-index: 999;
+}
+
+
+/* Tablet & mobile dropdown containment */
+@media (max-width: 900px) {
+  .lm-menu {
+    gap: 14px;
+  }
+
+  .lm-menu .sub-menu {
+    left: 50%;
+    right: auto;
+    transform: translate(-50%, 0);
+    max-width: min(360px, 100vw - 32px);
+  }
+
+  .lm-menu>li:last-child>.sub-menu,
+  .lm-menu>li:nth-last-child(2)>.sub-menu {
+    left: 50%;
+    right: auto;
+  }
+}
+
+/* Keep dropdowns on-screen for right-edge items */
+.lm-menu>li:last-child>.sub-menu,
+.lm-menu>li:nth-last-child(2)>.sub-menu {
+  right: 0;
+  left: auto;
+}
+
+.lm-menu li:hover>.sub-menu,
+.lm-menu li:focus-within>.sub-menu {
+  display: block;
+}
+
+.lm-menu .sub-menu li {
+  margin: 0;
+  padding: 0;
+}
+
+.lm-menu .sub-menu a {
+  width: 100%;
+  padding: 10px 10px;
+  border-radius: 12px;
+}
+
+.lm-menu .sub-menu a:hover {
+  background: rgba(60, 75, 61, 0.10);
+  text-decoration: none;
+}
+
+.lm-nav a {
+  color: var(--lm-ink);
+  text-decoration: none;
+}
+
+.lm-nav a:hover {
+  text-decoration: underline;
+}
+
+.lm-actions {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+}
+
+.lm-icon-btn {
+  border: 0;
+  background: transparent;
+  padding: 8px;
+  border-radius: 12px;
+  cursor: pointer;
+}
+
+.lm-icon-btn:hover {
+  background: rgba(60, 75, 61, 0.08);
+}
+
+.lm-footer {
+  margin-top: 60px;
+  padding: 46px 0 56px;
+  border-top: 0;
+  background: linear-gradient(180deg, var(--lm-sage), var(--lm-sage-2));
+  color: rgba(255, 255, 255, 0.82);
+}
+
+.lm-footer-grid {
+  display: grid;
+  grid-template-columns: 1.5fr 2.5fr 1fr;
+  gap: 28px;
+  align-items: start;
+}
+
+.lm-footer-title {
+  font-family: var(--lm-serif);
+  font-size: 18px;
+  color: var(--lm-ink);
+  margin-bottom: 10px;
+}
+
+.lm-footer-text {
+  margin: 0 0 14px;
+  line-height: 1.6;
+}
+
+.lm-footer-small {
+  font-size: 13px;
+  margin-top: 14px;
+}
+
+.lm-footer-heading {
+  font-weight: 700;
+  color: rgba(255, 255, 255, 0.92);
+  margin-bottom: 12px;
+}
+
+.lm-footer-menu {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: grid;
+  gap: 10px;
+}
+
+.lm-footer-menu--cols {
+  grid-template-columns: repeat(3, 1fr);
+  column-gap: 24px;
+}
+
+@media (max-width: 500px) {
+  .lm-footer-menu--cols {
+    grid-template-columns: 1fr;
+  }
+}
+
+.lm-footer-menu a {
+  text-decoration: none;
+  font-size: 14px;
+}
+
+.lm-footer-menu a:hover {
+  text-decoration: underline;
+  color: #ffffff;
+}
+
+@media (max-width: 900px) {
+  .lm-footer-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+/* WooCommerce layout tweaks */
+.woocommerce .woocommerce-breadcrumb {
+  color: var(--lm-muted);
+}
+
+.woocommerce .woocommerce-message,
+.woocommerce .woocommerce-info,
+.woocommerce .woocommerce-error {
+  border-radius: 14px;
+  background: rgba(255, 255, 255, 0.7);
+  border: 1px solid var(--lm-border);
+}
+
+.woocommerce table.shop_table {
+  border-radius: 14px;
+  overflow: hidden;
+  border: 1px solid var(--lm-border);
+}
+
+.woocommerce table.shop_table th,
+.woocommerce table.shop_table td {
+  padding: 14px;
+  border-color: var(--lm-border);
+}
+
+.woocommerce a.button,
+.woocommerce button.button,
+.woocommerce input.button,
+.woocommerce #respond input#submit {
+  background: var(--lm-sage);
+  color: #fff;
+  border-radius: 14px;
+  padding: 12px 18px;
+  border: 0;
+  font-weight: 600;
+}
+
+.woocommerce a.button:hover,
+.woocommerce button.button:hover,
+.woocommerce input.button:hover,
+.woocommerce #respond input#submit:hover {
+  background: var(--lm-sage-2);
+  color: #fff;
+}
+
+.woocommerce .cart-collaterals .cart_totals,
+.woocommerce .woocommerce-checkout-review-order {
+  background: rgba(255, 255, 255, 0.6);
+  border: 1px solid var(--lm-border);
+  border-radius: 18px;
+  padding: 16px;
+  box-shadow: var(--lm-shadow);
+}
+
+
+
+/* Strong nav resets (some plugins/themes re-introduce list markers) */
+.lm-menu,
+.lm-menu ul,
+.lm-menu li {
+  list-style: none !important;
+}
+
+.lm-menu ul {
+  margin: 0;
+  padding: 0;
+}
+
+.lm-menu li::marker {
+  content: "" !important;
+}
+
+/* Mega menu layout for Shop + Questions */
+.lm-header,
+.lm-header-inner,
+.lm-nav,
+.lm-menu {
+  overflow: visible;
+}
+
+/*
+  Mega menu positioning: make the dropdown center within the nav row (not the <li>).
+  This prevents off-canvas overflow when the trigger sits near the viewport edge.
+*/
+.lm-menu {
+  position: relative;
+}
+
+.lm-menu>li.lm-mega {
+  position: static;
+}
+
+.lm-menu>li.lm-mega>.sub-menu {
+  width: min(980px, calc(100vw - 24px));
+  padding: 16px;
+  border-radius: 22px;
+  display: none;
+  gap: 10px;
+  /* Re-assert absolute positioning explicitly for mega menus */
+  position: absolute;
+  top: 100%;
+  left: 50%;
+  right: auto;
+  /* No translateY gap; keeps submenu reachable without flicker */
+  transform: translate(-50%, 0);
+  z-index: 999;
+}
+
+.lm-menu>li.lm-mega:hover>.sub-menu,
+.lm-menu>li.lm-mega:focus-within>.sub-menu {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+}
+
+.lm-menu>li.lm-mega>.sub-menu a {
+  padding: 12px 12px;
+  border-radius: 14px;
+  background: rgba(255, 255, 255, 0.55);
+}
+
+.lm-menu>li.lm-mega>.sub-menu a:hover {
+  background: rgba(60, 75, 61, 0.14);
+}
+
+@media (max-width: 900px) {
+
+  .lm-menu>li.lm-mega:hover>.sub-menu,
+  .lm-menu>li.lm-mega:focus-within>.sub-menu {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
+@media (max-width: 620px) {
+  .lm-menu {
+    gap: 12px;
+  }
+
+  .lm-menu>li.lm-mega:hover>.sub-menu,
+  .lm-menu>li.lm-mega:focus-within>.sub-menu {
+    grid-template-columns: 1fr;
+  }
+}
+
+
+/* WooCommerce styling ported from style.css */
+woocommerce-page,
+.woocommerce-page .woocommerce {
+  --color-primary: #2c3e23;
+  --color-accent: #d4a574;
+  --font-serif: 'Libre Baskerville', serif;
+  --font-sans: 'Montserrat', sans-serif;
+  font-family: var(--font-sans);
+  color: var(--color-primary);
+}
+
+.woocommerce-page h1,
+.woocommerce-page h2,
+.woocommerce-page h3 {
+  font-family: var(--font-serif);
+  color: var(--color-primary);
+}
+
+/* 2. Buttons */
+.woocommerce button.button.alt,
+.woocommerce a.button.alt,
+.woocommerce #respond input#submit.alt {
+  background-color: var(--color-primary) !important;
+  color: white !important;
+  border-radius: 4px !important;
+  text-transform: uppercase !important;
+  font-weight: 600 !important;
+  padding: 12px 24px !important;
+  border: none !important;
+}
+
+.woocommerce button.button.alt:hover,
+.woocommerce a.button.alt:hover {
+  background-color: #1a2515 !important;
+}
+
+/* 3. Product Grid */
+ul.products {
+  display: grid !important;
+  grid-template-columns: repeat(4, 1fr) !important;
+  gap: 30px !important;
+}
+
+ul.products li.product {
+  float: none !important;
+  width: 100% !important;
+  margin: 0 !important;
+  background: white;
+  border-radius: 8px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  border: 1px solid #eee;
+  padding-bottom: 20px;
+  display: flex !important;
+  flex-direction: column !important;
+}
+
+ul.products li.product:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+}
+
+ul.products li.product img {
+  margin: 0 auto 15px !important;
+  border-radius: 8px 8px 0 0;
+  width: 100% !important;
+  height: auto !important;
+  aspect-ratio: auto;
+  object-fit: contain;
+}
+
+ul.products li.product .woocommerce-loop-product__title {
+  padding: 0 15px !important;
+  font-family: var(--font-serif) !important;
+  font-size: 1.1em !important;
+  margin-bottom: 8px !important;
+}
+
+ul.products li.product .price {
+  padding: 0 15px !important;
+  color: var(--color-primary) !important;
+  font-weight: 700 !important;
+  margin-bottom: 15px !important;
+  margin-top: auto !important;
+  /* Push to bottom */
+}
+
+ul.products li.product .button {
+  margin: 0 15px !important;
+  text-align: center;
+}
+
+/* 4. Single Product Page */
+.single-product div.product {
+  display: grid !important;
+  grid-template-columns: 1fr 1fr !important;
+  gap: 50px !important;
+}
+
+.single-product .woocommerce-product-gallery {
+  width: 100% !important;
+  float: none !important;
+}
+
+.single-product .summary {
+  width: 100% !important;
+  float: none !important;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+.single-product .product_title {
+  font-size: 2.5rem !important;
+  margin-bottom: 1rem !important;
+}
+
+.single-product .price {
+  font-size: 1.5rem !important;
+  color: var(--color-accent) !important;
+}
+
+.single-product .cart {
+  display: flex !important;
+  gap: 10px !important;
+  margin-top: 2rem !important;
+}
+
+.quantity .qty {
+  height: 46px !important;
+  border: 1px solid #ddd !important;
+  border-radius: 4px !important;
+}
+
+/* 5. Checkout & Cart */
+.woocommerce-cart-form,
+.woocommerce-checkout {
+  background: white;
+  padding: 40px;
+  border-radius: 12px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+}
+
+.input-text {
+  padding: 12px !important;
+  border: 1px solid #ddd !important;
+  border-radius: 4px !important;
+}
+
+.input-text:focus {
+  border-color: var(--color-primary) !important;
+  outline: none !important;
+}
+
+/* 6. Notices */
+.woocommerce-message,
+.woocommerce-info,
+.woocommerce-error {
+  border-radius: 4px;
+  padding: 15px 15px 15px 50px !important;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+}
+
+.woocommerce-message {
+  border-top-color: var(--color-primary) !important;
+}
+
+.woocommerce-info {
+  border-top-color: var(--color-accent) !important;
+}
+
+/* 7. Responsive */
+@media (max-width: 768px) {
+  ul.products {
+    grid-template-columns: repeat(2, 1fr) !important;
+  }
+
+  .single-product div.product {
+    grid-template-columns: 1fr !important;
+  }
+}
+
+@media (max-width: 480px) {
+  ul.products {
+    grid-template-columns: 1fr !important;
+  }
+}
+
+/* WooCommerce layout + styling (ported from style.css) */
+woocommerce-page,
+.woocommerce-page .woocommerce {
+  --color-primary: #2c3e23;
+  --color-accent: #d4a574;
+  --font-serif: 'Libre Baskerville', serif;
+  --font-sans: 'Montserrat', sans-serif;
+  font-family: var(--font-sans);
+  color: var(--color-primary);
+}
+
+.woocommerce-page h1,
+.woocommerce-page h2,
+.woocommerce-page h3 {
+  font-family: var(--font-serif);
+  color: var(--color-primary);
+}
+
+/* Buttons */
+.woocommerce button.button.alt,
+.woocommerce a.button.alt,
+.woocommerce #respond input#submit.alt {
+  background-color: #2c3e23 !important;
+  color: white !important;
+  border-radius: 4px;
+  text-transform: uppercase !important;
+  font-weight: 600 !important;
+  padding: 12px 24px !important;
+  border: none !important;
+}
+
+.woocommerce button.button.alt:hover,
+.woocommerce a.button.alt:hover {
+  background-color: #1a2515 !important;
+}
+
+/* Product grid */
+ul.products {
+  display: grid !important;
+  grid-template-columns: repeat(4, 1fr) !important;
+  gap: 30px !important;
+  padding: 20px 0 !important;
+}
+
+@media (max-width: 1024px) {
+  ul.products {
+    grid-template-columns: repeat(3, 1fr) !important;
+  }
+}
+
+@media (max-width: 768px) {
+  ul.products {
+    grid-template-columns: repeat(2, 1fr) !important;
+  }
+}
+
+@media (max-width: 480px) {
+  ul.products {
+    grid-template-columns: 1fr !important;
+  }
+}
+
+ul.products li.product {
+  background: #fdfaf4;
+  border-radius: 8px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  border: 1px solid #eee;
+  padding-bottom: 20px;
+  display: flex !important;
+  flex-direction: column !important;
+}
+
+ul.products li.product:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+}
+
+ul.products li.product img {
+  margin: 0 auto 15px !important;
+  border-radius: 8px 8px 0 0;
+  width: 100% !important;
+  height: auto !important;
+  aspect-ratio: auto;
+  object-fit: contain;
+}
+
+ul.products li.product .woocommerce-loop-product__title {
+  font-family: 'Libre Baskerville', serif;
+  font-size: 1.1rem;
+  margin: 0 15px 5px;
+}
+
+ul.products li.product .price {
+  margin: 0 15px 10px;
+  font-weight: 600;
+}
+
+ul.products li.product .button {
+  margin: auto 15px 0 !important;
+  width: calc(100% - 30px) !important;
+  background-color: #2c3e23 !important;
+  color: white !important;
+  text-align: center !important;
+  padding: 12px !important;
+  border-radius: 4px !important;
+  font-weight: 600 !important;
+  font-size: 0.95rem !important;
+}
+
+/* Single product layout */
+.single-product div.product {
+  max-width: 1200px !important;
+  margin: 0 auto !important;
+  padding: 60px 20px !important;
+  display: grid !important;
+  grid-template-columns: minmax(0, 1.1fr) minmax(0, 1fr);
+  gap: 40px;
+  align-items: flex-start;
+}
+
+@media (max-width: 900px) {
+  .single-product div.product {
+    grid-template-columns: 1fr;
+  }
+}
+
+/* Left column: product images */
+.single-product div.product .woocommerce-product-gallery,
+.single-product div.product .images,
+.single-product .product-images {
+  width: 100% !important;
+  max-width: 480px !important;
+  margin: 0 auto !important;
+}
+
+/* Ensure product images scale nicely */
+.single-product div.product .woocommerce-product-gallery img,
+.single-product div.product .images img {
+  width: 100% !important;
+  height: auto !important;
+  object-fit: cover;
+  border-radius: 8px;
+}
+
+/* Right column: summary */
+.single-product .entry-summary {
+  width: 100% !important;
+}
+
+.single-product .entry-summary h1.product_title {
+  font-family: 'Libre Baskerville', serif;
+  font-size: 2rem;
+  margin-bottom: 10px;
+}
+
+.single-product .entry-summary .price {
+  font-size: 1.2rem;
+  font-weight: 600;
+  margin-bottom: 20px;
+}
+
+/* Hide stray page widgets on WooCommerce screens just in case */
+.woocommerce .widget_pages,
+.woocommerce .widget_nav_menu,
+.woocommerce .widget_meta {
+  display: none;
+}
+
+/* WooCommerce product grid */
+.woocommerce ul.products,
+ul.products {
+  display: grid !important;
+  grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)) !important;
+  gap: 30px !important;
+  padding: 24px 0 40px !important;
+  grid-auto-flow: row dense;
+}
+
+/* Responsive breakpoints */
+@media (max-width: 1024px) {
+
+  .woocommerce ul.products,
+  ul.products {
+    grid-template-columns: repeat(3, minmax(0, 1fr)) !important;
+  }
+}
+
+@media (max-width: 768px) {
+
+  .woocommerce ul.products,
+  ul.products {
+    grid-template-columns: repeat(2, minmax(0, 1fr)) !important;
+  }
+}
+
+@media (max-width: 500px) {
+
+  .woocommerce ul.products,
+  ul.products {
+    grid-template-columns: 1fr !important;
+  }
+}
+
+/* Product cards */
+.woocommerce ul.products li.product,
+ul.products li.product {
+  background: #fdfaf4 !important;
+  border-radius: 8px !important;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05) !important;
+  border: 1px solid #eee !important;
+  padding-bottom: 20px !important;
+  display: flex !important;
+  flex-direction: column !important;
+  overflow: hidden !important;
+  transition: transform 0.2s ease, box-shadow 0.2s ease !important;
+  float: none !important;
+  width: auto !important;
+  margin: 0 !important;
+}
+
+.woocommerce ul.products li.product:hover,
+ul.products li.product:hover {
+  transform: translateY(-3px) !important;
+  box-shadow: 0 10px 20px rgba(0, 0, 0, 0.12) !important;
+}
+
+.woocommerce ul.products li.product img,
+ul.products li.product img {
+  margin: 0 0 15px !important;
+  border-radius: 8px 8px 0 0 !important;
+  width: 100% !important;
+  height: auto !important;
+  aspect-ratio: 1 / 1 !important;
+  object-fit: cover !important;
+}
+
+/* Product title / price / buttons */
+.woocommerce ul.products li.product .woocommerce-loop-product__title,
+ul.products li.product .woocommerce-loop-product__title {
+  font-family: 'Libre Baskerville', serif !important;
+  font-size: 1.05rem !important;
+  margin: 0 15px 6px !important;
+  padding: 0 !important;
+}
+
+.woocommerce ul.products li.product .price,
+ul.products li.product .price {
+  margin: 0 15px 12px !important;
+  font-weight: 600 !important;
+  color: var(--color-primary) !important;
+}
+
+.woocommerce ul.products li.product .button,
+ul.products li.product .button {
+  margin: auto 15px 0 !important;
+  width: calc(100% - 30px) !important;
+  background-color: #2c3e23 !important;
+  color: #ffffff !important;
+  text-align: center !important;
+  padding: 12px !important;
+  border-radius: 4px !important;
+  font-weight: 600 !important;
+  font-size: 0.95rem !important;
+}
+
+/* Single product layout */
+.single-product div.product {
+  max-width: 1200px !important;
+  margin: 0 auto !important;
+  padding: 60px 20px !important;
+  display: grid !important;
+  grid-template-columns: minmax(0, 1.1fr) minmax(0, 1fr) !important;
+  gap: 40px !important;
+  align-items: flex-start !important;
+}
+
+@media (max-width: 900px) {
+  .single-product div.product {
+    grid-template-columns: 1fr !important;
+  }
+}
+
+/* Left column: images */
+.single-product div.product .woocommerce-product-gallery,
+.single-product div.product .images,
+.single-product .product-images {
+  width: 100% !important;
+  max-width: 480px !important;
+  margin: 0 auto !important;
+  float: none !important;
+}
+
+.single-product div.product .woocommerce-product-gallery img,
+.single-product div.product .images img {
+  width: 100% !important;
+  height: auto !important;
+  object-fit: cover;
+  border-radius: 8px;
+}
+
+/* Right column: summary */
+.single-product .entry-summary {
+  width: 100% !important;
+  float: none !important;
+}
+
+.single-product .entry-summary h1.product_title {
+  font-family: 'Libre Baskerville', serif;
+  font-size: 2rem;
+  margin-bottom: 10px;
+}
+
+.single-product .entry-summary .price {
+  font-size: 1.2rem;
+  font-weight: 600;
+  margin-bottom: 20px;
+  color: var(--color-accent);
+}
+
+.single-product .entry-summary .single_add_to_cart_button {
+  background-color: #2c3e23 !important;
+  color: white !important;
+  padding: 12px 24px !important;
+  border-radius: 4px !important;
+  text-transform: uppercase !important;
+  font-weight: 600 !important;
+}
+
+/* Cross-sells / upsells / related products */
+.woocommerce .cross-sells,
+.woocommerce .upsells,
+.woocommerce .related {
+  margin-top: 40px;
+}
+
+.woocommerce .cross-sells h2,
+.woocommerce .upsells h2,
+.woocommerce .related h2 {
+  font-family: 'Libre Baskerville', serif;
+  font-size: 1.6rem;
+  margin-bottom: 20px;
+}
+
+.woocommerce .cross-sells ul.products,
+.woocommerce .upsells ul.products,
+.woocommerce .related ul.products {
+  display: grid !important;
+  grid-template-columns: repeat(3, minmax(0, 1fr)) !important;
+  gap: 24px !important;
+}
+
+@media (max-width: 900px) {
+
+  .woocommerce .cross-sells ul.products,
+  .woocommerce .upsells ul.products,
+  .woocommerce .related ul.products {
+    grid-template-columns: repeat(2, minmax(0, 1fr)) !important;
+  }
+}
+
+@media (max-width: 600px) {
+
+  .woocommerce .cross-sells ul.products,
+  .woocommerce .upsells ul.products,
+  .woocommerce .related ul.products {
+    grid-template-columns: 1fr !important;
+  }
+}
+
+
+
+/* Ensure related/cross-sells/upsells stay responsive on mobile (override Woo floats/widths) */
+.woocommerce .cross-sells ul.products,
+.woocommerce .upsells ul.products,
+.woocommerce .related ul.products {
+  margin: 0 !important;
+  padding: 0 !important;
+  list-style: none !important;
+}
+
+.woocommerce .cross-sells ul.products li.product,
+.woocommerce .upsells ul.products li.product,
+.woocommerce .related ul.products li.product {
+  width: auto !important;
+  float: none !important;
+  margin: 0 !important;
+  max-width: 100% !important;
+}
+
+@media (max-width: 480px) {
+
+  .woocommerce .cross-sells ul.products,
+  .woocommerce .upsells ul.products,
+  .woocommerce .related ul.products {
+    gap: 16px !important;
+  }
+}
+
+.woocommerce .cross-sells ul.products li.product,
+.woocommerce .upsells ul.products li.product,
+.woocommerce .related ul.products li.product {
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.06);
+  border-radius: 10px;
+}
+
+/* Slightly vertical images for recommendations */
+.woocommerce .cross-sells ul.products li.product img,
+.woocommerce .upsells ul.products li.product img,
+.woocommerce .related ul.products li.product img {
+  aspect-ratio: auto !important;
+  object-fit: contain;
+}
+
+/* Related/cross-sells cards: avoid excessive vertical height on mobile */
+.woocommerce .cross-sells ul.products,
+.woocommerce .upsells ul.products,
+.woocommerce .related ul.products {
+  padding: 0 !important;
+  max-width: var(--lm-max) !important;
+}
+
+/* Clamp titles to keep cards compact and aligned */
+.woocommerce .cross-sells ul.products li.product .woocommerce-loop-product__title,
+.woocommerce .upsells ul.products li.product .woocommerce-loop-product__title,
+.woocommerce .related ul.products li.product .woocommerce-loop-product__title {
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 2;
+  overflow: hidden;
+}
+
+/* Give recommendation images a consistent box so tall images don't blow up card height */
+.woocommerce .cross-sells ul.products li.product img,
+.woocommerce .upsells ul.products li.product img,
+.woocommerce .related ul.products li.product img {
+  width: 100% !important;
+  max-width: 240px;
+  max-height: 190px;
+  height: auto !important;
+  aspect-ratio: 1 / 1;
+  object-fit: contain;
+}
+
+@media (max-width: 600px) {
+
+  .woocommerce .cross-sells,
+  .woocommerce .upsells,
+  .woocommerce .related {
+    margin-top: 28px;
+  }
+
+  .woocommerce .cross-sells ul.products,
+  .woocommerce .upsells ul.products,
+  .woocommerce .related ul.products {
+    gap: 16px !important;
+  }
+
+  .woocommerce .cross-sells ul.products li.product,
+  .woocommerce .upsells ul.products li.product,
+  .woocommerce .related ul.products li.product {
+    padding: 16px 14px 18px !important;
+  }
+}
+
+/* --- High-End Footer Redesign --- */
+.lm-footer {
+  background: #0f1c11;
+  /* Deep forest green */
+  color: #fdfaf4;
+  margin-top: 100px;
+  font-family: var(--lm-sans, sans-serif);
+  position: relative;
+  overflow: hidden;
+}
+
+/* Newsletter Band */
+.lm-footer-newsletter {
+  background: #142817;
+  /* Slightly lighter forest */
+  padding: 80px 0;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+}
+
+.lm-footer-newsletter-inner {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 40px;
+}
+
+.lm-footer-newsletter-copy h2 {
+  font-family: var(--lm-serif, serif);
+  font-size: 2.8rem;
+  line-height: 1.1;
+  margin: 0 0 12px;
+  color: #fff;
+  letter-spacing: -0.02em;
+}
+
+.lm-footer-newsletter-copy p {
+  font-size: 1.1rem;
+  color: rgba(255, 255, 255, 0.7);
+  margin: 0;
+  max-width: 500px;
+}
+
+.lm-footer-newsletter-form {
+  display: flex;
+  gap: 0;
+  background: rgba(255, 255, 255, 0.03);
+  border: 1px solid rgba(255, 255, 255, 0.15);
+  border-radius: 8px;
+  padding: 6px;
+  transition: border-color 0.3s ease, box-shadow 0.3s ease;
+  width: 100%;
+  max-width: 460px;
+}
+
+.lm-footer-newsletter-form:focus-within {
+  border-color: #d4a574;
+  box-shadow: 0 0 0 4px rgba(212, 165, 116, 0.15);
+}
+
+.lm-footer-newsletter-form input[type="email"] {
+  flex: 1;
+  background: transparent;
+  border: none;
+  color: #fff;
+  padding: 12px 18px;
+  font-size: 1rem;
+  outline: none;
+  width: 100%;
+}
+
+.lm-footer-newsletter-form input::placeholder {
+  color: rgba(255, 255, 255, 0.4);
+}
+
+.lm-footer-newsletter-form .lm-btn--accent {
+  background: #d4a574;
+  color: #102414;
+  border: none;
+  padding: 12px 28px;
+  border-radius: 6px;
+  font-weight: 700;
+  font-size: 0.95rem;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  white-space: nowrap;
+}
+
+.lm-footer-newsletter-form .lm-btn--accent:hover {
+  background: #e5b98a;
+  transform: translateY(-1px);
+}
+
+/* Main Footer Grid */
+.lm-footer-main {
+  padding: 100px 0 80px;
+}
+
+.lm-footer-grid {
+  display: grid;
+  grid-template-columns: 2fr 1fr 1fr 1.2fr;
+  gap: 60px;
+}
+
+.lm-footer-brand-name {
+  font-family: var(--lm-serif, serif);
+  font-size: 1.8rem;
+  color: #d4a574;
+  margin: 0 0 20px;
+}
+
+.lm-footer-bio {
+  font-size: 1rem;
+  line-height: 1.7;
+  color: rgba(255, 255, 255, 0.65);
+  margin-bottom: 28px;
+  max-width: 320px;
+}
+
+.lm-footer-social {
+  display: flex;
+  gap: 16px;
+}
+
+.lm-social-link {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 42px;
+  height: 42px;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.05);
+  color: rgba(255, 255, 255, 0.8);
+  transition: all 0.3s ease;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.lm-social-link svg {
+  width: 20px;
+  height: 20px;
+}
+
+.lm-social-link:hover {
+  background: #d4a574;
+  color: #102414;
+  transform: translateY(-3px);
+  border-color: #d4a574;
+}
+
+.lm-footer-heading {
+  font-family: var(--lm-sans, sans-serif);
+  font-size: 0.85rem;
+  font-weight: 800;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  color: #fff;
+  margin-bottom: 24px;
+  display: block;
+}
+
+.lm-footer-menu {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.lm-footer-menu li {
+  margin-bottom: 12px;
+}
+
+.lm-footer-menu a {
+  color: rgba(255, 255, 255, 0.6);
+  text-decoration: none;
+  font-size: 1rem;
+  transition: color 0.2s ease;
+}
+
+.lm-footer-menu a:hover {
+  color: #d4a574;
+  text-decoration: none;
+}
+
+.lm-footer-contact p {
+  color: rgba(255, 255, 255, 0.65);
+  line-height: 1.7;
+  margin-bottom: 20px;
+  font-size: 1rem;
+}
+
+.lm-footer-contact-links a {
+  display: block;
+  color: #d4a574;
+  font-weight: 600;
+  margin-top: 10px;
+}
+
+.lm-footer-contact-links a:hover {
+  text-decoration: underline;
+}
+
+/* Bottom Bar */
+.lm-footer-bottom {
+  padding: 32px 0;
+  border-top: 1px solid rgba(255, 255, 255, 0.05);
+  background: rgba(0, 0, 0, 0.2);
+}
+
+.lm-footer-bottom-inner {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-size: 0.9rem;
+  color: rgba(255, 255, 255, 0.4);
+}
+
+.lm-footer-meta-menu {
+  display: flex;
+  gap: 32px;
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.lm-footer-meta-menu a {
+  color: rgba(255, 255, 255, 0.4);
+  transition: color 0.2s ease;
+}
+
+.lm-footer-meta-menu a:hover {
+  color: rgba(255, 255, 255, 0.8);
+}
+
+/* Responsive */
+@media (max-width: 1100px) {
+  .lm-footer-grid {
+    gap: 40px;
+  }
+}
+
+@media (max-width: 991px) {
+  .lm-footer-newsletter-inner {
+    flex-direction: column;
+    text-align: center;
+  }
+
+  .lm-footer-newsletter-copy p {
+    margin: 0 auto;
+  }
+
+  .lm-footer-grid {
+    grid-template-columns: 1fr 1fr;
+    gap: 50px;
+  }
+}
+
+@media (max-width: 640px) {
+  .lm-footer-newsletter-copy h2 {
+    font-size: 2.2rem;
+  }
+
+  .lm-footer-grid {
+    grid-template-columns: 1fr;
+    text-align: center;
+    gap: 40px;
+  }
+
+  .lm-footer-brand-name,
+  .lm-footer-bio {
+    margin-left: auto;
+    margin-right: auto;
+  }
+
+  .lm-footer-social {
+    justify-content: center;
+  }
+
+  .lm-footer-bottom-inner {
+    flex-direction: column;
+    gap: 20px;
+    text-align: center;
+  }
+
+  .lm-footer-meta-menu {
+    justify-content: center;
+    gap: 20px;
+  }
+}
+
+/* Founder / "Meet Laura" Section Layout */
+.lm-founder {
+  margin: 60px 0;
+  padding: 0 18px;
+}
+
+.lm-founder-card {
+  max-width: 1100px;
+  margin: 0 auto;
+  background: var(--lm-card);
+  border-radius: var(--lm-radius);
+  border: 1px solid var(--lm-border);
+  overflow: hidden;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  align-items: center;
+}
+
+.lm-founder-media {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  min-height: 400px;
+  /* Ensure height if empty */
+}
+
+.lm-founder-media img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+
+.lm-founder-body {
+  padding: 40px;
+}
+
+.lm-founder-eyebrow {
+  font-weight: 700;
+  text-transform: uppercase;
+  color: var(--lm-sage);
+  font-size: 13px;
+  letter-spacing: 0.08em;
+  margin-bottom: 20px;
+}
+
+.lm-founder-title {
+  font-family: var(--lm-serif);
+  font-size: 32px;
+  margin: 0 0 20px;
+  line-height: 1.15;
+}
+
+.lm-founder-text {
+  font-size: 17px;
+  line-height: 1.6;
+  margin-bottom: 30px;
+  color: rgba(43, 42, 40, 0.85);
+}
+
+.lm-founder-actions {
+  display: flex;
+  gap: 16px;
+  flex-wrap: wrap;
+}
+
+@media (max-width: 900px) {
+  .lm-founder-card {
+    grid-template-columns: 1fr;
+    text-align: center;
+  }
+
+  .lm-founder-media {
+    min-height: 300px;
+    height: 300px;
+    /* Constrain height on mobile */
+  }
+
+  .lm-founder-actions {
+    justify-content: center;
+  }
+}
+
+/* --- Laura Shop Grid v2: airy cards, nothing against edges --- */
+.woocommerce ul.products,
+ul.products {
+  display: grid !important;
+  grid-template-columns: repeat(3, minmax(0, 1fr)) !important;
+  gap: 40px !important;
+  padding: 32px 32px 56px !important;
+  max-width: 1240px;
+  margin: 0 auto !important;
+  grid-auto-flow: row !important;
+}
+
+.woocommerce ul.products li.product,
+ul.products li.product {
+  background: #fdfaf4 !important;
+  border-radius: 18px !important;
+  border: 1px solid rgba(0, 0, 0, 0.06) !important;
+  box-shadow: 0 18px 38px rgba(15, 28, 17, 0.08) !important;
+  padding: 22px 20px 26px !important;
+  display: flex !important;
+  flex-direction: column !important;
+  overflow: hidden !important;
+  transition: transform 0.2s ease, box-shadow 0.2s ease !important;
+}
+
+.woocommerce ul.products li.product:hover,
+ul.products li.product:hover {
+  transform: translateY(-6px);
+  box-shadow: 0 22px 46px rgba(15, 28, 17, 0.14) !important;
+}
+
+ul.products li.product img {
+  margin: 8px auto 18px !important;
+  border-radius: 12px !important;
+  width: 100% !important;
+  max-width: 260px;
+  height: auto !important;
+  aspect-ratio: auto;
+  object-fit: contain;
+}
+
+.woocommerce ul.products li.product .woocommerce-loop-product__title,
+ul.products li.product .woocommerce-loop-product__title {
+  padding: 0 4px !important;
+  text-align: left;
+}
+
+.woocommerce ul.products li.product .price,
+ul.products li.product .price {
+  padding: 0 4px 4px !important;
+}
+
+.woocommerce ul.products li.product .button,
+ul.products li.product .button {
+  margin: 8px 4px 0 !important;
+}
+
+@media (max-width: 640px) {
+
+  .woocommerce ul.products,
+  ul.products {
+    padding: 24px 18px 42px !important;
+    gap: 28px !important;
+  }
+}
+
+
+/* Align price and CTA nicely within new grid */
+.woocommerce ul.products li.product .price,
+ul.products li.product .price {
+  padding: 0 4px 4px !important;
+  color: var(--color-primary) !important;
+  font-weight: 700 !important;
+  margin-top: 6px !important;
+  margin-bottom: 8px !important;
+}
+
+.woocommerce ul.products li.product .button,
+ul.products li.product .button {
+  margin: auto 4px 0 !important;
+  align-self: stretch;
+}
+
+
+/* Give shop breadcrumbs and titles breathing room */
+.woocommerce .woocommerce-breadcrumb,
+.woocommerce-page .woocommerce-breadcrumb,
+.woocommerce .woocommerce-products-header,
+.woocommerce-page .woocommerce-products-header {
+  max-width: 1240px;
+  margin: 0 auto 18px !important;
+  padding: 0 32px !important;
+}
+
+
+/* Make logo more legible on desktop */
+.lm-brand img {
+  height: 96px;
+  width: auto;
+  display: block;
+}
+
+@media (max-width: 640px) {
+  .lm-brand img {
+    height: 72px;
+  }
+}
+
+
+/* === Shop header refinement === */
+.woocommerce-shop .woocommerce-breadcrumb,
+.post-type-archive-product .woocommerce-breadcrumb {
+  font-size: 0.9rem;
+  color: var(--lm-muted);
+}
+
+.woocommerce-shop .woocommerce-breadcrumb,
+.post-type-archive-product .woocommerce-breadcrumb,
+.woocommerce-shop .woocommerce-products-header,
+.post-type-archive-product .woocommerce-products-header {
+  max-width: var(--lm-max);
+  margin: 0 auto 20px !important;
+  padding: 0 32px !important;
+}
+
+/* === Shop grid v3: 3-up, centered, no missing first product === */
+.woocommerce-shop ul.products,
+.post-type-archive-product ul.products {
+  display: grid !important;
+  grid-template-columns: repeat(3, minmax(0, 1fr)) !important;
+  gap: 40px !important;
+  padding: 32px 32px 56px !important;
+  max-width: 1240px;
+  margin: 0 auto !important;
+}
+
+.woocommerce-shop ul.products li.product,
+.post-type-archive-product ul.products li.product {
+  grid-column: auto !important;
+}
+
+/* Give product images extra breathing room */
+.woocommerce-shop ul.products li.product img,
+.post-type-archive-product ul.products li.product img {
+  margin: 8px auto 18px !important;
+  border-radius: 12px !important;
+  width: 100% !important;
+  max-width: 260px;
+  max-height: 420px;
+  height: auto !important;
+  aspect-ratio: auto;
+  object-fit: contain;
+}
+
+/* Align price + CTA in cards */
+.woocommerce-shop ul.products li.product .price,
+.post-type-archive-product ul.products li.product .price {
+  padding: 0 4px 6px !important;
+  font-weight: 700 !important;
+  margin-top: 6px !important;
+  margin-bottom: 8px !important;
+}
+
+.woocommerce-shop ul.products li.product .button,
+.post-type-archive-product ul.products li.product .button {
+  margin: auto 4px 0 !important;
+  align-self: stretch;
+}
+
+/* === Related / upsell / cross-sell layout === */
+.single-product .related ul.products,
+.single-product .upsells ul.products,
+.single-product .cross-sells ul.products {
+  list-style: none !important;
+  margin: 0 auto !important;
+  padding: 8px 0 12px !important;
+  max-width: 1120px;
+  display: grid !important;
+  grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)) !important;
+  gap: 28px !important;
+  align-items: stretch !important;
+  justify-items: stretch !important;
+}
+
+
+.single-product .related ul.products li.product,
+.single-product .upsells ul.products li.product,
+.single-product .cross-sells ul.products li.product {
+  background: var(--lm-bg-soft);
+  border-radius: var(--lm-radius-card);
+  border: 1px solid var(--lm-border-soft);
+  box-shadow: var(--lm-shadow-soft);
+  padding: 16px 14px 18px;
+  display: flex !important;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  width: 100% !important;
+  float: none !important;
+  height: 100%;
+}
+
+/* === Mobile overflow guard for product recommendation grids ===
+   Prevents horizontal scrolling caused by long titles/links inside CSS grid.
+   Applies to related/upsells/cross-sells and general product grids. */
+body.woocommerce,
+body.woocommerce-page {
+  overflow-x: hidden;
+}
+
+.woocommerce ul.products,
+.woocommerce ul.products li.product {
+  min-width: 0;
+  max-width: 100%;
+}
+
+.woocommerce ul.products li.product a,
+.woocommerce ul.products li.product .woocommerce-loop-product__title {
+  min-width: 0;
+}
+
+.woocommerce ul.products li.product .woocommerce-loop-product__title {
+  white-space: normal;
+  overflow-wrap: anywhere;
+  word-break: break-word;
+}
+
+
+/* === Home content line + duplicate card tweaks === */
+.home .lm-content .wp-content {
+  border: none;
+  box-shadow: none;
+}
+
+.home .lm-section-divider,
+.home .entry-content>hr {
+  border: 0;
+  height: 0;
+}
+
+/* === Checkout: sleek card-based layout === */
+.woocommerce-checkout .col2-set,
+.woocommerce-checkout #customer_details {
+  max-width: 760px;
+  margin: 0 auto 32px !important;
+}
+
+.woocommerce-checkout #customer_details .col-1,
+.woocommerce-checkout #customer_details .col-2 {
+  background: #fdfaf4;
+  border-radius: 18px;
+  border: 1px solid rgba(0, 0, 0, 0.06);
+  box-shadow: 0 16px 40px rgba(15, 28, 17, 0.12);
+  padding: 24px 22px;
+}
+
+.woocommerce-checkout #order_review {
+  background: #111b12;
+  color: #fdfaf4;
+  border-radius: 20px;
+  padding: 24px 22px 26px;
+  border: none;
+  box-shadow: 0 22px 60px rgba(0, 0, 0, 0.45);
+}
+
+.woocommerce-checkout #order_review table,
+.woocommerce-checkout #order_review th,
+.woocommerce-checkout #order_review td {
+  border: none;
+}
+
+.woocommerce-checkout #order_review .shop_table {
+  width: 100%;
+}
+
+.woocommerce-checkout #order_review .order-total strong {
+  font-size: 1.2rem;
+}
+
+.woocommerce-checkout #payment {
+  background: transparent;
+  border: none;
+  padding: 18px 0 0;
+}
+
+.woocommerce-checkout #payment div.payment_box {
+  background: rgba(255, 255, 255, 0.08);
+  border-radius: 12px;
+}
+
+/* Checkout primary button */
+.woocommerce-checkout .place-order .button {
+  width: 100%;
+  border-radius: 999px;
+  padding: 14px 20px !important;
+  font-size: 1rem !important;
+  font-weight: 700 !important;
+}
+
+/* Stack layout on narrow screens */
+@media (min-width: 980px) {
+  .woocommerce-checkout form.checkout {
+    display: grid;
+    grid-template-columns: minmax(0, 1.2fr) minmax(0, 0.9fr);
+    gap: 32px;
+    align-items: flex-start;
+  }
+
+  .woocommerce-checkout #customer_details {
+    max-width: none;
+    margin: 0 !important;
+  }
+}
+
+
+
+/* === Shop grid: ensure no "hero" first product offset === */
+.woocommerce-shop ul.products li.product.first,
+.post-type-archive-product ul.products li.product.first,
+.woocommerce-shop ul.products li.product:nth-child(1),
+.post-type-archive-product ul.products li.product:nth-child(1) {
+  grid-column: auto !important;
+  margin-left: 0 !important;
+}
+
+.woocommerce-shop ul.products::before,
+.post-type-archive-product ul.products::before {
+  content: none !important;
+}
+
+
+/* === Product thumbnails (stable, no odd colored bands) ===
+   The shop and landing grids use CSS Grid + flexible cards.
+   Avoid forcing tall min-heights / clip-path crops on <img>, which can create
+   large empty blocks and odd background artifacts with transparent PNGs. */
+.woocommerce ul.products li.product img,
+ul.products li.product img {
+  width: 100% !important;
+  height: auto !important;
+  display: block !important;
+  margin: 0 0 14px !important;
+  aspect-ratio: 1 / 1 !important;
+  object-fit: contain !important;
+  padding: 14px !important;
+  background: #ffffff !important;
+  border-radius: 12px !important;
+  max-height: none !important;
+  min-height: 0 !important;
+  clip-path: none !important;
+}
+
+
+/* === Single product detail: elevated layout === */
+.single-product .site-main {
+  max-width: 1120px;
+  margin: 0 auto;
+  padding: 40px 24px 80px;
+}
+
+.single-product div.product {
+  display: grid;
+  grid-template-columns: minmax(0, 0.95fr) minmax(0, 1.05fr);
+  gap: 40px;
+  align-items: flex-start;
+}
+
+@media (max-width: 900px) {
+  .single-product div.product {
+    grid-template-columns: 1fr;
+  }
+}
+
+.single-product div.product .woocommerce-product-gallery {
+  background: #fdfaf4;
+  border-radius: 22px;
+  border: 1px solid rgba(0, 0, 0, 0.06);
+  box-shadow: 0 18px 36px rgba(15, 28, 17, 0.10);
+  padding: 22px 18px 26px;
+}
+
+.single-product div.product .woocommerce-product-gallery__wrapper {
+  margin: 0 !important;
+}
+
+.single-product div.product .woocommerce-product-gallery img {
+  width: 100%;
+  height: auto;
+  object-fit: contain;
+  clip-path: inset(0 6% 0 6%);
+}
+
+.single-product div.product .summary.entry-summary {
+  padding: 10px 0;
+}
+
+.single-product div.product .product_title {
+  font-size: 2.1rem;
+  line-height: 1.15;
+  margin-bottom: 10px;
+}
+
+.single-product div.product .price {
+  font-size: 1.4rem;
+  font-weight: 700;
+  color: var(--lm-primary, #264226);
+  margin-bottom: 12px;
+}
+
+.single-product div.product .woocommerce-product-details__short-description {
+  font-size: 0.98rem;
+  line-height: 1.7;
+  color: #444;
+  margin-bottom: 18px;
+}
+
+.single-product div.product form.cart {
+  margin-bottom: 24px;
+  padding: 14px 16px;
+  background: #f6efe4;
+  border-radius: 16px;
+  border: 1px solid rgba(0, 0, 0, 0.05);
+}
+
+.single-product div.product form.cart .quantity input.qty {
+  max-width: 80px;
+}
+
+/* JS-enhanced quantity stepper (more usable on mobile than native spinners) */
+.single-product div.product form.cart .quantity {
+  display: inline-flex;
+  align-items: center;
+}
+
+.lm-qty-wrap {
+  display: inline-flex;
+  align-items: center;
+  background: #fff;
+  border: 1px solid rgba(0, 0, 0, 0.12);
+  border-radius: 12px;
+  overflow: hidden;
+  height: 42px;
+}
+
+.lm-qty-btn {
+  width: 42px;
+  height: 42px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  border: 0;
+  background: transparent;
+  font-size: 20px;
+  line-height: 1;
+  color: #2b2b2b;
+  cursor: pointer;
+}
+
+.lm-qty-btn:active {
+  transform: translateY(1px);
+}
+
+.lm-qty-wrap input.qty {
+  width: 52px;
+  max-width: 52px;
+  height: 42px;
+  border: 0 !important;
+  border-left: 1px solid rgba(0, 0, 0, 0.08) !important;
+  border-right: 1px solid rgba(0, 0, 0, 0.08) !important;
+  border-radius: 0 !important;
+  text-align: center;
+  padding: 0 !important;
+  font-weight: 700;
+  -moz-appearance: textfield;
+}
+
+.lm-qty-wrap input.qty::-webkit-outer-spin-button,
+.lm-qty-wrap input.qty::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
+@media (max-width: 480px) {
+  .lm-qty-wrap {
+    height: 44px;
+  }
+
+  .lm-qty-btn {
+    width: 44px;
+    height: 44px;
+  }
+
+  .lm-qty-wrap input.qty {
+    height: 44px;
+  }
+}
+
+.single-product div.product .single_add_to_cart_button {
+  border-radius: 999px !important;
+  padding: 12px 26px !important;
+  font-weight: 700 !important;
+}
+
+.single-product .product_meta {
+  font-size: 0.86rem;
+  color: #666;
+}
+
+.single-product .woocommerce-tabs {
+  margin-top: 40px;
+}
+
+.single-product .woocommerce-tabs ul.tabs {
+  border-bottom: 1px solid rgba(0, 0, 0, 0.08);
+}
+
+.single-product .woocommerce-tabs ul.tabs li a {
+  font-weight: 600;
+}
+
+.single-product .woocommerce-tabs .panel {
+  padding: 18px 0 0;
+  font-size: 0.95rem;
+  line-height: 1.7;
+}
+
+/* === Single product: related / you may also like redesign === */
+.single-product .related,
+.single-product .upsells,
+.single-product .cross-sells {
+  max-width: 1120px;
+  margin: 60px auto 10px;
+  padding: 0 24px 10px;
+}
+
+.single-product .related>h2,
+.single-product .upsells>h2,
+.single-product .cross-sells>h2 {
+  font-size: 1.55rem;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--lm-muted);
+  margin-bottom: 20px;
+}
+
+.single-product .related ul.products,
+.single-product .upsells ul.products,
+.single-product .cross-sells ul.products {
+  list-style: none !important;
+  margin: 0 auto !important;
+  padding: 8px 0 12px !important;
+  max-width: 1120px;
+  display: grid !important;
+  grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)) !important;
+  gap: 28px !important;
+  align-items: stretch !important;
+  justify-items: stretch !important;
+}
+
+
+.single-product .related ul.products li.product,
+.single-product .upsells ul.products li.product,
+.single-product .cross-sells ul.products li.product {
+  background: var(--lm-bg-soft);
+  border-radius: var(--lm-radius-card);
+  border: 1px solid var(--lm-border-soft);
+  box-shadow: var(--lm-shadow-soft);
+  padding: 16px 14px 18px;
+  display: flex !important;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  width: 100% !important;
+  float: none !important;
+  height: 100%;
+}
+
+
+.single-product .related ul.products li.product a.woocommerce-LoopProduct-link,
+.single-product .upsells ul.products li.product a.woocommerce-LoopProduct-link,
+.single-product .cross-sells ul.products li.product a.woocommerce-LoopProduct-link {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+}
+
+.single-product .related ul.products li.product img,
+.single-product .upsells ul.products li.product img,
+.single-product .cross-sells ul.products li.product img {
+  width: auto !important;
+  max-width: 220px;
+  max-height: 260px;
+  height: auto !important;
+  object-fit: contain !important;
+  background: transparent !important;
+  border: none !important;
+  box-shadow: none !important;
+  clip-path: inset(0 6% 0 6%);
+  margin: 0 auto 14px;
+}
+
+
+.single-product .related ul.products li.product h2,
+.single-product .upsells ul.products li.product h2,
+.single-product .cross-sells ul.products li.product h2 {
+  font-size: 0.98rem;
+  line-height: 1.4;
+  margin-bottom: 6px;
+}
+
+.single-product .related ul.products li.product .price,
+.single-product .upsells ul.products li.product .price,
+.single-product .cross-sells ul.products li.product .price {
+  font-weight: 700;
+  margin-bottom: 10px;
+}
+
+.single-product .related ul.products li.product .button,
+.single-product .upsells ul.products li.product .button,
+.single-product .cross-sells ul.products li.product .button {
+  margin-top: auto;
+  width: 100%;
+}
+
+/* Stack related items on narrow screens */
+@media (max-width: 640px) {
+
+  .single-product .related ul.products,
+  .single-product .upsells ul.products,
+  .single-product .cross-sells ul.products {
+    grid-template-columns: 1fr !important;
+  }
+}
+
+/* Links */
+a {
+  color: var(--lm-primary);
+  text-decoration-color: rgba(38, 66, 38, 0.25);
+  text-underline-offset: 3px;
+}
+
+a:hover {
+  text-decoration-color: rgba(38, 66, 38, 0.55);
+}
+
+/* Global layout shells */
+.lm-section,
+.home .entry-content>.wp-block-group,
+.page-template-default .entry-content>.wp-block-group {
+  max-width: 1120px;
+  margin: 0 auto;
+  padding: 56px 24px;
+}
+
+@media (max-width: 768px) {
+
+  .lm-section,
+  .home .entry-content>.wp-block-group,
+  .page-template-default .entry-content>.wp-block-group {
+    padding: 40px 18px;
+  }
+}
+
+/* Hero layout refinement */
+.lm-hero-shell {
+  max-width: 1180px;
+  margin: 0 auto 72px;
+  padding: 40px 24px 12px;
+}
+
+.lm-hero {
+  border-radius: 26px;
+  overflow: hidden;
+  position: relative;
+  min-height: 420px;
+  display: grid;
+  /* Give the illustration room without ever crowding the copy */
+  grid-template-columns: minmax(0, 1.15fr) minmax(360px, 520px);
+  background: linear-gradient(135deg, #f5efe7, #efe2d4);
+  border: 1px solid var(--lm-border-soft);
+  box-shadow: var(--lm-shadow-soft);
+}
+
+.lm-hero-left {
+  position: relative;
+  z-index: 2;
+  padding: 54px 46px 52px;
+}
+
+.lm-hero-right {
+  /* Give the illustration more presence while keeping the copy dominant */
+  padding: 18px 22px 18px 10px;
+  align-items: center;
+  justify-content: center;
+}
+
+/* Stack on tablets + phones so the art never pushes the copy */
+@media (max-width: 1024px) {
+  .lm-hero {
+    grid-template-columns: 1fr;
+    min-height: 0;
+  }
+
+  .lm-hero-left {
+    padding: 36px 22px 18px;
+  }
+
+  .lm-hero-right {
+    padding: 8px 18px 26px;
+  }
+
+  .lm-hero-right .lm-hero-img {
+    width: 100%;
+    max-width: 620px;
+    height: auto;
+    max-height: 360px;
+    object-fit: contain;
+  }
+}
+
+@media (max-width: 520px) {
+  .lm-hero-left {
+    padding: 32px 18px 14px;
+  }
+
+  .lm-hero-right .lm-hero-img {
+    max-width: 520px;
+    max-height: 320px;
+  }
+}
+
+/* Hero heading: allow intentional line breaks (e.g., "Full Spectrum CBD\nand More") */
+.lm-h1 {
+  white-space: pre-line;
+  line-height: 1.06;
+}
+
+/* Remove the "halo" overlay so the illustration feels clean and premium. */
+.lm-hero:after {
+  content: none;
+}
+
+.lm-hero-right {
+  position: relative;
+  z-index: 1;
+  overflow: hidden;
+  /* Use the React-rendered <img> so we can swap hero art without fighting dist CSS. */
+  background-image: none !important;
+  display: flex;
+  justify-content: center;
+  align-items: flex-end;
+  /* Align bottom of art with CTA row */
+  padding-bottom: 46px;
+}
+
+.lm-hero-img {
+  /* Give the illustration more presence without letting it bully the copy. */
+  width: min(640px, 100%);
+  height: auto;
+  object-fit: contain;
+  display: block;
+  filter: drop-shadow(0 18px 36px rgba(0, 0, 0, .08));
+}
+
+/* Hero image: warm circular-economy farm illustration */
+
+/* Header nav refinement */
+.lm-header-inner {
+  max-width: 1180px;
+  margin: 0 auto;
+  padding: 18px 24px;
+}
+
+.lm-nav a {
+  font-size: 0.96rem;
+  letter-spacing: 0.03em;
+  text-transform: uppercase;
+}
+
+.lm-nav a:hover {
+  color: var(--lm-primary);
+}
+
+/* Primary buttons */
+.lm-button,
+.woocommerce a.button,
+.woocommerce button.button,
+.woocommerce input.button,
+.woocommerce #respond input#submit,
+button,
+input[type="submit"] {
+  border-radius: 999px;
+  padding: 11px 22px;
+  font-size: 0.97rem;
+  font-weight: 600;
+  letter-spacing: 0.02em;
+  text-transform: none;
+  border: none;
+  background-color: var(--lm-primary);
+  color: #fdfaf4;
+  box-shadow: 0 14px 26px rgba(15, 28, 17, 0.26);
+  transition: transform 160ms ease-out, box-shadow 160ms ease-out, background-color 160ms ease-out;
+}
+
+.lm-button:hover,
+.woocommerce a.button:hover,
+.woocommerce button.button:hover,
+.woocommerce input.button:hover,
+.woocommerce #respond input#submit:hover,
+button:hover,
+input[type="submit"]:hover {
+  background-color: #1f3620;
+  transform: translateY(-1px);
+  box-shadow: 0 18px 34px rgba(15, 28, 17, 0.35);
+}
+
+.woocommerce a.button.alt,
+.woocommerce button.button.alt,
+.woocommerce input.button.alt {
+  background-color: var(--lm-accent);
+  box-shadow: 0 14px 26px rgba(140, 95, 40, 0.32);
+}
+
+.woocommerce a.button.alt:hover,
+.woocommerce button.button.alt:hover,
+.woocommerce input.button.alt:hover {
+  background-color: #a7753d;
+}
+
+/* Secondary / ghost buttons */
+.lm-button--ghost {
+  background: transparent;
+  color: var(--lm-primary);
+  border: 1px solid var(--lm-primary);
+  box-shadow: none;
+}
+
+.lm-button--ghost:hover {
+  background: rgba(38, 66, 38, 0.06);
+  box-shadow: none;
+}
+
+/* WooCommerce notices */
+.woocommerce-message,
+.woocommerce-error,
+.woocommerce-info {
+  border-radius: 14px;
+  padding: 14px 16px;
+  border: 1px solid rgba(0, 0, 0, 0.06);
+  background: #fff;
+}
+
+/* Footer shell */
+.site-footer {
+  background: #111b12;
+  color: #f6f1e8;
+  padding: 44px 0 30px;
+}
+
+.site-footer a {
+  color: #f6f1e8;
+}
+
+.site-footer a:hover {
+  color: #ffffff;
+}
+
+/* Smooth card hover for key cards */
+.lm-card,
+.woocommerce ul.products li.product,
+ul.products li.product {
+  transition: transform 160ms ease-out, box-shadow 160ms ease-out;
+}
+
+.lm-card:hover,
+.woocommerce ul.products li.product:hover,
+ul.products li.product:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 22px 48px rgba(15, 28, 17, 0.16);
+}
+
+/* Refined breadcrumbs */
+.woocommerce-breadcrumb {
+  font-size: 0.85rem;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--lm-muted);
+}
+
+
+/* === Global type rhythm refinement === */
+.entry-content>h2,
+.entry-content>h3 {
+  margin-top: 2.2em;
+  margin-bottom: 0.6em;
+}
+
+.entry-content>p {
+  max-width: 46rem;
+}
+
+/* === Home education cards: cleaner layout if used === */
+.home .lm-education-cards {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+  gap: 26px;
+  margin-top: 18px;
+}
+
+.home .lm-education-card {
+  background: var(--lm-bg-soft);
+  border-radius: var(--lm-radius-card);
+  border: 1px solid var(--lm-border-soft);
+  box-shadow: var(--lm-shadow-soft);
+  padding: 20px 18px 22px;
+}
+
+/* CTA rows in sections */
+.lm-cta-row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+  align-items: center;
+  margin-top: 18px;
+}
+
+@media (max-width: 640px) {
+  .lm-cta-row {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+}
+
+
+/* === Single product gallery + purchase flow refinement === */
+.single-product div.product .woocommerce-product-gallery {
+  background: #fdfaf4;
+  border-radius: 24px;
+  border: 1px solid var(--lm-border-soft);
+  box-shadow: var(--lm-shadow-soft);
+  padding: 22px 18px 26px;
+}
+
+.single-product div.product .woocommerce-product-gallery__wrapper {
+  margin: 0 !important;
+}
+
+.single-product div.product .woocommerce-product-gallery img {
+  width: 100%;
+  height: auto;
+  object-fit: contain;
+  background: transparent !important;
+  border: none !important;
+  clip-path: inset(0 6% 0 6%);
+}
+
+/* Mini-checkout feel around add-to-cart */
+.single-product div.product form.cart {
+  margin-bottom: 24px;
+  padding: 16px 18px 18px;
+  background: #f6efe4;
+  border-radius: 18px;
+  border: 1px solid rgba(0, 0, 0, 0.05);
+  box-shadow: 0 14px 30px rgba(15, 28, 17, 0.10);
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+  align-items: center;
+}
+
+.single-product div.product form.cart .quantity {
+  margin-right: 10px;
+}
+
+.single-product div.product form.cart .quantity input.qty {
+  max-width: 90px;
+  text-align: center;
+}
+
+.single-product div.product .single_add_to_cart_button {
+  border-radius: 999px !important;
+  padding: 12px 26px !important;
+  font-weight: 700 !important;
+  min-width: 180px;
+}
+
+@media (max-width: 640px) {
+  .single-product div.product form.cart {
+    flex-direction: column;
+    align-items: stretch;
+  }
+}
+
+
+/* === Header search overlay === */
+.lm-search-bar {
+  display: none;
+  background: rgba(8, 13, 10, 0.78);
+  backdrop-filter: blur(10px);
+  position: fixed;
+  inset: 0;
+  z-index: 90;
+}
+
+.lm-search-bar-inner {
+  max-width: 720px;
+  margin: 18vh auto 0;
+  padding: 28px 24px;
+  background: #fdfaf4;
+  border-radius: 20px;
+  box-shadow: 0 24px 60px rgba(0, 0, 0, 0.35);
+}
+
+.lm-search-form {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+  align-items: center;
+}
+
+.lm-search-input {
+  flex: 1 1 auto;
+  min-width: 0;
+  padding: 11px 14px;
+  border-radius: 999px;
+  border: 1px solid rgba(0, 0, 0, 0.15);
+  font-size: 0.98rem;
+}
+
+.lm-search-input:focus {
+  outline: none;
+  border-color: var(--lm-primary);
+  box-shadow: 0 0 0 1px var(--lm-primary);
+}
+
+.lm-search-submit {
+  white-space: nowrap;
+}
+
+body.lm-search-open .lm-search-bar {
+  display: block;
+}
+
+/* Ensure overlay text remains readable on dark veil */
+.lm-search-bar,
+.lm-search-bar * {
+  color: #211f1a;
+}
+
+
+/* Search overlay refinements */
+body.lm-search-open {
+  overflow: hidden;
+}
+
+.lm-search-bar {
+  background: rgba(5, 8, 6, 0.88);
+}
+
+.lm-search-bar-inner {
+  color: #211f1a;
+  position: relative;
+}
+
+.lm-search-input,
+.lm-search-input::placeholder {
+  color: #211f1a;
+}
+
+/* Apple-style close button */
+.lm-search-close {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  font-size: 28px;
+  line-height: 1;
+  border: none;
+  /* High-contrast pill for visibility on all backgrounds */
+  background: rgba(253, 250, 244, 0.96);
+  color: #2b2a28;
+  cursor: pointer;
+  padding: 4px 10px;
+  border-radius: 999px;
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.25);
+}
+
+.lm-search-close:hover {
+  color: #555;
+}
+
+
+/* Woo result count + ordering alignment */
+.woocommerce-page .woocommerce-result-count,
+.woocommerce-page .woocommerce-ordering {
+  padding: 0 24px;
+}
+
+@media (min-width: 768px) {
+
+  .woocommerce-page .woocommerce-result-count,
+  .woocommerce-page .woocommerce-ordering {
+    max-width: 1120px;
+    margin-left: auto;
+    margin-right: auto;
+  }
+}
+
+
+/* Breadcrumb spacing */
+.woocommerce-breadcrumb,
+.lm-breadcrumbs {
+  padding-top: 20px;
+}
+
+/* Woo result count + ordering inline alignment */
+.woocommerce-page .lm-shop-meta,
+.woocommerce-page .woocommerce-result-count,
+.woocommerce-page .woocommerce-ordering {
+  max-width: 1120px;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.woocommerce-page .lm-shop-meta {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 8px 24px 0;
+}
+
+.woocommerce-page .lm-shop-meta .woocommerce-result-count,
+.woocommerce-page .lm-shop-meta .woocommerce-ordering {
+  padding: 0;
+  margin: 0;
+}
+
+@media (max-width: 767px) {
+  .woocommerce-page .lm-shop-meta {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 4px;
+  }
+}
+
+/* Search icon color refinement */
+.lm-header .lm-icon-btn svg {
+  color: #16351c;
+  stroke: currentColor;
+}
+
+/* Search overlay legibility tweaks */
+.lm-search-bar-inner,
+.lm-search-bar-inner * {
+  color: #211f1a;
+}
+
+.lm-search-input {
+  background-color: #fff;
+}
+
+.lm-search-input::placeholder {
+  color: #8c8572;
+}
+
+
+/* Blog layout with sidebar */
+.lm-blog-layout {
+  display: grid;
+  grid-template-columns: minmax(0, 3fr) minmax(260px, 1.2fr);
+  gap: 40px;
+  padding: 32px 24px 48px;
+}
+
+.lm-blog-main .entry-content {
+  max-width: 720px;
+}
+
+.lm-blog-sidebar {
+  border-left: 1px solid rgba(0, 0, 0, 0.06);
+  padding-left: 24px;
+}
+
+.lm-blog-sidebar .widget {
+  margin-bottom: 24px;
+}
+
+.lm-blog-sidebar .widget-title {
+  font-size: 0.92rem;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--lm-muted);
+  margin-bottom: 8px;
+}
+
+.lm-blog-sidebar ul {
+  list-style: none;
+  padding-left: 0;
+}
+
+.lm-blog-sidebar li {
+  margin-bottom: 6px;
+}
+
+.lm-blog-sidebar a {
+  text-decoration: none;
+}
+
+.lm-blog-sidebar a:hover {
+  text-decoration: underline;
+}
+
+@media (max-width: 900px) {
+  .lm-blog-layout {
+    grid-template-columns: minmax(0, 1fr);
+  }
+
+  .lm-blog-sidebar {
+    border-left: none;
+    padding-left: 0;
+    border-top: 1px solid rgba(0, 0, 0, 0.06);
+    padding-top: 18px;
+  }
+}
+
+
+/* Search close hover: lighter for subtle feedback */
+.lm-search-close:hover {
+  color: #cfcfcf;
+}
+
+
+/* Hard reset Woo column classes inside grid to avoid phantom gaps */
+.woocommerce ul.products[class*="columns-"] li.product {
+  margin: 0 !important;
+  float: none !important;
+  width: auto !important;
+}
+
+.woocommerce ul.products {
+  justify-items: stretch;
+  align-items: stretch;
+}
+
+
+/* Subtle app-like hover for product cards */
+.woocommerce ul.products li.product:hover,
+ul.products li.product:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.09);
+}
+
+
+/* Button polish: consistent radius + focus */
+.button,
+.lm-button,
+button,
+input[type="submit"] {
+  border-radius: 999px;
+}
+
+.button:focus,
+.lm-button:focus,
+button:focus,
+input[type="submit"]:focus {
+  outline: 2px solid rgba(22, 53, 28, 0.4);
+  outline-offset: 2px;
+}
+
+
+/* Hero: do not overlay bottles or any panel image on the right side (hero art is provided via <img>) */
+.lm-hero-right::after {
+  content: none !important;
+  background: none !important;
+}
+
+
+/* Home: tighten space above footer */
+.home .entry-content {
+  margin-bottom: 0;
+  padding-bottom: 0;
+}
+
+.home .entry-content> :last-child {
+  margin-bottom: 0;
+}
+
+/* Product shot panel: ensure it doesn't look empty */
+.lm-product-shot {
+  margin-top: 18px;
+  border-radius: 24px;
+  overflow: hidden;
+}
+
+/* Farm/wellness scene next to "What Sets Laura's Apart" */
+.lm-product-shot .img {
+  min-height: 220px;
+  /* Use an on-disk asset; previously pointed to a missing file and rendered blank */
+  background-image: url('images/section-sets-laura-c-clean-v1.jpg');
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+}
+
+
+/* Mobile / narrow viewport dropdown safety */
+@media (max-width: 1024px) {
+  .lm-menu .sub-menu {
+    right: 12px;
+    left: auto;
+    max-width: calc(100vw - 24px);
+  }
+}
+
+
+/* === HERO ART: real <img> with true transparency (no corners) === */
+.lm-hero-right {
+  position: relative;
+  /* Do NOT clip the art; transparency needs to show beyond any panel shape */
+  overflow: visible !important;
+  background: none !important;
+  border-radius: 0 !important;
+}
+
+/* If any dist CSS adds a pseudo-layer, disable it so we only see the <img> */
+.lm-hero-right::before,
+.lm-hero-right::after {
+  content: none !important;
+  background: none !important;
+}
+
+.lm-hero-img {
+  /* Size is responsive and intentionally restrained so type remains the hero */
+  width: min(600px, 100%);
+  height: auto;
+  display: block;
+  object-fit: contain;
+  margin: 0 auto;
+  /* High-design: more presence + a touch more color, still editorial */
+  opacity: 0.80;
+  filter: saturate(0.95) contrast(0.98) brightness(1.02) drop-shadow(0 18px 38px rgba(0, 0, 0, 0.12));
+  transform: scale(1.04);
+  transform-origin: center;
+  /* Feather edges so the graphic melts into the hero (no visible corners) */
+  -webkit-mask-image: radial-gradient(closest-side, rgba(0, 0, 0, 0.99) 0%, rgba(0, 0, 0, 0.96) 56%, rgba(0, 0, 0, 0.55) 78%, rgba(0, 0, 0, 0.0) 99%);
+  mask-image: radial-gradient(closest-side, rgba(0, 0, 0, 0.99) 0%, rgba(0, 0, 0, 0.96) 56%, rgba(0, 0, 0, 0.55) 78%, rgba(0, 0, 0, 0.0) 99%);
+  pointer-events: none;
+}
+
+/* Stack earlier so the art never pinches the copy on tablets / small laptops */
+@media (max-width: 1024px) {
+  .lm-hero-img {
+    width: min(620px, 92vw);
+    transform: scale(1.02);
+    filter: saturate(0.95) contrast(0.98) brightness(1.02) drop-shadow(0 12px 24px rgba(0, 0, 0, 0.10));
+  }
+}
+
+
+/* Bottle composition crop adjustment: show more labels */
+img[src*="hero-mt-folly-bottles-"] {
+  object-fit: cover;
+  object-position: center 88%;
+}
+
+
+/* Wrapped images inside long-form content (Gutenberg + classic editor)
+   Allow images with alignleft/alignright to have text wrap on desktop,
+   but stack nicely on small screens. */
+.lm-main .lm-prose .entry-content .wp-block-image,
+.lm-main .lm-prose .entry-content img {
+  margin-top: 0;
+}
+
+.lm-main .lm-prose .entry-content .wp-block-image.alignleft,
+.lm-main .lm-prose .entry-content img.alignleft {
+  float: left;
+  margin: 0 20px 16px 0;
+  max-width: 45%;
+}
+
+.lm-main .lm-prose .entry-content .wp-block-image.alignright,
+.lm-main .lm-prose .entry-content img.alignright {
+  float: right;
+  margin: 0 0 16px 20px;
+  max-width: 45%;
+}
+
+/* Make sure major blocks don’t get tangled in floats */
+.lm-main .lm-prose .entry-content h2,
+.lm-main .lm-prose .entry-content h3,
+.lm-main .lm-prose .entry-content h4,
+.lm-main .lm-prose .entry-content ul,
+.lm-main .lm-prose .entry-content ol {
+  clear: both;
+}
+
+/* On narrow screens, images should just stack full-width */
+@media (max-width: 768px) {
+
+  .lm-main .lm-prose .entry-content .wp-block-image.alignleft,
+  .lm-main .lm-prose .entry-content .wp-block-image.alignright,
+  .lm-main .lm-prose .entry-content img.alignleft,
+  .lm-main .lm-prose .entry-content img.alignright {
+    float: none;
+    margin: 14px 0;
+    max-width: 100%;
+  }
+}
+
+
+/* Hemp & CBD education page specific refinements */
+.page-slug-hemp-and-cbd-oil-education .lm-blog-grid {
+  margin-top: 24px;
+}
+
+/* Slightly smaller, more refined blog card titles */
+line-height: 1.35;
+}
+
+/* On very small screens, tighten card padding */
+@media (max-width: 640px) {
+  .lm-blog-card-body {
+    padding: 14px 14px 16px;
+  }
+}
+}
+
+/* Optional subtle intro text under the page title */
+.lm-page-intro {
+  margin: 4px 0 20px;
+  color: var(--lm-muted);
+  font-size: 0.98rem;
+}
+
+
+/* Sort controls for education/blog grid */
+.lm-blog-sort {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin: 8px 0 18px;
+}
+
+.lm-blog-sort-link {
+  display: inline-flex;
+  align-items: center;
+  padding: 6px 12px;
+  border-radius: 999px;
+  border: 1px solid rgba(43, 42, 40, 0.14);
+  font-size: 0.85rem;
+  text-decoration: none;
+  color: var(--lm-text);
+  background: rgba(255, 255, 255, 0.7);
+}
+
+.lm-blog-sort-link:hover {
+  border-color: rgba(43, 42, 40, 0.3);
+}
+
+.lm-blog-sort-link--active {
+  background: var(--lm-green);
+  border-color: var(--lm-green);
+  color: #fff;
+}
+
+
+/* Ensure third-level dropdowns in mega menus stay reachable */
+.lm-menu .sub-menu .sub-menu {
+  top: 0;
+  left: 100%;
+  transform: none;
+  margin-left: 4px;
+}
+
+/* Keep parent item "hot" while hovering into its child menu */
+.lm-menu .sub-menu li:hover>.sub-menu,
+.lm-menu .sub-menu li:focus-within>.sub-menu {
+  display: block;
+}
+
+
+.lm-hero-tagline {
+  font-family: var(--lm-serif);
+  font-size: 20px;
+  line-height: 1.35;
+  margin: 6px 0 14px;
+}
+
+@media (max-width: 640px) {
+  .lm-hero-tagline {
+    font-size: 18px;
+  }
+}
+
+
+/* Enhanced blog sidebar design */
+.lm-blog-sidebar {
+  border-left: none;
+  padding-left: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+@media (max-width: 900px) {
+  .lm-blog-sidebar {
+    border-top: 1px solid rgba(0, 0, 0, 0.06);
+    padding-top: 20px;
+    margin-top: 24px;
+  }
+}
+
+.lm-blog-sidebar .widget {
+  background: #ffffff;
+  border-radius: 20px;
+  padding: 18px 20px 20px;
+  border: 1px solid rgba(15, 23, 42, 0.06);
+  box-shadow: 0 18px 45px rgba(15, 23, 42, 0.06);
+}
+
+.lm-blog-sidebar .widget+.widget {
+  margin-top: 0;
+}
+
+.lm-blog-sidebar .widget-title {
+  font-family: var(--lm-sans);
+  font-size: 0.9rem;
+  font-weight: 600;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: var(--lm-muted-strong, #6b7280);
+  margin: 0 0 10px;
+}
+
+.lm-blog-sidebar ul {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.lm-blog-sidebar li+li {
+  margin-top: 6px;
+}
+
+.lm-blog-sidebar a {
+  font-size: 0.95rem;
+  line-height: 1.5;
+  text-decoration: none;
+}
+
+.lm-blog-sidebar a:hover {
+  text-decoration: underline;
+}
+
+.lm-blog-sidebar .widget_recent_entries li,
+.lm-blog-sidebar .widget_categories li,
+.lm-blog-sidebar .widget_archive li {
+  padding: 3px 0;
+}
+
+
+/* === Fix: ensure home feature image panel renders (clean crop, no prompt) === */
+.lm-product-shot .img {
+  background: url('images/section-sets-laura-c-clean-v1.jpg') center / cover no-repeat !important;
+}
+
+/* === Fix: prevent blog content (images/alignwide) from overflowing under sidebar === */
+.lm-blog-layout,
+.lm-blog-layout>* {
+  min-width: 0;
+}
+
+.lm-blog-main {
+  min-width: 0;
+  overflow: hidden;
+}
+
+.lm-blog-main .entry-content img,
+.lm-blog-main .entry-content figure,
+.lm-blog-main .entry-content .wp-block-image,
+.lm-blog-main .entry-content video,
+.lm-blog-main .entry-content iframe {
+  max-width: 100%;
+  height: auto;
+}
+
+/* Gutenberg wide/full alignment safety inside the blog two-column layout */
+.lm-blog-main .entry-content .alignwide,
+.lm-blog-main .entry-content .alignfull,
+.lm-blog-main .entry-content .wp-block-image.alignwide,
+.lm-blog-main .entry-content .wp-block-image.alignfull {
+  width: 100% !important;
+  max-width: 100% !important;
+  margin-left: 0 !important;
+  margin-right: 0 !important;
+}
+
+/* --- Hero illustration: eliminate rectangular corners + integrate natively --- */
+.lm-hero-right {
+  background: none !important;
+  border-radius: 0 !important;
+  overflow: hidden !important;
+}
+
+.lm-hero-right .lm-hero-img {
+  border-radius: 0 !important;
+  width: min(600px, 100%);
+  height: auto;
+  margin: 0 auto;
+  opacity: 0.80;
+  filter: saturate(0.95) contrast(0.98) brightness(1.02) drop-shadow(0 18px 38px rgba(0, 0, 0, 0.12));
+  transform: scale(1.05);
+  transform-origin: center;
+  /* Feather edges so any non-transparent pixels at the perimeter disappear */
+  -webkit-mask-image: radial-gradient(circle at center, rgba(0, 0, 0, 1) 62%, rgba(0, 0, 0, 0.78) 74%, rgba(0, 0, 0, 0) 92%);
+  mask-image: radial-gradient(circle at center, rgba(0, 0, 0, 1) 62%, rgba(0, 0, 0, 0.78) 74%, rgba(0, 0, 0, 0) 92%);
+  -webkit-mask-repeat: no-repeat;
+  mask-repeat: no-repeat;
+  -webkit-mask-size: 100% 100%;
+  mask-size: 100% 100%;
+}
+
+/* Stack earlier on tablets so art never squeezes the copy */
+@media (max-width: 1024px) {
+  .lm-hero-right .lm-hero-img {
+    width: min(680px, 94vw);
+    transform: scale(1.03);
+    filter: saturate(0.95) contrast(0.98) brightness(1.02) drop-shadow(0 12px 24px rgba(0, 0, 0, 0.10));
+  }
+}
+
+@media (max-width: 520px) {
+  .lm-hero-right .lm-hero-img {
+    width: min(520px, 94vw);
+    transform: scale(1.00);
+  }
+}
+
+/* === HOME HERO: product-first, iconic bottle (scoped, WP Engine–safe) ===
+   Goal: keep the existing hero copy/layout, but make the product image feel trustworthy and "conversion-safe"
+   through scale + calm placement (no effects, no distortion).
+   Scope: homepage hero only. */
+.home .lm-hero,
+.home .lm-hero::before,
+.home .lm-hero::after,
+.home .lm-hero-right,
+.home .lm-hero-right::before,
+.home .lm-hero-right::after {
+  background: none !important;
+  background-image: none !important;
+}
+
+/* Prevent any legacy pseudo layers from creating halos / multi-image artifacts */
+.home .lm-hero::before,
+.home .lm-hero::after,
+.home .lm-hero-right::before,
+.home .lm-hero-right::after {
+  content: none !important;
+}
+
+/* Right rail: calm product stage (no card/container vibe) */
+.home .lm-hero-right {
+  display: flex !important;
+  align-items: center !important;
+  justify-content: flex-end !important;
+  padding: 10px 0 10px !important;
+}
+
+/* Product image: never crop, never distort, never decorate */
+.home .lm-hero-right img.lm-hero-img {
+  display: block !important;
+  width: clamp(360px, 38vw, 520px) !important;
+  height: auto !important;
+  max-width: 100% !important;
+  object-fit: contain !important;
+  /* preserve label integrity */
+  object-position: 50% 50% !important;
+  border-radius: 0 !important;
+  border: 0 !important;
+  box-shadow: none !important;
+  filter: none !important;
+  -webkit-mask-image: none !important;
+  mask-image: none !important;
+  transform: none !important;
+}
+
+/* Tablet + down: stack (never squeeze copy), center bottle below CTA */
+@media (max-width: 1024px) {
+  .home .lm-hero-inner {
+    grid-template-columns: 1fr !important;
+    gap: 18px !important;
+  }
+
+  .home .lm-hero-right {
+    justify-content: center !important;
+    padding: 6px 0 0 !important;
+  }
+
+  .home .lm-hero-right img.lm-hero-img {
+    width: min(680px, 92vw) !important;
+    max-width: 560px !important;
+  }
+}
+
+@media (max-width: 520px) {
+  .home .lm-hero-right img.lm-hero-img {
+    width: min(520px, 94vw) !important;
+    max-width: 440px !important;
+  }
+}
+
+/* Small screens */
+@media (max-width: 520px) {
+  .home .lm-hero {
+    padding: 56px 0 28px !important;
+  }
+}
+
+/* -----------------------------
+   HOMEPAGE: SHOP BY OUTCOME
+----------------------------- */
+.lm-outcome-grid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 18px;
+}
+
+.lm-outcome-card {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+  gap: 8px;
+  padding: 18px;
+  min-height: 240px;
+  border-radius: 20px;
+  background: #fff;
+  background-size: cover;
+  background-position: center;
+  box-shadow: 0 10px 22px rgba(0, 0, 0, 0.10);
+  border: 1px solid rgba(0, 0, 0, 0.06);
+  text-decoration: none;
+  overflow: hidden;
+}
+
+/* Photo-backed outcome cards (href-based, safe + resilient for hybrid builds) */
+.lm-outcome-card::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(180deg,
+      rgba(0, 0, 0, 0.00) 0%,
+      rgba(0, 0, 0, 0.10) 38%,
+      rgba(0, 0, 0, 0.50) 100%);
+  pointer-events: none;
+}
+
+.lm-outcome-card[href*="/outcomes/sleep-better"],
+.lm-outcome-card[href*="/outcomes/sleep"] {
+  background-image: url('images/outcome-sleep-hero-illus.jpg');
+}
+
+.lm-outcome-card[href*="/outcomes/brain-health"],
+.lm-outcome-card[href*="/outcomes/brain"] {
+  background-image: url('images/outcome-brain-hero-illus.jpg');
+}
+
+.lm-outcome-card[href*="/outcomes/move-without-pain"],
+.lm-outcome-card[href*="/outcomes/pain"],
+.lm-outcome-card[href*="/outcomes/move"] {
+  background-image: url('images/outcome-move-hero-illus.jpg');
+}
+
+/* Funnel treatment (homepage only): turn the 3 outcomes into Step 1 of a guided purchase flow */
+.home .lm-outcomes {
+  position: relative;
+  /* Rustic ultra-premium backdrop for this section only (does not affect header/nav). */
+  background:
+    radial-gradient(1200px 520px at 50% 0%, rgba(255, 255, 255, 0.70), rgba(255, 255, 255, 0) 62%),
+    linear-gradient(180deg, rgba(250, 244, 236, 0.95) 0%, rgba(247, 238, 228, 0.82) 52%, rgba(245, 233, 220, 0.92) 100%);
+  border-top: 1px solid rgba(74, 54, 38, 0.06);
+  border-bottom: 1px solid rgba(74, 54, 38, 0.06);
+}
+
+.home .lm-outcomes::before {
+  content: "Step 1 of 3 — Choose your goal";
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  font-size: 12px;
+  font-weight: 800;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: rgba(52, 37, 25, 0.72);
+  margin: 0 auto 10px;
+  width: fit-content;
+  padding: 6px 12px;
+  border-radius: 999px;
+  border: 1px solid rgba(74, 54, 38, 0.16);
+  background:
+    linear-gradient(180deg, rgba(255, 255, 255, 0.86), rgba(255, 255, 255, 0.58));
+  box-shadow:
+    0 10px 26px rgba(43, 31, 21, 0.10),
+    inset 0 1px 0 rgba(255, 255, 255, 0.80);
+}
+
+.home .lm-outcome-card {
+  min-height: 268px;
+  padding: 18px 18px 16px;
+  /* Rustic premium surface: quiet edge, deeper shadow, warmer tone. */
+  border: 1px solid rgba(74, 54, 38, 0.16);
+  box-shadow:
+    0 18px 38px rgba(43, 31, 21, 0.14),
+    inset 0 1px 0 rgba(255, 255, 255, 0.24);
+}
+
+.home .lm-outcome-card::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  /* Rustic ultra-premium overlay: warm vignette + subtle tint. Avoids gray muddiness. */
+  background:
+    radial-gradient(740px 420px at 30% 18%, rgba(255, 255, 255, 0.22), rgba(255, 255, 255, 0) 60%),
+    linear-gradient(180deg, rgba(0, 0, 0, 0.00) 0%, rgba(26, 18, 12, 0.12) 46%, rgba(26, 18, 12, 0.58) 100%),
+    linear-gradient(140deg, rgba(255, 255, 255, 0.00) 0%, rgba(255, 255, 255, 0.00) 52%, var(--lm-outcome-accent, rgba(255, 255, 255, 0.00)) 100%);
+  pointer-events: none;
+}
+
+/* Rustic premium "seal" marker: clear meaning (quick picker) without confusing emoji/stickers. */
+.home .lm-outcome-emoji {
+  width: 44px;
+  height: 44px;
+  border-radius: 999px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 0;
+  /* hide emoji glyph */
+  background:
+    radial-gradient(14px 14px at 30% 28%, rgba(255, 255, 255, 0.55), rgba(255, 255, 255, 0) 65%),
+    radial-gradient(60px 60px at 55% 60%, rgba(255, 247, 236, 0.92), rgba(244, 230, 214, 0.92));
+  border: 1px solid rgba(74, 54, 38, 0.22);
+  box-shadow:
+    0 10px 22px rgba(43, 31, 21, 0.14),
+    inset 0 1px 0 rgba(255, 255, 255, 0.72);
+}
+
+.home .lm-outcome-emoji::before {
+  content: "30\a sec";
+  white-space: pre;
+  text-transform: uppercase;
+  letter-spacing: 0.10em;
+  font-size: 9px;
+  font-weight: 900;
+  line-height: 1.05;
+  color: rgba(52, 37, 25, 0.78);
+  text-align: center;
+}
+
+/* Rustic premium accent tuning: slightly earthier hues for a more "heritage" feel. */
+.home .lm-outcome-card[href*="/outcomes/sleep"] {
+  --lm-outcome-accent: rgba(60, 170, 150, 0.14);
+}
+
+.home .lm-outcome-card[href*="/outcomes/move"],
+.home .lm-outcome-card[href*="/outcomes/pain"] {
+  --lm-outcome-accent: rgba(214, 155, 70, 0.16);
+}
+
+.home .lm-outcome-card[href*="/outcomes/brain"] {
+  --lm-outcome-accent: rgba(217, 120, 125, 0.14);
+}
+
+.home .lm-outcome-title,
+.home .lm-outcome-text,
+.home .lm-outcome-cta,
+.home .lm-outcome-emoji {
+  position: relative;
+  z-index: 2;
+}
+
+.home .lm-outcome-cta {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  margin-top: 8px;
+  padding: 10px 12px;
+  width: fit-content;
+  border-radius: 999px;
+  background: rgba(250, 242, 232, 0.96);
+  color: rgba(52, 37, 25, 0.92);
+  border: 1px solid rgba(74, 54, 38, 0.22);
+  box-shadow:
+    0 12px 24px rgba(43, 31, 21, 0.16),
+    inset 0 1px 0 rgba(255, 255, 255, 0.78);
+}
+
+.home .lm-outcome-card:hover .lm-outcome-cta {
+  transform: translateY(-1px);
+  background: rgba(253, 248, 242, 0.98);
+}
+
+.lm-outcome-emoji {
+  position: relative;
+  z-index: 1;
+  width: 42px;
+  height: 42px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 999px;
+  background: rgba(255, 255, 255, 0.86);
+  border: 1px solid rgba(0, 0, 0, 0.08);
+  font-size: 22px;
+  line-height: 1;
+}
+
+.lm-outcome-title {
+  position: relative;
+  z-index: 1;
+  font-size: 20px;
+  font-weight: 800;
+  letter-spacing: -0.01em;
+  color: #fff;
+}
+
+.lm-outcome-text {
+  position: relative;
+  z-index: 1;
+  font-size: 14px;
+  line-height: 1.5;
+  color: rgba(255, 255, 255, 0.92);
+}
+
+.lm-outcome-cta {
+  position: relative;
+  z-index: 1;
+  margin-top: 6px;
+  font-size: 13px;
+  font-weight: 800;
+  color: rgba(255, 255, 255, 0.95);
+}
+
+.lm-outcome-card:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 14px 28px rgba(0, 0, 0, 0.10);
+}
+
+/* --------------------------------------------------------------------------
+   Rustic ultra-premium redesign (HOMEPAGE outcomes section only)
+   Purpose: make the "Choose your goal" funnel feel heritage-luxury
+   without touching global typography scale, global layout containers,
+   or header/nav/mega-menu.
+   -------------------------------------------------------------------------- */
+
+/* Parchment + grain (section only) */
+.home .lm-outcomes {
+  background:
+    radial-gradient(1200px 520px at 50% 0%, rgba(255, 255, 255, 0.74), rgba(255, 255, 255, 0) 62%),
+    radial-gradient(900px 520px at 50% 100%, rgba(255, 235, 210, 0.52), rgba(255, 255, 255, 0) 70%),
+    repeating-linear-gradient(0deg, rgba(70, 52, 36, 0.018) 0px, rgba(70, 52, 36, 0.018) 1px, rgba(255, 255, 255, 0) 3px, rgba(255, 255, 255, 0) 7px),
+    linear-gradient(180deg, rgba(250, 244, 236, 0.96) 0%, rgba(247, 238, 228, 0.86) 54%, rgba(245, 233, 220, 0.94) 100%);
+}
+
+/* Brass plaque step label */
+.home .lm-outcomes::before {
+  border-radius: 12px;
+  padding: 8px 12px;
+  background:
+    radial-gradient(18px 18px at 28% 22%, rgba(255, 255, 255, 0.55), rgba(255, 255, 255, 0) 65%),
+    linear-gradient(180deg, rgba(255, 246, 230, 0.92), rgba(242, 226, 200, 0.78));
+  border: 1px solid rgba(74, 54, 38, 0.26);
+  box-shadow:
+    0 18px 38px rgba(43, 31, 21, 0.14),
+    inset 0 1px 0 rgba(255, 255, 255, 0.78),
+    inset 0 -1px 0 rgba(60, 44, 30, 0.10);
+}
+
+/* Hand-ink divider under the section title (homepage only) */
+.home .lm-outcomes .lm-section-title {
+  position: relative;
+}
+
+.home .lm-outcomes .lm-section-title::after {
+  content: "";
+  display: block;
+  width: 120px;
+  height: 2px;
+  margin: 14px auto 0;
+  border-radius: 999px;
+  background:
+    linear-gradient(90deg, rgba(74, 54, 38, 0), rgba(74, 54, 38, 0.42), rgba(74, 54, 38, 0));
+  opacity: 0.85;
+}
+
+/* Outcome cards: richer edge + less muddy overlay */
+.home .lm-outcomes .lm-outcome-card {
+  border-radius: 22px;
+  border: 1px solid rgba(74, 54, 38, 0.18);
+  box-shadow:
+    0 26px 54px rgba(43, 31, 21, 0.16),
+    inset 0 1px 0 rgba(255, 255, 255, 0.26);
+}
+
+.home .lm-outcomes .lm-outcome-card::after {
+  background:
+    radial-gradient(740px 420px at 30% 18%, rgba(255, 255, 255, 0.28), rgba(255, 255, 255, 0) 62%),
+    linear-gradient(180deg, rgba(0, 0, 0, 0.00) 0%, rgba(22, 16, 12, 0.10) 40%, rgba(22, 16, 12, 0.62) 100%),
+    linear-gradient(140deg, rgba(255, 255, 255, 0.00) 0%, rgba(255, 255, 255, 0.00) 52%, var(--lm-outcome-accent, rgba(255, 255, 255, 0.00)) 100%);
+}
+
+/* Wax-seal style marker (clear + premium, not sticker-y) */
+.home .lm-outcomes .lm-outcome-emoji {
+  width: 46px;
+  height: 46px;
+  font-size: 0 !important;
+  border-radius: 999px;
+  background:
+    radial-gradient(14px 14px at 30% 28%, rgba(255, 255, 255, 0.32), rgba(255, 255, 255, 0) 70%),
+    radial-gradient(64px 64px at 55% 60%, rgba(210, 94, 80, 0.98), rgba(150, 58, 52, 0.98));
+  border: 1px solid rgba(74, 54, 38, 0.22);
+  box-shadow:
+    0 16px 34px rgba(43, 31, 21, 0.18),
+    inset 0 1px 0 rgba(255, 255, 255, 0.22),
+    inset 0 -10px 18px rgba(0, 0, 0, 0.18);
+}
+
+.home .lm-outcomes .lm-outcome-emoji::before {
+  content: "30\a sec";
+  white-space: pre;
+  text-transform: uppercase;
+  letter-spacing: 0.10em;
+  font-size: 9px;
+  font-weight: 900;
+  line-height: 1.05;
+  color: rgba(255, 246, 236, 0.95);
+  text-align: center;
+}
+
+.home .lm-outcomes .lm-outcome-emoji::after {
+  content: "picker";
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, calc(-50% + 10px));
+  font-size: 8px;
+  font-weight: 900;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: rgba(255, 246, 236, 0.92);
+  opacity: 0.92;
+}
+
+/* CTA: more "crafted" pill */
+.home .lm-outcomes .lm-outcome-cta {
+  background: rgba(255, 248, 238, 0.96);
+  color: rgba(52, 37, 25, 0.92);
+  border: 1px solid rgba(74, 54, 38, 0.26);
+  box-shadow:
+    0 16px 34px rgba(43, 31, 21, 0.18),
+    inset 0 1px 0 rgba(255, 255, 255, 0.78);
+}
+
+@media (max-width: 560px) {
+  .home .lm-outcomes::before {
+    margin: 0 auto 8px;
+  }
+
+  .home .lm-outcomes .lm-section-title::after {
+    width: 96px;
+  }
+}
+
+/* WooCommerce product grids: remove clearfix pseudo-elements (they become "empty" grid items) */
+.woocommerce ul.products::before,
+.woocommerce ul.products::after,
+ul.products::before,
+ul.products::after {
+  content: none !important;
+  display: none !important;
+}
+
+@media (max-width: 900px) {
+  .lm-outcome-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
+@media (max-width: 560px) {
+  .lm-outcome-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+/* Outcome landing pages */
+.lm-outcome-page {
+  padding: 44px 0 64px;
+}
+
+/* Outcome accent tokens (scoped). Adds color without touching global type/layout. */
+.lm-outcome-page {
+  --lm-outcome-accent: rgba(0, 0, 0, 0.10);
+  --lm-outcome-accent-strong: rgba(0, 0, 0, 0.20);
+}
+
+.lm-outcome--sleep {
+  --lm-outcome-accent: rgba(86, 200, 184, 0.18);
+  --lm-outcome-accent-strong: rgba(86, 200, 184, 0.34);
+}
+
+.lm-outcome--move-without-pain,
+.lm-outcome--pain {
+  --lm-outcome-accent: rgba(255, 179, 71, 0.18);
+  --lm-outcome-accent-strong: rgba(255, 179, 71, 0.34);
+}
+
+.lm-outcome--keep-your-brain-healthy,
+.lm-outcome--brain,
+.lm-outcome--brain-health {
+  --lm-outcome-accent: rgba(255, 120, 145, 0.16);
+  --lm-outcome-accent-strong: rgba(255, 120, 145, 0.32);
+}
+
+/* Make the hero + letter feel more "designed" and persuasive via color rhythm (still calm). */
+.lm-outcome-hero {
+  position: relative;
+}
+
+.lm-outcome-hero::before {
+  content: "";
+  position: absolute;
+  inset: -1px;
+  border-radius: 22px;
+  background: linear-gradient(160deg, var(--lm-outcome-accent), rgba(255, 255, 255, 0) 55%);
+  pointer-events: none;
+  z-index: 0;
+}
+
+.lm-outcome-hero>* {
+  position: relative;
+  z-index: 1;
+}
+
+.lm-outcome-pill {
+  border-color: rgba(0, 0, 0, 0.08);
+  background: rgba(255, 255, 255, 0.72);
+}
+
+.lm-outcome-pill:first-child {
+  background: rgba(255, 255, 255, 0.82);
+  box-shadow: inset 0 0 0 1px var(--lm-outcome-accent-strong);
+}
+
+.lm-outcome-letter {
+  border-left: 4px solid var(--lm-outcome-accent-strong);
+  background: linear-gradient(90deg, rgba(255, 255, 255, 0.86), rgba(255, 255, 255, 0.70));
+}
+
+/* Cards: add a subtle accent edge so the page feels more alive (conversion-first). */
+.lm-rec-card {
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.08);
+}
+
+.lm-rec-card::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  border-radius: 18px;
+  box-shadow: inset 0 0 0 1px rgba(0, 0, 0, 0.06), inset 0 0 0 2px rgba(255, 255, 255, 0.40);
+  pointer-events: none;
+}
+
+.lm-rec-card:hover {
+  box-shadow: 0 14px 44px rgba(0, 0, 0, 0.10);
+}
+
+.lm-outcome-kicker {
+  font-size: 12px;
+  font-weight: 800;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: rgba(0, 0, 0, 0.55);
+  margin: 0 0 8px;
+}
+
+.lm-outcome-hero {
+  display: grid;
+  grid-template-columns: 1.15fr 0.85fr;
+  gap: 28px;
+  align-items: center;
+  padding: 28px;
+  border-radius: 24px;
+  background: linear-gradient(180deg, rgba(119, 187, 65, 0.10), rgba(255, 255, 255, 0));
+  border: 1px solid rgba(0, 0, 0, 0.06);
+}
+
+.lm-outcome-hero h1 {
+  margin: 0 0 8px;
+  letter-spacing: -0.02em;
+}
+
+.lm-outcome-sub {
+  margin: 0 0 10px;
+  font-size: 1.05rem;
+  color: rgba(0, 0, 0, 0.75);
+}
+
+.lm-outcome-lede {
+  margin: 0 0 18px;
+  max-width: 52ch;
+}
+
+.lm-outcome-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+}
+
+.lm-outcome-actions .lm-btn--accent,
+.lm-outcome-actions .lm-btn--ghost {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 12px 16px;
+  border-radius: 999px;
+  font-weight: 700;
+  text-decoration: none;
+}
+
+.lm-outcome-actions .lm-btn--ghost {
+  border: 1px solid rgba(0, 0, 0, 0.12);
+  background: rgba(255, 255, 255, 0.7);
+}
+
+.lm-outcome-side {
+  border-radius: 20px;
+  background: rgba(255, 255, 255, 0.7);
+  border: 1px solid rgba(0, 0, 0, 0.06);
+  padding: 18px;
+}
+
+.lm-outcome-hero-art {
+  border-radius: 22px;
+  min-height: 360px;
+  background-size: cover;
+  background-position: center;
+  position: relative;
+  overflow: hidden;
+  border: 1px solid rgba(0, 0, 0, 0.06);
+  box-shadow: 0 14px 32px rgba(0, 0, 0, 0.10);
+}
+
+.lm-outcome-hero-art::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: radial-gradient(circle at 20% 20%, rgba(255, 255, 255, 0.35), rgba(255, 255, 255, 0) 55%),
+    linear-gradient(180deg, rgba(0, 0, 0, 0.00), rgba(0, 0, 0, 0.22));
+  pointer-events: none;
+}
+
+.lm-outcome-trust {
+  margin-top: 14px;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+.lm-outcome-pill {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 8px 10px;
+  border-radius: 999px;
+  background: rgba(255, 255, 255, 0.78);
+  border: 1px solid rgba(0, 0, 0, 0.08);
+  font-size: 12px;
+  font-weight: 800;
+  color: rgba(0, 0, 0, 0.70);
+}
+
+.lm-outcome-pill::before {
+  content: '✓';
+  color: #2a6b18;
+  font-weight: 900;
+}
+
+.lm-outcome-side h2 {
+  font-size: 1rem;
+  margin: 0 0 10px;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  color: rgba(0, 0, 0, 0.65);
+}
+
+.lm-outcome-checks {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  display: grid;
+  gap: 8px;
+}
+
+.lm-outcome-checks li {
+  display: grid;
+  grid-template-columns: 18px 1fr;
+  gap: 8px;
+  align-items: start;
+}
+
+.lm-outcome-checks li::before {
+  content: '✓';
+  color: #2a6b18;
+  font-weight: 900;
+}
+
+.lm-outcome-products {
+  padding: 38px 0 20px;
+}
+
+.lm-outcome-products h2 {
+  margin: 0 0 14px;
+}
+
+.lm-outcome-grid-2 {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 26px;
+}
+
+.lm-outcome-product-block {
+  border-radius: 20px;
+  border: 1px solid rgba(0, 0, 0, 0.08);
+  background: #fff;
+  padding: 22px;
+  box-shadow: 0 10px 24px rgba(0, 0, 0, 0.06);
+}
+
+.lm-outcome-product-block h3 {
+  margin: 0 0 6px;
+}
+
+.lm-outcome-product-block p {
+  margin: 0 0 12px;
+  color: rgba(0, 0, 0, 0.75);
+}
+
+.lm-outcome-shortcode {
+  margin-top: 10px;
+}
+
+.lm-outcome-shortcode .woocommerce ul.products {
+  margin: 0 !important;
+}
+
+/* Make the curated product grids breathe (Woo shortcodes default to tight floats) */
+.lm-outcome-shortcode .woocommerce ul.products {
+  /* Each block sits in a 2-col layout; keep products roomy inside each card */
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 18px;
+}
+
+.lm-outcome-shortcode .woocommerce ul.products li.product {
+  width: auto !important;
+  margin: 0 !important;
+  float: none !important;
+  border-radius: 16px;
+  border: 1px solid rgba(0, 0, 0, 0.06);
+  background: rgba(255, 255, 255, 0.78);
+  box-shadow: 0 10px 22px rgba(0, 0, 0, 0.05);
+  padding: 12px 12px 14px;
+}
+
+.lm-outcome-shortcode .woocommerce ul.products li.product img {
+  width: 100% !important;
+  height: auto;
+  border-radius: 14px;
+}
+
+.lm-outcome-shortcode .woocommerce ul.products li.product .woocommerce-loop-product__title {
+  margin-top: 10px !important;
+}
+
+.lm-outcome-shortcode .woocommerce ul.products li.product a {
+  text-decoration: none;
+}
+
+.lm-outcome-shortcode .woocommerce ul.products li.product .woocommerce-loop-product__title {
+  font-size: 0.98rem !important;
+  line-height: 1.25;
+}
+
+.lm-outcome-shortcode .woocommerce ul.products li.product .price {
+  font-size: 0.95rem !important;
+}
+
+.lm-outcome-shortcode .woocommerce ul.products li.product .button {
+  border-radius: 999px !important;
+}
+
+@media (max-width: 980px) {
+  .lm-outcome-shortcode .woocommerce ul.products {
+    gap: 16px;
+  }
+}
+
+@media (max-width: 520px) {
+  .lm-outcome-shortcode .woocommerce ul.products {
+    grid-template-columns: 1fr;
+    gap: 14px;
+  }
+
+  .lm-outcome-product-block {
+    padding: 18px;
+  }
+}
+
+.lm-outcome-shortcode .woocommerce ul.products li.product .button {
+  border-radius: 999px !important;
+}
+
+.lm-outcome-faq {
+  margin-top: 28px;
+  display: grid;
+  gap: 10px;
+}
+
+.lm-faq,
+.lm-faq-item {
+  border-radius: 18px;
+  border: 1px solid rgba(0, 0, 0, 0.08);
+  background: rgba(255, 255, 255, 0.75);
+  padding: 14px 16px;
+}
+
+.lm-faq summary,
+.lm-faq-item summary {
+  cursor: pointer;
+  font-weight: 800;
+}
+
+.lm-faq p,
+.lm-faq-item p {
+  margin: 10px 0 0;
+  color: rgba(0, 0, 0, 0.78);
+}
+
+.lm-faq-item[open] {
+  box-shadow: 0 10px 24px rgba(0, 0, 0, 0.06);
+}
+
+.lm-faq-body {
+  padding-right: 10px;
+}
+
+.lm-outcome-why {
+  padding: 22px 0 0;
+}
+
+.lm-outcome-why h2 {
+  margin: 0 0 14px;
+}
+
+.lm-card-grid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 14px;
+}
+
+.lm-card {
+  border-radius: 18px;
+  border: 1px solid rgba(0, 0, 0, 0.08);
+  background: rgba(255, 255, 255, 0.75);
+  padding: 16px;
+}
+
+.lm-card h3 {
+  margin: 0 0 6px;
+  font-size: 1rem;
+}
+
+.lm-card p {
+  margin: 0;
+  color: rgba(0, 0, 0, 0.75);
+}
+
+@media (max-width: 980px) {
+  .lm-outcome-hero {
+    grid-template-columns: 1fr;
+  }
+
+  .lm-outcome-side {
+    order: 2;
+  }
+}
+
+@media (max-width: 720px) {
+  .lm-outcome-grid-2 {
+    grid-template-columns: 1fr;
+  }
+
+  .lm-card-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .lm-outcome-shortcode .woocommerce ul.products {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 16px;
+  }
+}
+
+@media (max-width: 520px) {
+  .lm-outcome-shortcode .woocommerce ul.products {
+    grid-template-columns: 1fr;
+    gap: 14px;
+  }
+}
+
+/* === Outcome pages: editorial recommendations (scoped, no global Woo overrides) === */
+.lm-outcome-page .lm-outcome-recs {
+  margin-top: 14px;
+}
+
+.lm-outcome-page .lm-rec-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 14px;
+}
+
+/* Mobile-first: one per row */
+@media (max-width: 640px) {
+  .lm-outcome-page .lm-rec-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+.lm-outcome-page .lm-rec-card {
+  display: grid;
+  grid-template-columns: 76px minmax(0, 1fr);
+  gap: 14px;
+  align-items: center;
+  padding: 14px;
+  border-radius: 18px;
+  text-decoration: none;
+  background: rgba(255, 255, 255, 0.55);
+  border: 1px solid rgba(0, 0, 0, 0.06);
+  /* Outcome color cue (subtle): makes the page feel more alive without changing global typography. */
+  box-shadow: 0 6px 18px rgba(0, 0, 0, 0.04), inset 4px 0 0 var(--lm-outcome-accent, rgba(0, 0, 0, 0.00));
+}
+
+.lm-outcome-page .lm-rec-card:hover {
+  transform: translateY(-1px);
+  box-shadow: 0 10px 26px rgba(0, 0, 0, 0.06);
+}
+
+.lm-outcome-page .lm-rec-media {
+  width: 76px;
+  height: 76px;
+  border-radius: 16px;
+  overflow: hidden;
+  background: rgba(255, 255, 255, 0.7);
+  border: 1px solid rgba(0, 0, 0, 0.05);
+  display: grid;
+  place-items: center;
+}
+
+.lm-outcome-page .lm-rec-media img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+
+.lm-outcome-page .lm-rec-placeholder {
+  font-size: 22px;
+  opacity: 0.85;
+}
+
+.lm-outcome-page .lm-rec-title {
+  font-weight: 600;
+  line-height: 1.25;
+  margin-bottom: 6px;
+  /* prevent the “one word per line” disaster */
+  word-break: normal;
+  overflow-wrap: anywhere;
+  hyphens: auto;
+}
+
+/* Calm, premium CTA: quiet but clear */
+.lm-outcome-page .lm-rec-cta {
+  font-weight: 600;
+  font-size: 14px;
+  opacity: 0.85;
+}
+
+/* Ensure cards never cause overflow */
+.lm-outcome-page .lm-rec-card,
+.lm-outcome-page .lm-rec-body {
+  min-width: 0;
+}
+
+/* === Outcome pages: quick decision helper + jump bar (scoped) === */
+.lm-outcome-page .lm-outcome-helper {
+  margin: 16px 0 12px;
+  padding: 14px 16px;
+  border-radius: 18px;
+  border: 1px solid rgba(0, 0, 0, 0.07);
+  background: rgba(255, 255, 255, 0.62);
+  box-shadow: 0 6px 18px rgba(0, 0, 0, 0.04);
+}
+
+.lm-outcome-page .lm-outcome-helper h3 {
+  margin: 0 0 10px;
+  font-size: 1rem;
+}
+
+.lm-outcome-page .lm-outcome-helper ul {
+  margin: 0;
+  padding-left: 18px;
+}
+
+.lm-outcome-page .lm-outcome-helper li {
+  margin: 8px 0;
+  color: rgba(0, 0, 0, 0.78);
+}
+
+.lm-outcome-page .lm-outcome-helper strong {
+  font-weight: 800;
+}
+
+.lm-outcome-page .lm-outcome-jump {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  margin: 10px 0 18px;
+}
+
+.lm-outcome-page .lm-outcome-jump-pill {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 10px 12px;
+  border-radius: 999px;
+  border: 1px solid rgba(0, 0, 0, 0.08);
+  background: rgba(255, 255, 255, 0.6);
+  text-decoration: none;
+  font-weight: 700;
+  font-size: 13px;
+  line-height: 1;
+  color: rgba(0, 0, 0, 0.86);
+}
+
+.lm-outcome-page .lm-outcome-jump-pill:hover {
+  box-shadow: 0 10px 22px rgba(0, 0, 0, 0.06);
+  transform: translateY(-1px);
+}
+
+/* Add outcome color on interaction (scoped). */
+.lm-outcome-page .lm-outcome-jump-pill:hover {
+  box-shadow: 0 12px 26px rgba(0, 0, 0, 0.07);
+  border-color: rgba(0, 0, 0, 0.10);
+  background: linear-gradient(180deg, rgba(255, 255, 255, 0.72), rgba(255, 255, 255, 0.58));
+}
+
+/* Make anchored sections land below sticky header safely */
+.lm-outcome-page [id^="format-"] {
+  scroll-margin-top: 120px;
+}
+
+@media (max-width: 720px) {
+  .lm-outcome-page .lm-outcome-helper {
+    padding: 12px 14px;
+  }
+
+  .lm-outcome-page .lm-outcome-jump {
+    gap: 8px;
+  }
+}
+
+
+.lm-outcome-page .lm-outcome-empty {
+  margin: 0;
+  color: rgba(0, 0, 0, 0.65);
+}
+
+/* === Outcome pages: sales-letter guidance (scoped) === */
+.lm-outcome-page .lm-outcome-letter {
+  margin: 18px 0 6px;
+  padding: 18px;
+  border-radius: 26px;
+  background: rgba(255, 255, 255, 0.78);
+  border: 1px solid rgba(0, 0, 0, 0.06);
+  box-shadow: 0 18px 48px rgba(0, 0, 0, 0.06);
+}
+
+.lm-outcome-page .lm-outcome-letter-grid {
+  display: grid;
+  grid-template-columns: minmax(0, 1.4fr) minmax(0, 1fr);
+  gap: 18px;
+  align-items: start;
+}
+
+.lm-outcome-page .lm-outcome-letter-title {
+  margin: 0 0 10px;
+}
+
+.lm-outcome-page .lm-outcome-letter-lede {
+  margin: 0 0 10px;
+  color: rgba(0, 0, 0, 0.78);
+}
+
+.lm-outcome-page .lm-outcome-letter-promise {
+  margin: 0 0 14px;
+  font-weight: 650;
+  color: rgba(0, 0, 0, 0.82);
+}
+
+.lm-outcome-page .lm-outcome-plan {
+  margin-top: 10px;
+}
+
+.lm-outcome-page .lm-outcome-plan h3 {
+  margin: 0 0 10px;
+  font-size: 1rem;
+}
+
+.lm-outcome-page .lm-outcome-plan ol {
+  margin: 0;
+  padding-left: 18px;
+}
+
+.lm-outcome-page .lm-outcome-plan li {
+  margin: 10px 0;
+}
+
+.lm-outcome-page .lm-outcome-plan-head {
+  font-weight: 800;
+  margin-bottom: 4px;
+}
+
+.lm-outcome-page .lm-outcome-plan-text {
+  color: rgba(0, 0, 0, 0.76);
+}
+
+.lm-outcome-page .lm-outcome-letter-aside {
+  border-radius: 20px;
+  padding: 14px;
+  background: rgba(255, 255, 255, 0.62);
+  border: 1px solid rgba(0, 0, 0, 0.06);
+}
+
+.lm-outcome-page .lm-outcome-letter-aside h3 {
+  margin: 0 0 10px;
+  font-size: 1rem;
+}
+
+.lm-outcome-page .lm-outcome-letter-cta {
+  margin-top: 12px;
+}
+
+.lm-outcome-page .lm-outcome-letter-note {
+  margin-top: 10px;
+  font-size: 13px;
+  color: rgba(0, 0, 0, 0.70);
+}
+
+@media (max-width: 720px) {
+  .lm-outcome-page .lm-outcome-letter {
+    padding: 14px;
+    border-radius: 22px;
+  }
+
+  .lm-outcome-page .lm-outcome-letter-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+/* === Outcome pages: conversion-forward polish (scoped to outcome pages only) === */
+.lm-outcome-page .lm-outcome-products {
+  padding-top: 8px;
+}
+
+.lm-outcome-page .lm-outcome-grid-2 {
+  gap: 18px;
+}
+
+.lm-outcome-page .lm-outcome-product-block {
+  border-radius: 22px;
+  padding: 18px;
+  background: rgba(255, 255, 255, 0.78);
+  border: 1px solid rgba(0, 0, 0, 0.06);
+  box-shadow: 0 16px 40px rgba(0, 0, 0, 0.05);
+}
+
+/* A subtle color edge to reinforce "curated" modules (scoped to outcome pages). */
+.lm-outcome-page .lm-outcome-product-block {
+  position: relative;
+  overflow: hidden;
+}
+
+.lm-outcome-page .lm-outcome-product-block::before {
+  content: "";
+  position: absolute;
+  inset: 0 0 auto 0;
+  height: 4px;
+  background: linear-gradient(90deg, var(--lm-outcome-accent-strong, rgba(0, 0, 0, 0.10)), rgba(255, 255, 255, 0));
+  opacity: 0.95;
+  pointer-events: none;
+}
+
+.lm-outcome-page .lm-outcome-product-block>p {
+  margin-top: 6px;
+  color: rgba(0, 0, 0, 0.72);
+}
+
+.lm-outcome-page .lm-outcome-block-link {
+  font-weight: 700;
+  text-decoration: none;
+}
+
+.lm-outcome-page .lm-outcome-block-link:hover {
+  text-decoration: underline;
+}
+
+/* Recommendation cards: stronger hierarchy, more premium density */
+.lm-outcome-page .lm-rec-grid {
+  gap: 12px;
+}
+
+.lm-outcome-page .lm-rec-card {
+  grid-template-columns: 96px minmax(0, 1fr);
+  padding: 14px 14px;
+  border-radius: 20px;
+  background: rgba(255, 255, 255, 0.86);
+  border: 1px solid rgba(0, 0, 0, 0.06);
+  box-shadow: 0 10px 28px rgba(0, 0, 0, 0.05);
+  transition: transform .14s ease, box-shadow .14s ease, background-color .14s ease;
+}
+
+.lm-outcome-page .lm-rec-card:hover {
+  transform: translateY(-1px);
+  box-shadow: 0 16px 46px rgba(0, 0, 0, 0.08);
+  background: rgba(255, 255, 255, 0.94);
+}
+
+.lm-outcome-page .lm-rec-media {
+  width: 96px;
+  height: 96px;
+  border-radius: 18px;
+  background: rgba(0, 0, 0, 0.02);
+  border: 1px solid rgba(0, 0, 0, 0.05);
+}
+
+.lm-outcome-page .lm-rec-meta {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px;
+  margin-bottom: 6px;
+}
+
+.lm-outcome-page .lm-rec-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 4px 10px;
+  border-radius: 999px;
+  font-weight: 800;
+  font-size: 12px;
+  letter-spacing: 0.02em;
+  background: rgba(0, 0, 0, 0.05);
+}
+
+.lm-outcome-page .lm-rec-rating {
+  display: inline-flex;
+  align-items: baseline;
+  gap: 6px;
+  font-weight: 700;
+  font-size: 12px;
+  color: rgba(0, 0, 0, 0.70);
+  white-space: nowrap;
+}
+
+.lm-outcome-page .lm-rec-star {
+  font-size: 12px;
+}
+
+.lm-outcome-page .lm-rec-title {
+  font-weight: 800;
+  color: rgba(0, 0, 0, 0.88);
+}
+
+.lm-outcome-page .lm-rec-cta {
+  margin-top: 8px;
+  font-weight: 800;
+  font-size: 14px;
+  color: rgba(0, 0, 0, 0.78);
+}
+
+@media (max-width: 720px) {
+  .lm-outcome-page .lm-outcome-grid-2 {
+    gap: 14px;
+  }
+
+  .lm-outcome-page .lm-outcome-product-block {
+    padding: 16px;
+  }
+
+  .lm-outcome-page .lm-rec-card {
+    grid-template-columns: 84px minmax(0, 1fr);
+  }
+
+  .lm-outcome-page .lm-rec-media {
+    width: 84px;
+    height: 84px;
+  }
+}
+
+@media (max-width: 520px) {
+  .lm-outcome-page .lm-rec-meta {
+    justify-content: flex-start;
+  }
+
+  .lm-outcome-page .lm-rec-rating {
+    opacity: 0.9;
+  }
+}
+
+/* =========================================================
+   Premium polish layer (CONTENT ONLY)
+   - Scoped to main#lm-react-root to avoid header/nav/mega-menu.
+   - Keeps existing typography sizing & global layout intact.
+   ======================================================= */
+
+main#lm-react-root {
+  --lm-surface: rgba(255, 255, 255, 0.74);
+  --lm-surface-strong: rgba(255, 255, 255, 0.88);
+  --lm-border: rgba(0, 0, 0, 0.07);
+  --lm-border-strong: rgba(0, 0, 0, 0.11);
+  --lm-shadow-sm: 0 6px 18px rgba(0, 0, 0, 0.08);
+  --lm-shadow: 0 14px 40px rgba(0, 0, 0, 0.10);
+  --lm-radius-md: 18px;
+  --lm-radius-lg: 22px;
+}
+
+/* Cards: cleaner surface + subtle depth */
+main#lm-react-root .lm-card {
+  background: var(--lm-surface);
+  border: 1px solid var(--lm-border);
+  box-shadow: var(--lm-shadow-sm);
+  border-radius: var(--lm-radius-lg);
+  backdrop-filter: saturate(115%) blur(10px);
+}
+
+/* Card hover: premium lift without “UI jitter” */
+@media (hover:hover) {
+  main#lm-react-root .lm-card:hover {
+    box-shadow: var(--lm-shadow);
+    border-color: var(--lm-border-strong);
+  }
+}
+
+/* Inputs: calmer borders, better focus (no layout shift) */
+main#lm-react-root input[type="text"],
+main#lm-react-root input[type="email"],
+main#lm-react-root input[type="search"],
+main#lm-react-root input[type="tel"],
+main#lm-react-root input[type="number"],
+main#lm-react-root input[type="password"],
+main#lm-react-root textarea,
+main#lm-react-root select {
+  background: var(--lm-surface-strong);
+  border: 1px solid var(--lm-border);
+  border-radius: 14px;
+  box-shadow: 0 1px 0 rgba(0, 0, 0, 0.03);
+}
+
+main#lm-react-root input:focus,
+main#lm-react-root textarea:focus,
+main#lm-react-root select:focus {
+  outline: none;
+  border-color: rgba(0, 0, 0, 0.22);
+  box-shadow: 0 0 0 4px rgba(55, 105, 90, 0.12);
+}
+
+/* Links: subtle underline affordance for trust */
+main#lm-react-root a {
+  text-underline-offset: 3px;
+  text-decoration-thickness: 1px;
+}
+
+main#lm-react-root a:hover {
+  text-decoration-thickness: 2px;
+}
+
+/* Buttons within content (exclude header by scoping to main) */
+main#lm-react-root .wp-element-button,
+main#lm-react-root .wp-block-button__link,
+main#lm-react-root button,
+main#lm-react-root input[type="submit"] {
+  border-radius: 999px;
+}
+
+main#lm-react-root .wp-element-button:focus-visible,
+main#lm-react-root .wp-block-button__link:focus-visible,
+main#lm-react-root button:focus-visible,
+main#lm-react-root input[type="submit"]:focus-visible,
+main#lm-react-root a:focus-visible {
+  outline: none;
+  box-shadow: 0 0 0 4px rgba(55, 105, 90, 0.16);
+  border-radius: 999px;
+}
+
+/* Media: prevent accidental stretching in content areas */
+main#lm-react-root img {
+  max-width: 100%;
+  height: auto;
+}
+
+
+/* --- Rustic Ultra-Premium Homepage Outcome Triptych (scoped) --- */
+.home .lm-outcomes {
+  position: relative;
+}
+
+.home .lm-outcomes .lm-kicker {
+  max-width: 70ch;
+}
+
+.home .lm-outcomes .lm-outcome-grid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 18px;
+}
+
+@media (max-width: 960px) {
+  .home .lm-outcomes .lm-outcome-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
+@media (max-width: 560px) {
+  .home .lm-outcomes .lm-outcome-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+.home .lm-outcomes .lm-outcome-panel {
+  position: relative;
+  overflow: hidden;
+  border-radius: 22px;
+  min-height: 320px;
+  padding: 22px 22px 20px;
+  text-decoration: none;
+  color: inherit;
+  box-shadow: 0 20px 60px rgba(0, 0, 0, 0.10);
+  border: 1px solid rgba(0, 0, 0, 0.06);
+  background: rgba(255, 255, 255, 0.35);
+}
+
+.home .lm-outcomes .lm-outcome-panel:focus-visible {
+  outline: 2px solid rgba(0, 0, 0, 0.35);
+  outline-offset: 3px;
+}
+
+.home .lm-outcomes .lm-outcome-panel .lm-outcome-media {
+  position: absolute;
+  inset: 0;
+  background-size: cover;
+  background-position: center;
+  transform: scale(1.02);
+}
+
+.home .lm-outcomes .lm-outcome-panel--sleep .lm-outcome-media {
+  background-image: url('images/outcome-sleep-hero-illus.jpg');
+}
+
+.home .lm-outcomes .lm-outcome-panel--move .lm-outcome-media {
+  background-image: url('images/outcome-move-hero-illus.jpg');
+}
+
+.home .lm-outcomes .lm-outcome-panel--brain .lm-outcome-media {
+  background-image: url('images/outcome-brain-hero-illus.jpg');
+}
+
+/* warm editorial wash + text legibility */
+.home .lm-outcomes .lm-outcome-panel::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background:
+    radial-gradient(1200px 600px at 20% 0%, rgba(255, 245, 230, 0.75) 0%, rgba(255, 245, 230, 0.10) 55%, rgba(255, 245, 230, 0.00) 100%),
+    linear-gradient(180deg, rgba(255, 255, 255, 0.00) 0%, rgba(255, 255, 255, 0.12) 30%, rgba(0, 0, 0, 0.35) 100%);
+  pointer-events: none;
+}
+
+.home .lm-outcomes .lm-outcome-panel>* {
+  position: relative;
+  z-index: 1;
+}
+
+.home .lm-outcomes .lm-outcome-eyebrow {
+  font-size: 12px;
+  font-weight: 800;
+  letter-spacing: 0.10em;
+  text-transform: uppercase;
+  color: rgba(0, 0, 0, 0.70);
+  display: inline-block;
+  padding: 8px 12px;
+  border-radius: 999px;
+  background: rgba(255, 255, 255, 0.66);
+  border: 1px solid rgba(0, 0, 0, 0.08);
+  backdrop-filter: blur(6px);
+}
+
+.home .lm-outcomes .lm-outcome-title {
+  margin: 14px 0 0;
+  font-size: 28px;
+  line-height: 1.12;
+  letter-spacing: -0.02em;
+  color: rgba(255, 255, 255, 0.98);
+  text-shadow: 0 12px 36px rgba(0, 0, 0, 0.55);
+  max-width: 18ch;
+}
+
+.home .lm-outcomes .lm-outcome-cta {
+  margin-top: auto;
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  font-weight: 800;
+  letter-spacing: 0.01em;
+  color: rgba(255, 255, 255, 0.96);
+  padding-top: 18px;
+}
+
+.home .lm-outcomes .lm-outcome-cta::after {
+  content: '→';
+  display: inline-flex;
+  width: 30px;
+  height: 30px;
+  align-items: center;
+  justify-content: center;
+  border-radius: 999px;
+  background: rgba(255, 255, 255, 0.18);
+  border: 1px solid rgba(255, 255, 255, 0.20);
+}
+
+.home .lm-outcomes .lm-outcome-micro {
+  margin-top: 8px;
+  font-size: 13px;
+  color: rgba(255, 255, 255, 0.82);
+  text-shadow: 0 8px 26px rgba(0, 0, 0, 0.55);
+}
+
+.home .lm-outcomes .lm-outcome-panel:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 26px 70px rgba(0, 0, 0, 0.14);
+}
+
+.home .lm-outcomes .lm-outcome-panel:hover .lm-outcome-media {
+  transform: scale(1.04);
+}
+
+/* ========================================================================== 
+   Homepage Outcomes — Editorial Triptych (LOCKED)
+   Scope: .home .lm-outcomes.lm-outcomes--editorial
+   ========================================================================== */
+
+.home .lm-outcomes.lm-outcomes--editorial {
+  position: relative;
+  margin-top: 0;
+  padding: clamp(28px, 4vw, 48px) clamp(18px, 3vw, 32px);
+  background-image: url("./images/parchment-subtle.png");
+  background-repeat: repeat;
+  background-size: cover;
+}
+
+/* Remove any leftover UI container feeling */
+.home .lm-outcomes.lm-outcomes--editorial .lm-outcome-grid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: clamp(18px, 2.5vw, 28px);
+  margin-top: 22px;
+  align-items: start;
+}
+
+/* Magazine-like rhythm: slight vertical offsets (no symmetry grid energy) */
+.home .lm-outcomes.lm-outcomes--editorial .lm-outcome-panel:nth-child(1) {
+  transform: translateY(8px);
+}
+
+.home .lm-outcomes.lm-outcomes--editorial .lm-outcome-panel:nth-child(2) {
+  transform: translateY(-8px);
+}
+
+.home .lm-outcomes.lm-outcomes--editorial .lm-outcome-panel:nth-child(3) {
+  transform: translateY(14px);
+}
+
+.home .lm-outcomes.lm-outcomes--editorial .lm-outcome-panel {
+  /* Kill any previous card styling */
+  border: 0 !important;
+  border-radius: 0 !important;
+  box-shadow: none !important;
+  background: transparent !important;
+  padding: 0 !important;
+  text-decoration: none;
+  color: inherit;
+  display: grid;
+  grid-template-rows: auto auto auto auto;
+  row-gap: 10px;
+}
+
+/* Photographic moment (no overlay, no gradient). Text sits in whitespace below. */
+.home .lm-outcomes.lm-outcomes--editorial .lm-outcome-panel::before {
+  content: "";
+  display: block;
+  width: 100%;
+  aspect-ratio: 4 / 5;
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+}
+
+/* Guardrail: if any legacy <img>/<picture> remains, hide it to avoid stretched media */
+.home .lm-outcomes.lm-outcomes--editorial .lm-outcome-panel img,
+.home .lm-outcomes.lm-outcomes--editorial .lm-outcome-panel picture,
+.home .lm-outcomes.lm-outcomes--editorial .lm-outcome-panel source {
+  display: none !important;
+}
+
+.home .lm-outcomes.lm-outcomes--editorial .lm-outcome-panel--sleep::before {
+  background-image: url("./images/outcome-sleep-photo-v2.jpg");
+  background-position: center;
+}
+
+.home .lm-outcomes.lm-outcomes--editorial .lm-outcome-panel--move::before {
+  background-image: url("./images/outcome-move-photo-v2.jpg");
+  background-position: center;
+}
+
+.home .lm-outcomes.lm-outcomes--editorial .lm-outcome-panel--brain::before {
+  background-image: url("./images/outcome-brain-photo-v2.jpg");
+  background-position: center;
+}
+
+/* Ensure the three allowed lines feel editorial, not UI */
+.home .lm-outcomes.lm-outcomes--editorial .lm-outcome-eyebrow {
+  margin-top: 6px;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  opacity: 0.78;
+  /* Kill any legacy pill/capsule styling that would read as UI */
+  position: static !important;
+  inset: auto !important;
+  background: transparent !important;
+  backdrop-filter: none !important;
+  -webkit-backdrop-filter: none !important;
+  padding: 0 !important;
+  border-radius: 0 !important;
+  box-shadow: none !important;
+  border: 0 !important;
+}
+
+.home .lm-outcomes.lm-outcomes--editorial .lm-outcome-title {
+  margin: 0;
+  /* Ensure it sits in whitespace below the photo, not over it */
+  position: static !important;
+  inset: auto !important;
+  background: transparent !important;
+  padding: 0 !important;
+  border-radius: 0 !important;
+}
+
+/* CTA must not look like a pill/button. Make it an editorial link. */
+.home .lm-outcomes.lm-outcomes--editorial .lm-outcome-cta {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  padding: 0 !important;
+  background: transparent !important;
+  border-radius: 0 !important;
+  box-shadow: none !important;
+  border: 0 !important;
+  width: fit-content;
+  text-decoration: underline;
+  text-underline-offset: 4px;
+  position: static !important;
+  inset: auto !important;
+}
+
+/* Hide any CTA icon chrome (circles/arrows) so it reads as editorial link text */
+.home .lm-outcomes.lm-outcomes--editorial .lm-outcome-cta svg,
+.home .lm-outcomes.lm-outcomes--editorial .lm-outcome-cta [class*="icon"],
+.home .lm-outcomes.lm-outcomes--editorial .lm-outcome-cta [aria-hidden="true"] {
+  display: none !important;
+}
+
+.home .lm-outcomes.lm-outcomes--editorial .lm-outcome-cta::after {
+  content: " →";
+}
+
+/* Prevent any legacy hover/active overlays from reappearing */
+.home .lm-outcomes.lm-outcomes--editorial .lm-outcome-panel:hover,
+.home .lm-outcomes.lm-outcomes--editorial .lm-outcome-panel:focus {
+  box-shadow: none !important;
+}
+
+/* Responsive: keep it calm, editorial. */
+@media (max-width: 980px) {
+  .home .lm-outcomes.lm-outcomes--editorial .lm-outcome-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .home .lm-outcomes.lm-outcomes--editorial .lm-outcome-panel:nth-child(1),
+  .home .lm-outcomes.lm-outcomes--editorial .lm-outcome-panel:nth-child(2),
+  .home .lm-outcomes.lm-outcomes--editorial .lm-outcome-panel:nth-child(3) {
+    transform: none;
+  }
+
+  .home .lm-outcomes.lm-outcomes--editorial {
+    background-size: cover;
+  }
+}
+
+/* ========================================================================== 
+   Homepage Outcomes — Editorial Triptych (SIMPLIFIED + SITE-ALIGNED)
+   Goal: integrate with site; remove funnel/UI chrome; keep panels text-only.
+   Scope: .home .lm-outcomes.lm-outcomes--editorial
+   ========================================================================== */
+
+/* Kill the old funnel step pill on this section (homepage only) */
+.home .lm-outcomes.lm-outcomes--editorial::before {
+  content: none !important;
+  display: none !important;
+}
+
+/* Calm parchment field (subtle), no gradients */
+.home .lm-outcomes.lm-outcomes--editorial {
+  background-color: rgba(248, 242, 234, 0.92);
+  background-image: url("./images/parchment-subtle.png");
+  background-repeat: repeat;
+  background-size: cover;
+  border-top: 1px solid rgba(74, 54, 38, 0.06);
+  border-bottom: 1px solid rgba(74, 54, 38, 0.06);
+}
+
+/* Ensure we are not inheriting the legacy overlay pseudo-element */
+.home .lm-outcomes.lm-outcomes--editorial .lm-outcome-panel::before {
+  position: static !important;
+  inset: auto !important;
+  pointer-events: none;
+  /* photo surface (set per-panel below) */
+  background-color: transparent !important;
+}
+
+/* Remove any legacy panel overlay/wash that could still be applied via other rules */
+.home .lm-outcomes.lm-outcomes--editorial .lm-outcome-panel {
+  transform: none !important;
+  /* remove hover/offset transforms from older variants */
+}
+
+/* Triptych: simple, calm, aligned to the rest of the site */
+.home .lm-outcomes.lm-outcomes--editorial .lm-outcome-grid {
+  align-items: start;
+}
+
+/* Photo moment sits above text (no text-on-image) */
+.home .lm-outcomes.lm-outcomes--editorial .lm-outcome-panel {
+  display: flex !important;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.home .lm-outcomes.lm-outcomes--editorial .lm-outcome-panel::before {
+  content: "";
+  display: block;
+  width: 100%;
+  aspect-ratio: 4 / 5;
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+}
+
+/* Hide any leftover media nodes so we never double-render */
+.home .lm-outcomes.lm-outcomes--editorial .lm-outcome-panel .lm-outcome-media,
+.home .lm-outcomes.lm-outcomes--editorial .lm-outcome-panel img,
+.home .lm-outcomes.lm-outcomes--editorial .lm-outcome-panel picture,
+.home .lm-outcomes.lm-outcomes--editorial .lm-outcome-panel source {
+  display: none !important;
+}
+
+/* Text styling: calm, site-aligned (no overlays, no pills) */
+.home .lm-outcomes.lm-outcomes--editorial .lm-outcome-panel>* {
+  position: static !important;
+  z-index: auto !important;
+}
+
+.home .lm-outcomes.lm-outcomes--editorial .lm-outcome-eyebrow {
+  padding: 0 !important;
+  border: 0 !important;
+  border-radius: 0 !important;
+  background: transparent !important;
+  backdrop-filter: none !important;
+  color: rgba(52, 37, 25, 0.72) !important;
+}
+
+.home .lm-outcomes.lm-outcomes--editorial .lm-outcome-title {
+  margin: 0 !important;
+  color: rgba(52, 37, 25, 0.92) !important;
+  text-shadow: none !important;
+  max-width: 22ch;
+}
+
+/* CTA as an editorial link (not a button/pill, no icon chrome) */
+.home .lm-outcomes.lm-outcomes--editorial .lm-outcome-cta {
+  margin-top: 2px !important;
+  padding-top: 0 !important;
+  font-weight: 800;
+  color: rgba(52, 37, 25, 0.86) !important;
+  text-decoration: underline;
+  text-underline-offset: 3px;
+  display: inline;
+}
+
+.home .lm-outcomes.lm-outcomes--editorial .lm-outcome-cta::after {
+  content: none !important;
+  display: none !important;
+}
+
+/* Per-panel photography */
+.home .lm-outcomes.lm-outcomes--editorial .lm-outcome-panel--sleep::before {
+  background-image: url("./images/outcome-sleep-photo-v2.jpg");
+  background-position: center;
+}
+
+.home .lm-outcomes.lm-outcomes--editorial .lm-outcome-panel--move::before {
+  background-image: url("./images/outcome-move-photo-v2.jpg");
+  background-position: center;
+}
+
+.home .lm-outcomes.lm-outcomes--editorial .lm-outcome-panel--brain::before {
+  background-image: url("./images/outcome-brain-photo-v2.jpg");
+  background-position: center;
+}
+
+/* Responsive: keep it simple */
+@media (max-width: 960px) {
+  .home .lm-outcomes.lm-outcomes--editorial .lm-outcome-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
+@media (max-width: 560px) {
+  .home .lm-outcomes.lm-outcomes--editorial .lm-outcome-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+/* ========================================================================== 
+   Homepage Outcomes — Editorial (POLISH)
+   - soften container corners
+   - updated outcome photography (motion-forward)
+   Scope: .home .lm-outcomes.lm-outcomes--editorial
+   ========================================================================== */
+
+.home .lm-outcomes.lm-outcomes--editorial {
+  border-radius: 28px;
+  overflow: hidden;
+  /* create breathing room so rounded corners read against the page */
+  margin-left: clamp(14px, 2vw, 22px);
+  margin-right: clamp(14px, 2vw, 22px);
+}
+
+/* soften the photographic moments (not cards; just print-like corners) */
+.home .lm-outcomes.lm-outcomes--editorial .lm-outcome-panel::before {
+  border-radius: 22px;
+}
+
+/* ensure the updated images always render crisply */
+.home .lm-outcomes.lm-outcomes--editorial .lm-outcome-panel--sleep::before {
+  background-image: url("./images/outcome-sleep-photo-v2.jpg") !important;
+  background-position: center;
+}
+
+.home .lm-outcomes.lm-outcomes--editorial .lm-outcome-panel--move::before {
+  background-image: url("./images/outcome-move-photo-v2.jpg") !important;
+  background-position: center;
+}
+
+.home .lm-outcomes.lm-outcomes--editorial .lm-outcome-panel--brain::before {
+  background-image: url("./images/outcome-brain-photo-v2.jpg") !important;
+  background-position: center;
+}
+
+
+/* ========================================================================== 
+   Homepage Hero — Founder portrait refinement
+   Goal: iconic, grounded, non-squashed, premium presence (no UI trickery)
+   Scope: .home .lm-hero (React homepage only)
+   ========================================================================== */
+
+/* Make the right rail feel like an intentional image stage (not a background) */
+.home .lm-hero-right {
+  background: transparent !important;
+  display: grid;
+  place-items: center;
+  padding: 26px 22px;
+}
+
+/* Hero portrait: crop out the baked-in vignette, increase scale, preserve aspect */
+.home .lm-hero-right .lm-hero-img {
+  width: min(680px, 96%);
+  aspect-ratio: 4 / 5;
+  height: auto;
+  object-fit: cover;
+  object-position: 52% 28%;
+  border-radius: 24px;
+  border: 1px solid rgba(43, 42, 40, .12);
+  box-shadow: 0 18px 44px rgba(0, 0, 0, .14);
+  background: transparent !important;
+  filter: none !important;
+}
+
+/* Responsive: keep the portrait confident without overpowering copy */
+@media (max-width: 980px) {
+  .home .lm-hero-right {
+    padding: 12px 18px 26px;
+  }
+
+  .home .lm-hero-right .lm-hero-img {
+    width: min(620px, 96%);
+    aspect-ratio: 5 / 4;
+    object-position: 52% 22%;
+  }
+}
+
+@media (max-width: 520px) {
+  .home .lm-hero-right {
+    padding: 10px 14px 20px;
+  }
+
+  .home .lm-hero-right .lm-hero-img {
+    width: 100%;
+    aspect-ratio: 6 / 5;
+    border-radius: 18px;
+  }
+}
+
+
+/* ---- LM Hero bottle safety override (scoped by filename to avoid layout/typography changes elsewhere) ---- */
+section img[src*="laura-hero-Das1x8Qh.jpg"],
+section img[src*="hero-mt-folly-bottles-HPjTeTzA.jpg"] {
+  object-fit: contain !important;
+  width: auto !important;
+  max-width: 100% !important;
+  height: 100% !important;
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+
+/* =========================================================
+   GLOBAL RESPONSIVENESS + BUTTON LEGIBILITY PATCH
+   Goal: eliminate horizontal overflow site-wide and ensure
+   buttons remain readable in all states.
+   Notes: does NOT modify cart/checkout flow logic.
+   ========================================================= */
+
+/* 0) Global overflow guards */
+html,
+body {
+  max-width: 100%;
+  overflow-x: hidden;
+}
+
+img,
+svg,
+video,
+canvas {
+  max-width: 100%;
+  height: auto;
+}
+
+iframe {
+  max-width: 100%;
+}
+
+/* Prevent long strings/URLs from blowing layout */
+.lm-prose,
+.woocommerce,
+.entry-content {
+  overflow-wrap: anywhere;
+  word-break: break-word;
+}
+
+/* Tables: keep readable on mobile */
+table {
+  max-width: 100%;
+}
+
+@media (max-width: 680px) {
+
+  .lm-prose table,
+  .woocommerce table {
+    display: block;
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+  }
+}
+
+/* 1) WooCommerce grids: make ALL ul.products responsive (including related/upsells/cross-sells) */
+.woocommerce ul.products,
+.woocommerce-page ul.products {
+  width: 100% !important;
+  max-width: 100% !important;
+  box-sizing: border-box !important;
+  overflow: visible !important;
+}
+
+.woocommerce ul.products li.product,
+.woocommerce-page ul.products li.product {
+  width: 100% !important;
+  min-width: 0 !important;
+}
+
+/* Desktop default (keeps your existing 4-col rule intact where applicable) */
+@media (min-width: 981px) {
+
+  .woocommerce ul.products,
+  .woocommerce-page ul.products {
+    grid-template-columns: repeat(4, minmax(0, 1fr)) !important;
+  }
+}
+
+/* Tablet */
+@media (max-width: 980px) {
+
+  .woocommerce ul.products,
+  .woocommerce-page ul.products {
+    display: grid !important;
+    grid-template-columns: repeat(2, minmax(0, 1fr)) !important;
+    gap: 16px !important;
+  }
+}
+
+/* Mobile */
+@media (max-width: 560px) {
+
+  .woocommerce ul.products,
+  .woocommerce-page ul.products {
+    display: grid !important;
+    grid-template-columns: 1fr !important;
+    gap: 14px !important;
+  }
+}
+
+/* Specifically harden related/upsells/cross-sells where overflow is most common */
+@media (max-width: 980px) {
+
+  .woocommerce .related ul.products,
+  .woocommerce .up-sells ul.products,
+  .woocommerce .cross-sells ul.products {
+    display: grid !important;
+    grid-template-columns: repeat(2, minmax(0, 1fr)) !important;
+    gap: 16px !important;
+  }
+}
+
+@media (max-width: 560px) {
+
+  .woocommerce .related ul.products,
+  .woocommerce .up-sells ul.products,
+  .woocommerce .cross-sells ul.products {
+    grid-template-columns: 1fr !important;
+  }
+}
+
+/* 2) Button legibility: unify all buttons site-wide (excluding admin) */
+button,
+input[type="button"],
+input[type="submit"],
+input[type="reset"],
+a.button,
+.button,
+.woocommerce a.button,
+.woocommerce button.button,
+.woocommerce input.button,
+.woocommerce #respond input#submit {
+  background: var(--lm-sage) !important;
+  color: #fff !important;
+  border: 1px solid rgba(0, 0, 0, 0) !important;
+  text-decoration: none !important;
+}
+
+button:hover,
+input[type="button"]:hover,
+input[type="submit"]:hover,
+input[type="reset"]:hover,
+a.button:hover,
+.button:hover,
+.woocommerce a.button:hover,
+.woocommerce button.button:hover,
+.woocommerce input.button:hover,
+.woocommerce #respond input#submit:hover {
+  background: var(--lm-sage-2) !important;
+  color: #fff !important;
+}
+
+/* Focus/active states (accessible + legible) */
+button:focus-visible,
+input[type="button"]:focus-visible,
+input[type="submit"]:focus-visible,
+input[type="reset"]:focus-visible,
+a.button:focus-visible,
+.button:focus-visible,
+.woocommerce a.button:focus-visible,
+.woocommerce button.button:focus-visible,
+.woocommerce input.button:focus-visible,
+.woocommerce #respond input#submit:focus-visible {
+  outline: 3px solid rgba(60, 75, 61, 0.35) !important;
+  outline-offset: 2px !important;
+}
+
+button:active,
+input[type="button"]:active,
+input[type="submit"]:active,
+input[type="reset"]:active,
+a.button:active,
+.button:active,
+.woocommerce a.button:active,
+.woocommerce button.button:active,
+.woocommerce input.button:active,
+.woocommerce #respond input#submit:active {
+  background: var(--lm-sage-2) !important;
+  color: #fff !important;
+}
+
+/* Disabled buttons stay legible */
+button:disabled,
+input[type="button"]:disabled,
+input[type="submit"]:disabled,
+input[type="reset"]:disabled,
+.woocommerce a.button.disabled,
+.woocommerce a.button:disabled,
+.woocommerce button.button:disabled,
+.woocommerce input.button:disabled {
+  opacity: 0.55 !important;
+  cursor: not-allowed !important;
+  color: #fff !important;
+}
+
+/* Links styled as buttons should not inherit visited colors */
+a.button:visited,
+.button:visited,
+.woocommerce a.button:visited {
+  color: #fff !important;
+}
+
+/* "Added to cart" / secondary action links: keep readable */
+.woocommerce a.added_to_cart {
+  color: var(--lm-ink) !important;
+  text-decoration: underline !important;
+  text-underline-offset: 3px;
+}
+
+
+
+
+/* ===========================
+   Mobile-first responsiveness
+   =========================== */
+
+.lm-logo {
+  height: 90px;
+  width: auto;
+  max-width: 100%;
+  display: block;
+}
+
+/*
+  The theme uses aggressive global button styles (with !important) for Woo.
+  Header icon controls (search/account/cart + mobile menu) must stay lightweight
+  and not inherit filled button treatments.
+*/
+.lm-icon-btn,
+.lm-mobile-toggle,
+.lm-mobile-close {
+  background: transparent !important;
+  color: var(--lm-ink) !important;
+  box-shadow: none !important;
+}
+
+.lm-mobile-toggle {
+  border: 0 !important;
+  width: 44px;
+  height: 44px;
+  padding: 8px;
+  border-radius: 12px;
+  display: none;
+  /* Hidden on desktop */
+}
+
+.lm-mobile-toggle:hover,
+.lm-icon-btn:hover {
+  background: rgba(60, 75, 61, 0.08) !important;
+}
+
+.lm-mobile-toggle:active,
+.lm-icon-btn:active {
+  background: rgba(60, 75, 61, 0.14) !important;
+}
+
+/* Make the hamburger lines a little sturdier for mobile legibility */
+.lm-mobile-toggle-bars,
+.lm-mobile-toggle-bars::before,
+.lm-mobile-toggle-bars::after {
+  height: 2.5px;
+  border-radius: 999px;
+}
+
+.lm-mobile-toggle {
+  display: none;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+}
+
+.lm-mobile-toggle-bars {
+  position: relative;
+  width: 18px;
+  height: 2px;
+  background: var(--lm-ink);
+  display: block;
+}
+
+.lm-mobile-toggle-bars::before,
+.lm-mobile-toggle-bars::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  width: 18px;
+  height: 2px;
+  background: var(--lm-ink);
+}
+
+.lm-mobile-toggle-bars::before {
+  top: -6px;
+}
+
+.lm-mobile-toggle-bars::after {
+  top: 6px;
+}
+
+.lm-mobile-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.35);
+  z-index: 60;
+}
+
+.lm-mobile-drawer {
+  position: fixed;
+  top: 0;
+  right: 0;
+  height: 100vh;
+  width: min(88vw, 360px);
+  background: rgba(246, 240, 233, 0.98);
+  border-left: 1px solid var(--lm-border);
+  z-index: 70;
+  transform: translateX(100%);
+  transition: transform 220ms ease;
+  display: flex;
+  flex-direction: column;
+}
+
+.lm-mobile-drawer.is-open {
+  transform: translateX(0);
+}
+
+html.lm-no-scroll,
+html.lm-no-scroll body {
+  overflow: hidden;
+  height: 100%;
+}
+
+.lm-mobile-drawer-head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  padding: 14px 16px;
+  border-bottom: 1px solid var(--lm-border);
+}
+
+.lm-mobile-drawer-title {
+  font-family: var(--lm-serif);
+  font-weight: 600;
+  letter-spacing: 0.02em;
+}
+
+.lm-mobile-close {
+  border: 1px solid var(--lm-border);
+  background: rgba(255, 255, 255, 0.6);
+  border-radius: 999px;
+  width: 40px;
+  height: 40px;
+  cursor: pointer;
+  font-size: 22px;
+  line-height: 1;
+}
+
+.lm-mobile-nav {
+  padding: 10px 8px 18px;
+  overflow: auto;
+}
+
+.lm-mobile-menu {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.lm-mobile-menu li {
+  margin: 0;
+}
+
+.lm-mobile-menu a {
+  display: block;
+  padding: 12px 12px;
+  border-radius: 12px;
+  color: var(--lm-ink);
+  text-decoration: none;
+}
+
+.lm-mobile-menu a:hover {
+  background: rgba(255, 255, 255, 0.55);
+}
+
+/* Breakpoints */
+@media (max-width: 900px) {
+  .lm-shell {
+    padding: 0 14px;
+  }
+
+  .lm-header-inner {
+    padding: 10px 0;
+  }
+
+  .lm-logo {
+    height: 66px;
+  }
+
+  .lm-nav {
+    display: none;
+  }
+
+  .lm-mobile-toggle {
+    display: inline-flex;
+  }
+}
+
+@media (max-width: 480px) {
+  .lm-logo {
+    height: 56px;
+  }
+
+  .lm-header-inner {
+    gap: 10px;
+  }
+}
+
+/* Ensure grids collapse nicely on small screens */
+@media (max-width: 1024px) {
+  .products {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
+}
+
+@media (max-width: 768px) {
+  .products {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
+@media (max-width: 520px) {
+  .products {
+    grid-template-columns: repeat(1, minmax(0, 1fr));
+  }
+}
+
+/* Related products: remove the huge grid padding used on shop archives */
+.woocommerce .related ul.products,
+.woocommerce .upsells ul.products,
+.woocommerce .cross-sells ul.products {
+  padding: 0 !important;
+  max-width: var(--lm-max);
+}
+
+/* Related product cards: reduce vertical bloat and cap media height */
+.woocommerce .related ul.products li.product,
+.woocommerce .upsells ul.products li.product,
+.woocommerce .cross-sells ul.products li.product {
+  padding: 16px 14px 18px !important;
+}
+
+.woocommerce .related ul.products li.product img,
+.woocommerce .upsells ul.products li.product img,
+.woocommerce .cross-sells ul.products li.product img {
+  width: 100% !important;
+  max-width: 220px;
+  max-height: 180px;
+  margin: 6px auto 12px !important;
+  aspect-ratio: 1 / 1;
+  object-fit: contain;
+}
+
+.woocommerce .related ul.products li.product .woocommerce-loop-product__title,
+.woocommerce .upsells ul.products li.product .woocommerce-loop-product__title,
+.woocommerce .cross-sells ul.products li.product .woocommerce-loop-product__title {
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 2;
+  overflow: hidden;
+}
+
+/* Tables: allow scroll instead of overflow */
+@media (max-width: 768px) {
+  .woocommerce table.shop_table {
+    display: block;
+    width: 100%;
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+  }
+}
+
+
+/* === v1.7.4: Fix excessive height in related/upsells/cross-sells cards === */
+.single-product .related ul.products,
+.single-product .upsells ul.products,
+.single-product .cross-sells ul.products {
+  align-items: start !important;
+}
+
+.single-product .related ul.products li.product,
+.single-product .upsells ul.products li.product,
+.single-product .cross-sells ul.products li.product {
+  height: auto !important;
+  /* remove stretch-to-row height */
+  min-height: 0 !important;
+  padding: 14px 12px 16px !important;
+}
+
+.single-product .related ul.products li.product a.woocommerce-LoopProduct-link,
+.single-product .upsells ul.products li.product a.woocommerce-LoopProduct-link,
+.single-product .cross-sells ul.products li.product a.woocommerce-LoopProduct-link {
+  height: auto !important;
+  min-height: 0 !important;
+  justify-content: flex-start !important;
+}
+
+.single-product .related ul.products li.product img,
+.single-product .upsells ul.products li.product img,
+.single-product .cross-sells ul.products li.product img {
+  max-height: 180px !important;
+  max-width: 200px !important;
+  clip-path: none !important;
+  /* avoid unexpected sizing artifacts */
+}
+
+.single-product .related ul.products li.product .woocommerce-loop-product__title,
+.single-product .upsells ul.products li.product .woocommerce-loop-product__title,
+.single-product .cross-sells ul.products li.product .woocommerce-loop-product__title {
+  display: -webkit-box !important;
+  -webkit-box-orient: vertical !important;
+  -webkit-line-clamp: 2 !important;
+  overflow: hidden !important;
+  margin: 10px 0 6px !important;
+}
+
+.single-product .related ul.products li.product .price,
+.single-product .upsells ul.products li.product .price,
+.single-product .cross-sells ul.products li.product .price {
+  margin-top: 0 !important;
+  /* stop pushing price to bottom */
+  margin-bottom: 10px !important;
+}
+
+@media (max-width: 600px) {
+
+  .single-product .related ul.products,
+  .single-product .upsells ul.products,
+  .single-product .cross-sells ul.products {
+    grid-template-columns: repeat(2, minmax(0, 1fr)) !important;
+    gap: 14px !important;
+  }
+
+  .single-product .related ul.products li.product,
+  .single-product .upsells ul.products li.product,
+  .single-product .cross-sells ul.products li.product {
+    padding: 12px 10px 14px !important;
+  }
+
+  .single-product .related ul.products li.product img,
+  .single-product .upsells ul.products li.product img,
+  .single-product .cross-sells ul.products li.product img {
+    max-height: 150px !important;
+    max-width: 170px !important;
+  }
+}
+
+@media (max-width: 420px) {
+
+  .single-product .related ul.products,
+  .single-product .upsells ul.products,
+  .single-product .cross-sells ul.products {
+    grid-template-columns: 1fr !important;
+  }
+}
+
+
+/* ===== HOMEPAGE OUTCOME PANEL PHOTOS (SHIP OVERRIDE) ===== */
+.lm-outcome-panel--sleep::before {
+  background-image: url("./images/outcome-sleep-photo-v2.jpg");
+}
+
+.lm-outcome-panel--move::before {
+  background-image: url("./images/outcome-move-photo-v2.jpg");
+}
+
+.lm-outcome-panel--brain::before {
+  background-image: url("./images/outcome-brain-photo-v2.jpg");
+}
+
+
+/* ===== HERO BOTTLES POSITION (SHIP v1.7.9) ===== */
+.lm-hero-right {
+  align-items: flex-start;
+  justify-content: flex-start;
+  padding-top: 12px;
+}
+
+.lm-hero-right .lm-hero-img {
+  max-width: 760px;
+  max-height: 480px;
+  width: 100%;
+  height: auto;
+  object-fit: contain;
+  margin-top: -8px;
+}
+
+@media (max-width: 1024px) {
+  .lm-hero-right {
+    padding-top: 6px;
+  }
+
+  .lm-hero-right .lm-hero-img {
+    max-width: 680px;
+    max-height: 420px;
+    margin-top: 0;
+  }
+}
+
+
+/* ===== FAILSAFE MOBILE DRAWER (SHIP) ===== */
+.lm-mobile-overlay[hidden] {
+  display: none !important;
+}
+
+.lm-mobile-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, .35);
+  z-index: 9998;
+}
+
+.lm-mobile-drawer {
+  position: fixed;
+  top: 0;
+  left: 0;
+  height: 100vh;
+  width: min(86vw, 380px);
+  background: #fbf6ee;
+  z-index: 9999;
+  transform: translateX(-105%);
+  transition: transform .22s ease;
+  overflow: auto;
+  -webkit-overflow-scrolling: touch;
+  box-shadow: 0 18px 60px rgba(0, 0, 0, .18);
+}
+
+html.lm-mobile-open .lm-mobile-drawer {
+  transform: translateX(0);
+}
+
+html.lm-mobile-open .lm-mobile-overlay {
+  display: block !important;
+}
+
+/* prevent drawer nav from appearing in normal flow if base styles fail to load somewhere */
+.lm-mobile-drawer:not([data-initialized]) {
+  transform: translateX(-105%);
+}
+
+
+/* ===== HERO BOTTLES POSITION (SHIP) ===== */
+.lm-hero-right img {
+  max-width: 100%;
+  height: auto;
+  transform: translateY(-18px) scale(1.04);
+  transform-origin: center bottom;
+}
+
+@media (max-width: 980px) {
+  .lm-hero-right img {
+    transform: none;
+  }
+}
+
+/* Promo banner (homepage only) */
+.lm-promo-banner {
+  background: #D8C3A5;
+  color: #2F2A25;
+  text-align: center;
+  font-size: 14px;
+  font-weight: 500;
+  letter-spacing: .2px;
+  padding: 10px 16px;
+  line-height: 1.4;
+}
+
+@media (max-width:768px) {
+  .lm-promo-banner {
+    font-size: 13px;
+    padding: 10px 12px;
+  }
+}
+
+/* ===== HOMEPAGE OUTCOME PANEL PHOTOS (SHIP) ===== */
+.lm-outcome-panel::before {
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+}
+
+.lm-outcome-panel--sleep::before {
+  background-image: url("./images/outcome-sleep-photo-v2.jpg");
+}
+
+.lm-outcome-panel--move::before {
+  background-image: url("./images/outcome-move-photo-v2.jpg");
+}
+
+.lm-outcome-panel--brain::before {
+  background-image: url("./images/outcome-brain-photo-v2.jpg");
+}
+
+/* LM GPT HERO BADGE START */
+.lm-founder-badge{
+  display:flex;
+  align-items:center;
+  gap:14px;
+  margin-bottom: 18px;
+}
+.lm-founder-img{
+  width:56px;
+  height:56px;
+  border-radius:9999px;
+  object-fit:cover;
+  border:2px solid rgba(255,255,255,0.85);
+  box-shadow: 0 8px 24px rgba(0,0,0,0.12);
+}
+.lm-founder-eyebrow{
+  font-size: 12px;
+  letter-spacing: .14em;
+  text-transform: uppercase;
+  opacity: .7;
+}
+.lm-founder-title{
+  font-weight: 600;
+  font-size: 14px;
+  margin-top: 2px;
+}
+.lm-founder-sub{
+  font-size: 13px;
+  opacity: .75;
+  margin-top: 2px;
+}
+/* Make the right-side product hero image pop */
+.lm-hero-right .lm-hero-img{
+  filter: drop-shadow(0 18px 28px rgba(0,0,0,0.18));
+  transform: translateY(6px);
+}
+/* LM GPT HERO BADGE END */

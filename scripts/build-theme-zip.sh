@@ -2,7 +2,7 @@
 set -euo pipefail
 
 VERSION="${1:-dev}"
-THEME_SRC="wp-content/themes/lauras-mercantile-hybrid-enhanced 3"
+THEME_SRC="wp-content/themes/lauras-mercantile-hybrid-gpt"
 DIST_DIR="dist"
 
 # Sanitize version for folder name

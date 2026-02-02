@@ -21,11 +21,11 @@ jobs:
         with:
           node-version: "20"
       - name: Install React deps
-        working-directory: "wp-content/themes/lauras-mercantile-hybrid-enhanced 3/react-src"
+        working-directory: "wp-content/themes/lauras-mercantile-hybrid-gpt/react-src"
         run: npm install --no-audit --no-fund
 
       - name: Build React
-        working-directory: "wp-content/themes/lauras-mercantile-hybrid-enhanced 3/react-src"
+        working-directory: "wp-content/themes/lauras-mercantile-hybrid-gpt/react-src"
         run: npm run build
 
       - name: "Guard: Outcomes files must exist"

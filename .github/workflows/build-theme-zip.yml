@@ -32,10 +32,7 @@ jobs:
         run: npm run build
 
       - name: Guard: Outcomes files must exist
-        run: |
-          test -f "wp-content/themes/lauras-mercantile-hybrid-enhanced 3/assets/js/home-outcomes-editorial.js"
-          test -f "wp-content/themes/lauras-mercantile-hybrid-enhanced 3/assets/base.css"
-          test -f "wp-content/themes/lauras-mercantile-hybrid-enhanced 3/functions.php"
+        run: test -f "wp-content/themes/lauras-mercantile-hybrid-enhanced 3/assets/js/home-outcomes-editorial.js" && test -f "wp-content/themes/lauras-mercantile-hybrid-enhanced 3/assets/base.css" && test -f "wp-content/themes/lauras-mercantile-hybrid-enhanced 3/functions.php"
 
       - name: Package theme ZIP (parallel-install)
         run: bash scripts/build-theme-zip.sh "${GITHUB_REF_NAME}"

@@ -1,9 +1,7 @@
 name: Deploy theme via rsync (WP Engine)
 
 on:
-  push:
-    branches: ["stage", "main"]
-
+  workflow_dispatch:
 jobs:
   deploy:
     runs-on: ubuntu-latest

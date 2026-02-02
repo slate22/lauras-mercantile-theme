@@ -31,7 +31,7 @@ jobs:
         working-directory: "wp-content/themes/lauras-mercantile-hybrid-enhanced 3/react-src"
         run: npm run build
 
-      - name: Guard: Outcomes files must exist
+      - name: "Guard: Outcomes files must exist"
         run: test -f "wp-content/themes/lauras-mercantile-hybrid-enhanced 3/assets/js/home-outcomes-editorial.js" && test -f "wp-content/themes/lauras-mercantile-hybrid-enhanced 3/assets/base.css" && test -f "wp-content/themes/lauras-mercantile-hybrid-enhanced 3/functions.php"
 
       - name: Package theme ZIP (parallel-install)

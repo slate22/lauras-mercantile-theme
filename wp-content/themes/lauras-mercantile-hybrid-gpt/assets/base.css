@@ -233,7 +233,8 @@ main {
   padding: 16px 18px 18px;
 }
 
-margin: 0 0 8px;
+.lm-blog-card-excerpt-body {
+  margin: 0 0 8px;
 }
 
 
@@ -3207,7 +3208,8 @@ img[src*="hero-mt-folly-bottles-"] {
 }
 
 /* Slightly smaller, more refined blog card titles */
-line-height: 1.35;
+.lm-blog-card-title {
+  line-height: 1.35;
 }
 
 /* On very small screens, tighten card padding */
@@ -3215,7 +3217,6 @@ line-height: 1.35;
   .lm-blog-card-body {
     padding: 14px 14px 16px;
   }
-}
 }
 
 /* Optional subtle intro text under the page title */
@@ -5568,9 +5569,9 @@ a.button:visited,
    =========================== */
 
 .lm-logo {
-  height: 72px;
-  width: auto;
-  max-width: 100%;
+  height: 160px !important;
+  width: auto !important;
+  max-width: none !important;
   display: block;
 }
 
@@ -5744,7 +5745,7 @@ html.lm-no-scroll body {
   }
 
   .lm-logo {
-    height: 56px;
+    height: 120px !important;
   }
 
   .lm-nav {
@@ -5758,7 +5759,7 @@ html.lm-no-scroll body {
 
 @media (max-width: 480px) {
   .lm-logo {
-    height: 48px;
+    height: 100px !important;
   }
 
   .lm-header-inner {

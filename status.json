@@ -1,6 +1,6 @@
 {
     "project_id": "lauras-mercantile-theme",
     "current_status": "success",
-    "latest_artifact_url": "lauras-mercantile-v1-81-final.tar.gz",
-    "next_recommended_step": "Upload the theme package to the live environment and verify that mushroom products are prioritized in search and shop views."
+    "latest_artifact_url": "https://github.com/slate22/lauras-mercantile-theme/commit/40c5e0852fbad01826d2a751f7e7200cfd9fb8d7",
+    "next_recommended_step": "Verify the GitHub Action deployment and then use the SFTP commands in UPLOAD_COMMANDS.md to deploy the theme package to WP Engine."
 }

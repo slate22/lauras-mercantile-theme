@@ -77,7 +77,7 @@
 
 <?php if ( function_exists('is_front_page') && is_front_page() ) : ?>
   <div class="lm-promo-banner" role="region" aria-label="Promotion">
-    Take 20% off Functional Mushrooms and Functional Chocolate. No coupon needed.
+    Take 20% off CBD Chocolates and Mushrooms. Check our Full Spectrum CBD Oil specials. No coupon required!
   </div>
 <?php endif; ?>
 

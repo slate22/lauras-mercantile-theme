@@ -673,7 +673,13 @@ add_action('wp_enqueue_scripts', function () {
  * Prioritizes 'Functional Mushrooms' (1st) and 'Joe Tippens Protocol' (2nd).
  */
 add_filter('posts_clauses', function($clauses, $query) {
-    if (is_admin() || !is_shop() || !$query->is_main_query()) {
+    // Apply to shop page and product categories
+    if (is_admin() || !is_shop() && !is_product_category()) {
+        return $clauses;
+    }
+
+    // Only affect the main query to avoid breaking widgets/sidebars
+    if (isset($query->query_vars['post_type']) && $query->query_vars['post_type'] !== 'product') {
         return $clauses;
     }
 
@@ -697,14 +703,24 @@ add_filter('posts_clauses', function($clauses, $query) {
         $clauses['join'] .= " LEFT JOIN {$wpdb->term_relationships} AS tr_sort ON ({$wpdb->posts}.ID = tr_sort.object_id AND tr_sort.term_taxonomy_id IN ($id1, $id2))";
     }
 
-    // Custom sort order: 1 for Mushrooms, 2 for Tippens, 3 for everything else
+    // Custom sort order: 
+    // 0: Functional Mushrooms
+    // 1: Joe Tippens
+    // 2: Everything else
     $priority_order = "CASE 
-        WHEN tr_sort.term_taxonomy_id = $id1 THEN 1 
-        WHEN tr_sort.term_taxonomy_id = $id2 THEN 2 
-        ELSE 3 END";
+        WHEN tr_sort.term_taxonomy_id = $id1 THEN 0 
+        WHEN tr_sort.term_taxonomy_id = $id2 THEN 1 
+        ELSE 2 END";
 
-    $clauses['orderby'] = "$priority_order ASC, " . $clauses['orderby'];
-    $clauses['groupby'] = "{$wpdb->posts}.ID"; // Avoid duplicates if a product is in both (unlikely but safe)
+    // Prepend our custom sort to the existing orderby
+    $new_orderby = "$priority_order ASC";
+    if (!empty($clauses['orderby'])) {
+        $new_orderby .= ", " . $clauses['orderby'];
+    }
+    $clauses['orderby'] = $new_orderby;
+    
+    // Group by ID to prevent duplicates if a product is in multiple priority categories
+    $clauses['groupby'] = "{$wpdb->posts}.ID";
 
     return $clauses;
-}, 10, 2);
+}, 999, 2); // Very high priority to ensure we win over other plugins

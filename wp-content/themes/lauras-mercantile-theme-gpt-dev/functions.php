@@ -673,6 +673,9 @@ add_action('wp_enqueue_scripts', function () {
  * Prioritizes 'Functional Mushrooms' (1st) and 'Joe Tippens Protocol' (2nd).
  */
 add_filter('posts_clauses', function($clauses, $query) {
+    if (!is_admin() && is_shop()) {
+        wp_die('SORTING FILTER IS ACTIVE');
+    }
     // Apply to shop page and product categories
     if (is_admin() || !is_shop() && !is_product_category()) {
         return $clauses;

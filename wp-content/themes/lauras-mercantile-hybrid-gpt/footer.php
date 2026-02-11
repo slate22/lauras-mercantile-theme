@@ -25,10 +25,10 @@
         </div>
         <p class="lm-footer-bio">Restoring the earth and healing bodies with regenerative hemp farming in the heart of Winchester, Kentucky.</p>
         <div class="lm-footer-social">
-          <a href="#" aria-label="Facebook" class="lm-social-link">
+          <a href="https://www.facebook.com/LaurasHempChocolate" target="_blank" rel="noopener" aria-label="Facebook" class="lm-social-link">
             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z"></path></svg>
           </a>
-          <a href="#" aria-label="Instagram" class="lm-social-link">
+          <a href="https://www.instagram.com/laurasmercantile/"Instagram" class="lm-social-link">
             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="2" width="20" height="20" rx="5" ry="5"></rect><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"></path><line x1="17.5" y1="6.5" x2="17.51" y2="6.5"></line></svg>
           </a>
           <a href="#" aria-label="Twitter" class="lm-social-link">
@@ -43,9 +43,10 @@
         <ul class="lm-footer-menu">
            <li><a href="/shop">Shop All</a></li>
            <li><a href="/lab-results">Lab Results</a></li>
-           <li><a href="/education-center">Education</a></li>
+           <li><a href="/hemp-and-cbd-oil-education/">Education</a></li>
            <li><a href="/blog">Wellness Blog</a></li>
            <li><a href="/wholesale">Wholesale</a></li>
+           <li><a href="/my-account">My Account</a></li>
         </ul>
       </div>
 
@@ -53,7 +54,7 @@
       <div class="lm-footer-col">
         <h4 class="lm-footer-heading">Company</h4>
         <ul class="lm-footer-menu">
-           <li><a href="/our-approach">Our Approach</a></li>
+           <li><a href="https://laurasmercantile.com/agricultural-sustainability-efforts-of-mt-folly-farm/">Our Approach</a></li>
            <li><a href="/meet-laura">Meet Laura</a></li>
            <li><a href="/contact">Contact Us</a></li>
            <li><a href="/faq">FAQs</a></li>
@@ -69,8 +70,10 @@
       <div class="lm-footer-col lm-footer-contact">
         <h4 class="lm-footer-heading">Visit Us</h4>
         <p>
-          Mt. Folly Farm<br/>
-          Winchester, KY 40391
+          Laura&rsquo;s Mercantile<br/>
+          1 S Main St<br/>
+          Winchester, KY 40391<br/>
+          (859) 474-8218
         </p>
         <p class="lm-footer-contact-links">
           <a href="mailto:support@laurasmercantile.com">support@laurasmercantile.com</a>
@@ -84,125 +87,31 @@
     <div class="lm-shell lm-footer-bottom-inner">
       <p class="lm-copyright">&copy; <?php echo date('Y'); ?> Laura’s Mercantile. All rights reserved.</p>
       <ul class="lm-footer-meta-menu">
-          <li><a href="/terms-of-service">Terms of Service</a></li>
+          <li><a href="/my-account">My Account</a></li>
+          <li></li>
       </ul>
     </div>
   </section>
 </footer>
 
-<?php wp_footer(); ?>
+
 <script>
-(function() {
-  // Wait for DOM to be fully loaded
-  function initMobileMenu() {
-    const toggle = document.getElementById('lm-menu-toggle');
-    const nav = document.getElementById('lm-nav');
-    
-    console.log('Mobile menu init:', { toggle: !!toggle, nav: !!nav });
-    
-    if (!toggle || !nav) {
-      console.log('Mobile menu elements not found, retrying...');
-      return false;
-    }
-
-    // Close menu when clicking outside
-    function closeMenuOnOutsideClick(e) {
-      if (!nav.contains(e.target) && !toggle.contains(e.target)) {
-        closeMenu();
-      }
-    }
-
-    // Close menu when pressing Escape key
-    function closeMenuOnEscape(e) {
-      if (e.key === 'Escape') {
-        closeMenu();
-      }
-    }
-
-    // Function to close menu
-    function closeMenu() {
-      console.log('Closing menu');
-      nav.classList.remove('is-open');
-      document.body.classList.remove('menu-open');
-      toggle.setAttribute('aria-expanded', 'false');
-      
-      // Reset to hamburger icon
-      toggle.innerHTML = '<span class="lm-menu-toggle-icon"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 6h16M4 12h16M4 18h16" /></svg></span><span class="lm-menu-toggle-text">Menu</span>';
-      
-      // Remove event listeners
-      document.removeEventListener('click', closeMenuOnOutsideClick);
-      document.removeEventListener('keydown', closeMenuOnEscape);
-    }
-
-    // Function to open menu
-    function openMenu() {
-      console.log('Opening menu');
-      nav.classList.add('is-open');
-      document.body.classList.add('menu-open');
-      toggle.setAttribute('aria-expanded', 'true');
-      
-      // Change to close icon
-      toggle.innerHTML = '<span class="lm-menu-toggle-icon"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 6L6 18M6 6l12 12" /></svg></span><span class="lm-menu-toggle-text">Close</span>';
-      
-      // Add event listeners for closing
-      setTimeout(() => {
-        document.addEventListener('click', closeMenuOnOutsideClick);
-        document.addEventListener('keydown', closeMenuOnEscape);
-      }, 100);
-    }
-
-    // Toggle menu
-    toggle.addEventListener('click', function(e) {
-      e.preventDefault();
-      e.stopPropagation();
-      
-      const isOpen = nav.classList.contains('is-open');
-      console.log('Toggle clicked, current state:', isOpen);
-      
-      if (isOpen) {
-        closeMenu();
-      } else {
-        openMenu();
-      }
-    });
-
-    // Close menu when window resizes to desktop size
-    let resizeTimer;
-    window.addEventListener('resize', function() {
-      clearTimeout(resizeTimer);
-      resizeTimer = setTimeout(function() {
-        if (window.innerWidth > 800) {
-          closeMenu();
-        }
-      }, 250);
-    });
-
-    // Close menu on navigation link click
-    const navLinks = nav.querySelectorAll('a');
-    navLinks.forEach(link => {
-      link.addEventListener('click', function() {
-        closeMenu();
-      });
-    });
-
-    return true;
-  }
-
-  // Try multiple methods to ensure script runs
-  if (document.readyState === 'loading') {
-    document.addEventListener('DOMContentLoaded', initMobileMenu);
-  } else {
-    initMobileMenu();
-  }
-
-  // Fallback: try again after a short delay if elements weren't found
-  setTimeout(() => {
-    if (!document.getElementById('lm-menu-toggle') || !document.getElementById('lm-nav')) {
-      console.log('Retrying mobile menu initialization...');
-      initMobileMenu();
-    }
-  }, 1000);
+/* LM_MOBILE_NAV_FAILSAFE */
+(function(){
+  function q(s){return document.querySelector(s);}
+  var toggle=q('.lm-mobile-toggle');
+  var drawer=q('#lm-mobile-drawer');
+  var overlay=q('.lm-mobile-overlay');
+  if(!toggle||!drawer||!overlay) return;
+  drawer.setAttribute('data-initialized','1');
+  function open(){document.documentElement.classList.add('lm-mobile-open'); overlay.hidden=false; toggle.setAttribute('aria-expanded','true'); drawer.setAttribute('aria-hidden','false');}
+  function close(){document.documentElement.classList.remove('lm-mobile-open'); overlay.hidden=true; toggle.setAttribute('aria-expanded','false'); drawer.setAttribute('aria-hidden','true');}
+  toggle.addEventListener('click', function(e){e.preventDefault(); if(document.documentElement.classList.contains('lm-mobile-open')) close(); else open();});
+  document.addEventListener('click', function(e){ if(e.target && e.target.getAttribute && e.target.getAttribute('data-lm-close')==='1') close(); });
+  document.addEventListener('keydown', function(e){ if(e.key==='Escape') close(); });
 })();
 </script>
+
+<?php wp_footer(); ?>
 </body>
 </html>

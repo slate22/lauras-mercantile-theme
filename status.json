@@ -1,6 +1,6 @@
 {
     "project_id": "lauras-mercantile-theme",
     "current_status": "success",
-    "latest_artifact_url": "https://github.com/slate22/lauras-mercantile-theme/commit/latest",
-    "next_recommended_step": "Monitor user feedback on the new checkout layout and verify all payment gateways display correctly within the new design."
+    "latest_artifact_url": "lauras-mercantile-v1-81-final.tar.gz",
+    "next_recommended_step": "Upload the theme package to the live environment and verify that mushroom products are prioritized in search and shop views."
 }

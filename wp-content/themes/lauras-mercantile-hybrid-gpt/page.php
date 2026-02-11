@@ -1,12 +1,21 @@
-<?php get_header(); ?>
+<?php
+if (!defined('ABSPATH')) exit;
+get_header();
+?>
 
-<div class="checkout-container">
-  <div class="checkout-left">
-    <!-- Customer Details -->
+<main class="lm-main">
+  <div class="lm-prose">
+    <?php
+      while (have_posts()) : the_post();
+        // Pages often rely on the theme to render the title.
+        // Keep it consistent with posts and provide a clear page header.
+        the_title('<header class="lm-entry-header"><h1 class="lm-entry-title">', '</h1></header>');
+        echo '<div class="entry-content">';
+        the_content();
+        echo '</div>';
+      endwhile;
+    ?>
   </div>
-  <div class="checkout-right">
-    <!-- Order Review -->
-  </div>
-</div>
+</main>
 
 <?php get_footer(); ?>

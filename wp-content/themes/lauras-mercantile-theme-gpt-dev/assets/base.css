@@ -6016,8 +6016,8 @@ html.lm-mobile-open .lm-mobile-overlay {
 
 /* Promo banner (homepage only) */
 .lm-promo-banner {
-  background: #D8C3A5;
-  color: #2F2A25;
+  background: var(--lm-sage);
+  color: #ffffff;
   text-align: center;
   font-size: 14px;
   font-weight: 500;

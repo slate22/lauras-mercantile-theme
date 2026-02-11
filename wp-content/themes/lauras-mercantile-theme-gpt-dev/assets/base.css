@@ -3440,8 +3440,8 @@ img[src*="hero-mt-folly-bottles-"] {
 .home .lm-hero-right,
 .home .lm-hero-right::before,
 .home .lm-hero-right::after {
-  background: none !important;
-  background-image: none !important;
+  /* background: none !important; */
+  /* background-image: none !important; */
 }
 
 /* Prevent any legacy pseudo layers from creating halos / multi-image artifacts */

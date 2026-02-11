@@ -666,3 +666,45 @@ add_action('wp_enqueue_scripts', function () {
     filemtime($path)
   );
 }, 99);
+
+
+/**
+ * Robust Category-Based Sorting for WooCommerce Shop
+ * Prioritizes 'Functional Mushrooms' (1st) and 'Joe Tippens Protocol' (2nd).
+ */
+add_filter('posts_clauses', function($clauses, $query) {
+    if (is_admin() || !is_shop() || !$query->is_main_query()) {
+        return $clauses;
+    }
+
+    global $wpdb;
+
+    // Slugs confirmed via browser exploration:
+    $slug1 = 'functional-mushrooms';
+    $slug2 = 'jtp-pathway'; 
+
+    // Get Term IDs
+    $term1 = get_term_by('slug', $slug1, 'product_cat');
+    $term2 = get_term_by('slug', $slug2, 'product_cat');
+
+    $id1 = $term1 ? $term1->term_taxonomy_id : 0;
+    $id2 = $term2 ? $term2->term_taxonomy_id : 0;
+
+    if (!$id1 && !$id2) return $clauses;
+
+    // Join term_relationships if not already joined
+    if (strpos($clauses['join'], 'tr_sort') === false) {
+        $clauses['join'] .= " LEFT JOIN {$wpdb->term_relationships} AS tr_sort ON ({$wpdb->posts}.ID = tr_sort.object_id AND tr_sort.term_taxonomy_id IN ($id1, $id2))";
+    }
+
+    // Custom sort order: 1 for Mushrooms, 2 for Tippens, 3 for everything else
+    $priority_order = "CASE 
+        WHEN tr_sort.term_taxonomy_id = $id1 THEN 1 
+        WHEN tr_sort.term_taxonomy_id = $id2 THEN 2 
+        ELSE 3 END";
+
+    $clauses['orderby'] = "$priority_order ASC, " . $clauses['orderby'];
+    $clauses['groupby'] = "{$wpdb->posts}.ID"; // Avoid duplicates if a product is in both (unlikely but safe)
+
+    return $clauses;
+}, 10, 2);

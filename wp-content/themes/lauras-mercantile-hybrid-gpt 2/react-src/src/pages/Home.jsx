@@ -8,11 +8,15 @@ export default function Home() {
       <div className="lm-shell">
         <section className="lm-hero">
           <div className="lm-hero-left">
-            <h1 className="lm-h1">Powered by Nature. Proven by Science. Pioneering Longevity.</h1>
+            <div className="lm-founder-badge">
+              <img src={(lm.assetBase || '/wp-content/themes/lauras-mercantile-theme-gpt-dev/assets/') + 'images/hero-laura-photo.png'} alt="Founder Laura Freeman" />
+              <span>From Founder Laura Freeman</span>
+            </div>
+            <h1 className="lm-h1">Full Spectrum CBD Oil and More</h1>
+            <div className="lm-hero-sub">Powered by Nature. Proven by Science. Pioneering health for the long haul.</div>
             <p className="lm-lede">Laura changed the way American eats by introducing no-antibiotic, no growth hormone beef to a national audience while championing regenerative agriculture. Now in her 60s, her drive and vitality are proof that choosing integrity in food and farming leads to a longer, stronger life.</p>
             <div style={{ marginTop: 18, display: 'flex', gap: 12, flexWrap: 'wrap' }}>
               <a className="lm-btn" href={lm.shopUrl || '/shop/'}>Shop Now</a>
-              <Link className="lm-btn secondary" to="/our-approach">Our Approach</Link>
             </div>
           </div>
           <div className="lm-hero-right" aria-hidden="true" />

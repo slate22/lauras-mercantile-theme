@@ -90,6 +90,41 @@
   color: var(--lm-ink);
 }
 
+.lm-hero-sub {
+  font-family: var(--lm-serif);
+  font-size: clamp(20px, 2.5vw, 26px);
+  font-weight: 500;
+  line-height: 1.3;
+  margin-bottom: 24px;
+  color: var(--lm-sage);
+  max-width: 32ch;
+}
+
+.lm-founder-badge {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin-bottom: 24px;
+}
+
+.lm-founder-badge img {
+  width: 64px !important;
+  height: 64px !important;
+  border-radius: 50% !important;
+  object-fit: cover !important;
+  border: 2px solid #fff !important;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1) !important;
+  display: block;
+}
+
+.lm-founder-badge span {
+  font-size: 14px;
+  font-weight: 600;
+  color: var(--lm-sage);
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+
 .lm-lede {
   color: var(--lm-muted);
   font-size: clamp(16px, 1.8vw, 18px);
@@ -1519,6 +1554,7 @@ a:focus-visible {
     flex: 1;
   }
 }
+
 /* ========================================
    LAB RESULTS PAGE
    ======================================== */
@@ -1611,7 +1647,8 @@ a:focus-visible {
   margin-top: 0;
 }
 
-.instruction-img, .sample-img {
+.instruction-img,
+.sample-img {
   width: 100%;
   height: auto;
   border: 1px solid var(--lm-border-subtle);
@@ -1699,10 +1736,13 @@ a:focus-visible {
 }
 
 @media (max-width: 800px) {
-  .instructions-grid, .herbal-grid, .lot-guide-content ul {
+
+  .instructions-grid,
+  .herbal-grid,
+  .lot-guide-content ul {
     grid-template-columns: 1fr;
   }
-  
+
   .coa-search-form {
     flex-direction: column;
   }

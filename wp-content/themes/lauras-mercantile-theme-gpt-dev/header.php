@@ -77,7 +77,7 @@
 
 <?php if ( function_exists('is_front_page') && is_front_page() ) : ?>
   <div class="lm-promo-banner" role="region" aria-label="Promotion">
-    Take 20% off CBD Chocolates and Mushroom Supplements. No coupon required.
+    Take 20% off CBD Chocolates and Mushroom Supplements. <a href="/product-category/full-spectrum-cbd-oil/" style="color: #fff; text-decoration: underline;">See our Full Spectrum CBD Oil Speciaals</a>. No coupon required.
   </div>
 <?php endif; ?>
 

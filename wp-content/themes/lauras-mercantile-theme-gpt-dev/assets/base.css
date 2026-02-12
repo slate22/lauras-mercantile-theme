@@ -6051,3 +6051,25 @@ html.lm-mobile-open .lm-mobile-overlay {
 .lm-outcome-panel--brain::before {
   background-image: url("./images/outcome-brain-photo-v2.jpg");
 }
+
+/* FIX FOR HERO IMAGE CHECKERBOARD - FORCE CLEAN IMAGE */
+.home .lm-hero-right {
+  background-image: url('images/hero-bottles-clean.png') !important;
+  background-size: contain !important;
+  background-repeat: no-repeat !important;
+  background-position: 68% 85% !important;
+  min-height: 480px;
+}
+
+.home .lm-hero-right img,
+.home .lm-hero-img {
+  display: none !important;
+  opacity: 0 !important;
+}
+
+@media (max-width: 900px) {
+  .home .lm-hero-right {
+    min-height: 320px !important;
+    background-position: center bottom !important;
+  }
+}

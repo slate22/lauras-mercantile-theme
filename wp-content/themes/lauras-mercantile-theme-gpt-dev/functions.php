@@ -667,5 +667,133 @@ add_action('wp_enqueue_scripts', function () {
   );
 }, 99);
 
+/**
+ * Emergency hotfix for broken Turmeric images (404s in media library).
+ * Overrides the image HTML for specific product IDs.
+ *
+ * @param string $html Original image HTML.
+ * @param WC_Product|int $product_or_id Product object or ID.
+ * @return string Modified HTML.
+ */
+function lm_fix_turmeric_images($html, $product_or_id) {
+    $product_id = is_object($product_or_id) ? $product_or_id->get_id() : (int) $product_or_id;
+    
+    $map = [
+        166466 => [
+            'url' => 'https://laurasmercantile.com/wp-content/uploads/2026/02/turmeric.avif',
+            'alt' => 'Ancient Nutrition Turmeric'
+        ],
+        138510 => [
+            'url' => 'https://laurasmercantile.com/wp-content/uploads/2026/02/turmeric-500x750.avif',
+            'alt' => 'NOW Turmeric Capsules'
+        ],
+        139017 => [
+            'url' => 'https://laurasmercantile.com/wp-content/uploads/2026/02/turmeric_cbd_oil_bundle-500x750.avif',
+            'alt' => 'Turmeric & CBD Bundle 1500'
+        ],
+        166471 => [
+            'url' => 'https://laurasmercantile.com/wp-content/uploads/2026/02/turmeric_cbd_oil_bundle-500x750.avif',
+            'alt' => 'Turmeric & CBD Bundle 1500'
+        ],
+        166473 => [
+            'url' => 'https://laurasmercantile.com/wp-content/uploads/2026/02/turmeric_cbd_oil_bundle-500x750.avif',
+            'alt' => 'Turmeric & CBD Bundle 3000'
+        ]
+    ];
+
+    if (isset($map[$product_id])) {
+        $img = $map[$product_id];
+        // Return a clean img tag that works in both grid and single product contexts.
+        return sprintf(
+            '<img src="%s" class="attachment-woocommerce_thumbnail size-woocommerce_thumbnail wp-post-image" alt="%s" loading="lazy" />',
+            esc_url($img['url']),
+            esc_attr($img['alt'])
+        );
+    }
+    return $html;
+}
+add_filter('woocommerce_product_get_image', 'lm_fix_turmeric_images', 20, 2);
+add_filter('woocommerce_single_product_image_thumbnail_html', 'lm_fix_turmeric_images', 20, 2);
+
+/**
+ * Prioritize specific product categories in the shop query.
+ * 1. Functional Mushrooms
+ * 2. Joe Tippens Protocol Products
+ * 3. Everything else
+ */
+/**
+ * Prioritize specific product categories in the shop query.
+ * 1. Ancient Nutrition Turmeric & Bundles (Top)
+ * 2. Functional Mushrooms
+ * 3. Joe Tippens Protocol Products
+ * 4. Everything else
+ */
+/**
+ * Prioritize specific product categories in the shop query.
+ * 1. Ancient Nutrition Turmeric & Bundles (Top)
+ * 2. Functional Mushrooms
+ * 3. Joe Tippens Protocol Products
+ * 4. Everything else
+ */
+/**
+ * Force specific products to the top of the shop and category pages.
+ */
+add_filter('posts_orderby', function($orderby, $query) {
+    if (is_admin()) {
+        return $orderby;
+    }
+
+    // Target the main shop/category archive queries
+    $is_woo_archive = false;
+    if (function_exists('is_shop') && (is_shop() || is_product_category() || is_product_tag())) {
+        $is_woo_archive = true;
+    }
+
+    // Check if this is explicitly a product query
+    $pt = $query->get('post_type');
+    $is_product_query = ($pt === 'product' || (is_array($pt) && in_array('product', $pt)));
+
+    if (!$is_woo_archive && !$is_product_query) {
+        return $orderby;
+    }
+
+    // Don't interfere with search results
+    if ($query->get('s')) return $orderby;
+
+    global $wpdb;
+
+    $mushrooms_slug = 'functional-mushrooms';
+    $tippens_slug   = 'joe-tippens-protocol-products';
+
+    // Specific Product IDs for Ancient Nutrition Turmeric and Turmeric Bundles
+    $turmeric_ids = [166466, 139017, 166471, 166473, 163552, 165372];
+    $turmeric_ids_str = implode(',', $turmeric_ids);
+
+    // Build the priority logic
+    $priority_sql = " (
+        CASE 
+            WHEN {$wpdb->posts}.ID IN ($turmeric_ids_str) THEN 0
+            ELSE (
+                SELECT COALESCE(MIN(CASE 
+                    WHEN t.slug = '$mushrooms_slug' THEN 1 
+                    WHEN t.slug = '$tippens_slug' THEN 2 
+                    ELSE 3 
+                END), 3)
+                FROM {$wpdb->term_relationships} tr_p
+                INNER JOIN {$wpdb->term_taxonomy} tt_p ON tr_p.term_taxonomy_id = tt_p.term_taxonomy_id
+                INNER JOIN {$wpdb->terms} t ON tt_p.term_id = t.term_id
+                WHERE tr_p.object_id = {$wpdb->posts}.ID
+                  AND tt_p.taxonomy = 'product_cat'
+            )
+        END
+    ) ASC ";
+
+    if (empty($orderby)) {
+        return $priority_sql;
+    }
+
+    return $priority_sql . ", " . $orderby;
+}, 99999, 2);
+
 
 

@@ -1,4 +1,4 @@
-name: Deploy theme via rsync (WP Engine)
+name: Deploy theme to WP Engine
 
 on:
   workflow_dispatch:
@@ -8,31 +8,54 @@ jobs:
     steps:
       - uses: actions/checkout@v4
 
-      - name: Start SSH agent and add key
-        uses: webfactory/ssh-agent@v0.9.0
+      - name: Create deployment artifact
+        run: |
+          echo "Creating theme deployment package..."
+          echo "Checking theme structure..."
+          ls -la wp-content/themes/lauras-mercantile-hybrid-gpt/
+          echo "Verifying style.css exists..."
+          if [ -f "wp-content/themes/lauras-mercantile-hybrid-gpt/style.css" ]; then
+            echo "✅ style.css found"
+            head -10 wp-content/themes/lauras-mercantile-hybrid-gpt/style.css
+          else
+            echo "❌ style.css missing - this will cause installation failure!"
+            exit 1
+          fi
+          echo "Creating proper WordPress theme package..."
+          cd wp-content/themes/
+          tar -czf ../../lauras-mercantile-hybrid-gpt.tar.gz lauras-mercantile-hybrid-gpt/
+          cd ../../
+          echo "Package contents (should start with lauras-mercantile-hybrid-gpt/):"
+          tar -tzf lauras-mercantile-hybrid-gpt.tar.gz | head -20
+          echo "Package size:"
+          ls -la lauras-mercantile-hybrid-gpt.tar.gz
+
+      - name: Upload artifact for manual deployment
+        uses: actions/upload-artifact@v4
         with:
-          ssh-private-key: ${{ secrets.WPE_SSH_PRIVATE_KEY }}
+          name: theme-package
+          path: lauras-mercantile-hybrid-gpt.tar.gz
+          retention-days: 30
 
-      - name: Add WP Engine host key
+      - name: Deployment Summary
         run: |
-          mkdir -p ~/.ssh
-          ssh-keyscan -H ${{ github.ref_name == 'main' && 'merc22.ssh.wpengine.net' || 'merc22stg.ssh.wpengine.net' }} >> ~/.ssh/known_hosts
-      - name: Diagnostic SSH - List remote theme directory
-        env:
-          SSH_USER: ${{ github.ref_name == 'main' && secrets.WPE_SSH_USER_PROD || secrets.WPE_SSH_USER_STAGE }}
-          SSH_HOST: ${{ github.ref_name == 'main' && 'merc22.ssh.wpengine.net' || 'merc22stg.ssh.wpengine.net' }}
-        run: |
-          echo "--- SSH Connection Test ---"
-          ssh -o StrictHostKeyChecking=yes ${SSH_USER}@${SSH_HOST} "pwd && ls -la wp-content/themes"
-          echo "--- Ensure target directory exists ---"
-          ssh -o StrictHostKeyChecking=yes ${SSH_USER}@${SSH_HOST} "mkdir -p wp-content/themes/lauras-mercantile-mobile-responsive-rebuild && ls -la wp-content/themes/lauras-mercantile-mobile-responsive-rebuild"
-
-      - name: Rsync theme to WP Engine
-        env:
-          SSH_USER: ${{ github.ref_name == 'main' && secrets.WPE_SSH_USER_PROD || secrets.WPE_SSH_USER_STAGE }}
-          SSH_HOST: ${{ github.ref_name == 'main' && 'merc22.ssh.wpengine.net' || 'merc22stg.ssh.wpengine.net' }}
-        run: |
-          rsync -az --delete \
-            -e "ssh -o StrictHostKeyChecking=yes" \
-            "wp-content/themes/lauras-mercantile-mobile-responsive-rebuild/" \
-            "${SSH_USER}@${SSH_HOST}:wp-content/themes/lauras-mercantile-mobile-responsive-rebuild/"
+          echo "🚀 THEME DEPLOYMENT SUMMARY 🚀"
+          echo "=================================="
+          echo "Branch: ${{ github.ref_name }}"
+          echo "Commit: ${{ github.sha }}"
+          echo "Theme: lauras-mercantile-hybrid-gpt"
+          echo "Status: Ready for manual deployment"
+          echo ""
+          echo "📦 Download the theme package from:"
+          echo "GitHub Actions → Artifacts → theme-package"
+          echo ""
+          echo "🔧 Manual deployment steps:"
+          echo "1. Download lauras-mercantile-hybrid-gpt.tar.gz"
+          echo "2. Extract and upload to wp-content/themes/"
+          echo "3. Activate theme if needed"
+          echo ""
+          echo "✨ Changes included:"
+          echo "- Bigger logo (120px height)"
+          echo "- Promotional banner (20% off mushrooms/chocolates)"
+          echo "- JavaScript banner fallback"
+          echo "- CSS improvements"

@@ -1,0 +1,932 @@
+/*
+Theme Name: Laura's Mercantile Hybrid (GPT-DEV v1.9.4)
+Theme URI: https://laurasmercantile.com
+Author: Antigravity
+Description: A high-performance hybrid theme. React for marketing, Native WooCommerce for checkout.
+Version: 1.9.4
+*/
+
+:root {
+    /* Brand Colors */
+    --color-primary: #2c3e23;
+    --color-accent: #5a7d4e;
+    --color-background: #f8f6f3;
+    --color-surface: #FFFFFF;
+    --color-text: #333333;
+    --color-text-muted: #666666;
+    --color-border: #E5E5E5;
+
+    /* Typography */
+    --font-heading: 'Libre Baskerville', 'Georgia', serif;
+    --font-body: 'Inter', system-ui, sans-serif;
+
+    /* Spacing */
+    --spacing-xs: 0.5rem;
+    --spacing-sm: 1rem;
+    --spacing-md: 2rem;
+    --spacing-lg: 4rem;
+    --spacing-xl: 8rem;
+
+    /* Shadows */
+    --shadow-sm: 0 1px 2px rgba(0, 0, 0, 0.05);
+    --shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+    --shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
+}
+
+* {
+    box-sizing: border-box;
+}
+
+body {
+    margin: 0;
+    font-family: var(--font-body);
+    background-color: var(--color-background);
+    color: var(--color-text);
+    line-height: 1.6;
+    -webkit-font-smoothing: antialiased;
+}
+
+a {
+    text-decoration: none;
+    color: inherit;
+    transition: color 0.2s;
+}
+
+ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+/* --- Top Bar --- */
+.top-bar {
+    background-color: #F2EFED;
+    color: var(--color-text-muted);
+    text-align: center;
+    padding: 0.6rem;
+    font-size: 0.75rem;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    border-bottom: 1px solid rgba(0, 0, 0, 0.05);
+}
+
+/* --- Navbar --- */
+.navbar {
+    position: sticky;
+    top: 0;
+    z-index: 50;
+    background-color: var(--color-surface);
+    border-bottom: 1px solid var(--color-border);
+    height: 80px;
+    display: flex;
+    align-items: center;
+}
+
+.navbar-container {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    width: 100%;
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 1rem;
+}
+
+.navbar-logo {
+    font-family: var(--font-heading);
+    font-size: 1.5rem;
+    font-weight: 600;
+    color: var(--color-primary);
+    letter-spacing: -0.02em;
+}
+
+.desktop-nav {
+    display: none;
+}
+
+@media (min-width: 768px) {
+    .desktop-nav {
+        display: flex;
+        gap: 2rem;
+    }
+}
+
+.nav-link {
+    font-size: 0.95rem;
+    color: var(--color-text);
+    font-weight: 500;
+    position: relative;
+}
+
+.nav-link:hover {
+    color: var(--color-primary);
+}
+
+.navbar-actions {
+    display: flex;
+    gap: 1rem;
+    align-items: center;
+}
+
+.icon-btn {
+    color: var(--color-text);
+    background: none;
+    border: none;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+}
+
+.icon-btn svg {
+    stroke: currentColor;
+}
+
+.cart-btn {
+    position: relative;
+}
+
+.cart-badge {
+    position: absolute;
+    top: -8px;
+    right: -8px;
+    background-color: var(--color-accent);
+    color: white;
+    font-size: 0.75rem;
+    width: 18px;
+    height: 18px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+/* --- Content --- */
+.woocommerce-container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 4rem 2rem;
+    min-height: 60vh;
+}
+
+/* --- Footer --- */
+.footer {
+    background-color: var(--color-primary);
+    color: white;
+    padding: var(--spacing-lg) 0 var(--spacing-md);
+    margin-top: auto;
+}
+
+.footer-container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 2rem;
+}
+
+.footer-logo {
+    color: white;
+    font-size: 1.5rem;
+    margin-bottom: 1rem;
+    display: block;
+    font-family: var(--font-heading);
+}
+
+.footer-tagline {
+    color: rgba(255, 255, 255, 0.7);
+    font-size: 0.95rem;
+    max-width: 300px;
+    margin-bottom: 2rem;
+}
+
+/* Footer Grid */
+.footer-grid {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 3rem;
+    margin-bottom: 3rem;
+}
+
+@media (min-width: 768px) {
+    .footer-grid {
+        grid-template-columns: 2fr 1fr 1fr 1fr;
+    }
+}
+
+.footer-col h4 {
+    color: var(--color-accent);
+    margin-bottom: 1.25rem;
+    font-size: 1rem;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    font-family: var(--font-body);
+}
+
+.footer-links li {
+    margin-bottom: 0.75rem;
+}
+
+.footer-links a {
+    color: rgba(255, 255, 255, 0.8);
+    font-size: 0.95rem;
+}
+
+.footer-links a:hover {
+    color: white;
+    text-decoration: underline;
+}
+
+.footer-bottom {
+    border-top: 1px solid rgba(255, 255, 255, 0.1);
+    padding-top: 1.5rem;
+    text-align: center;
+    color: rgba(255, 255, 255, 0.5);
+    /* ===================================
+   LAURA'S MERCANTILE REDESIGN STYLES
+   =================================== */
+
+    /* Typography */
+    body {
+        font-family: 'Inter', 'Helvetica Neue', Arial, sans-serif;
+        color: #333;
+        font-size: 16px;
+        line-height: 1.6;
+    }
+
+    h1,
+    h2,
+    h3 {
+        font-family: 'Libre Baskerville', Georgia, serif;
+        font-weight: 400;
+        color: #2c3e23;
+    }
+
+    h1 {
+        font-size: 52px;
+        line-height: 1.2;
+        margin-bottom: 20px;
+    }
+
+    h2 {
+        font-size: 42px;
+        line-height: 1.3;
+        margin-bottom: 30px;
+    }
+
+    h3 {
+        font-size: 24px;
+        line-height: 1.4;
+        margin-bottom: 15px;
+    }
+
+    /* Buttons */
+    .vc_btn3-container .vc_btn3,
+    .woocommerce a.button,
+    .woocommerce button.button,
+    .woocommerce button.button.alt {
+        background-color: #2c3e23 !important;
+        color: #ffffff !important;
+        border-radius: 4px;
+        padding: 16px 32px;
+        font-size: 16px;
+        font-weight: 600;
+        text-transform: none;
+        letter-spacing: 0.5px;
+        transition: all 0.3s ease;
+        border: none;
+    }
+
+    .vc_btn3-container .vc_btn3:hover,
+    .woocommerce a.button:hover,
+    .woocommerce button.button:hover,
+    .woocommerce button.button.alt:hover {
+        background-color: #1a2515 !important;
+        transform: translateY(-2px);
+        box-shadow: 0 4px 12px rgba(44, 62, 35, 0.3);
+    }
+
+    /* Hero Section */
+    .hero-section {
+        min-height: 600px;
+        display: flex;
+        align-items: center;
+        background-size: cover;
+        background-position: center right;
+        position: relative;
+    }
+
+    .hero-section::before {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 50%;
+        bottom: 0;
+        background: linear-gradient(to right, rgba(255, 255, 255, 0.95), rgba(255, 255, 255, 0));
+    }
+
+    .hero-content {
+        position: relative;
+        z-index: 2;
+        max-width: 550px;
+    }
+
+    /* Health Benefit Cards */
+    .health-benefit-card {
+        text-align: center;
+        padding: 30px 20px;
+        transition: all 0.3s ease;
+        border-radius: 8px;
+    }
+
+    .health-benefit-card:hover {
+        transform: translateY(-5px);
+        box-shadow: 0 8px 24px rgba(0, 0, 0, 0.1);
+    }
+
+    .health-benefit-card img {
+        border-radius: 8px;
+        margin-bottom: 20px;
+        width: 100%;
+        height: auto;
+    }
+
+    /* Trust Signals Section */
+    .trust-signals {
+        background-color: #f8f6f3;
+        padding: 80px 0;
+    }
+
+    .trust-signal-item {
+        text-align: center;
+        padding: 20px;
+    }
+
+    .trust-signal-item i {
+        font-size: 48px;
+        color: #5a7d4e;
+        margin-bottom: 20px;
+    }
+
+    /* Product Grid */
+    .woocommerce ul.products li.product {
+        border-radius: 8px;
+        overflow: hidden;
+        transition: all 0.3s ease;
+    }
+
+    .woocommerce ul.products li.product:hover {
+        box-shadow: 0 8px 24px rgba(0, 0, 0, 0.12);
+        transform: translateY(-5px);
+    }
+
+    /* Announcement Bar */
+    .announcement-bar {
+        background-color: #f8f6f3;
+        text-align: center;
+        padding: 12px 20px;
+        font-size: 14px;
+        font-weight: 500;
+        color: #2c3e23;
+    }
+
+    .announcement-bar a {
+        color: #2c3e23;
+        text-decoration: none;
+        display: inline-flex;
+        align-items: center;
+    }
+
+    .announcement-bar a:hover {
+        text-decoration: underline;
+    }
+
+    /* Navigation */
+    .header-navigation {
+        padding: 20px 0;
+    }
+
+    .header-navigation ul li a {
+        color: #333;
+        font-size: 15px;
+        font-weight: 500;
+        text-transform: none;
+        letter-spacing: 0.3px;
+        transition: color 0.3s ease;
+    }
+
+    .header-navigation ul li a:hover {
+        color: #5a7d4e;
+    }
+
+    /* Trust Badges on Product Page */
+    .product-trust-badges {
+        margin-top: 20px;
+        padding: 20px;
+        background: #f9f9f9;
+        border-radius: 8px;
+        border-left: 4px solid #5a7d4e;
+    }
+
+    .product-trust-badges ul {
+        margin: 0;
+        padding: 0;
+        list-style: none;
+        /* Override standard lists */
+    }
+
+    .product-trust-badges li {
+        margin-bottom: 8px;
+        padding-left: 25px;
+        position: relative;
+        font-size: 14px;
+        color: #444;
+    }
+
+    .product-trust-badges li:before {
+        content: '✓';
+        position: absolute;
+        left: 0;
+        color: #5a7d4e;
+        font-weight: bold;
+    }
+
+    /* Mobile Responsive */
+    @media (max-width: 768px) {
+        h1 {
+            font-size: 36px;
+        }
+
+        h2 {
+            font-size: 32px;
+        }
+
+        .hero-section {
+            min-height: 400px;
+        }
+
+        .hero-content {
+            max-width: 100%;
+            padding: 40px 20px;
+        }
+
+        .health-benefit-card {
+            margin-bottom: 30px;
+        }
+    }
+
+    /* WooCommerce Checkout Protection */
+    .woocommerce-checkout .vc_row,
+    .woocommerce-cart .vc_row {
+        /* Prevent Visual Composer from breaking checkout */
+        max-width: 100% !important;
+        margin-left: auto !important;
+        margin-right: auto !important;
+    }
+
+    .woocommerce form .form-row {
+        /* Ensure form fields stay intact */
+        display: block !important;
+        margin-bottom: 15px !important;
+    }
+
+    .woocommerce form .form-row input.input-text,
+    .woocommerce form .form-row textarea {
+        width: 100% !important;
+        padding: 10px !important;
+
+        /* ============================================
+   SHOP COMPLETE - FINAL FIX (5-MINUTE FIX)
+   ============================================ */
+        /* 1. Force the grid */
+        body.woocommerce ul.products {
+            display: grid !important;
+            grid-template-columns: repeat(4, 1fr) !important;
+            gap: 30px !important;
+            margin: 40px 0 !important;
+        }
+
+        body.woocommerce ul.products::before,
+        body.woocommerce ul.products::after {
+            content: none !important;
+            display: none !important;
+        }
+
+        /* 2. Reset List Items completely for Card Style */
+        body.woocommerce ul.products li.product {
+            all: unset !important;
+            /* The nuclear reset */
+            display: flex !important;
+            flex-direction: column !important;
+            background: #ffffff !important;
+            border-radius: 8px !important;
+            overflow: hidden !important;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05) !important;
+            transition: transform 0.3s ease, box-shadow 0.3s ease !important;
+            padding-bottom: 20px !important;
+            border: 1px solid #f0f0f0 !important;
+            box-sizing: border-box !important;
+            list-style: none !important;
+            position: relative !important;
+            width: 100% !important;
+            margin: 0 !important;
+        }
+
+        body.woocommerce ul.products li.product:hover {
+            transform: translateY(-8px) !important;
+            box-shadow: 0 12px 24px rgba(0, 0, 0, 0.1) !important;
+            border-color: #2c3e23 !important;
+        }
+
+        /* 3. Image Handling */
+        body.woocommerce ul.products li.product a img {
+            width: 100% !important;
+            height: auto !important;
+            aspect-ratio: 1 / 1 !important;
+            object-fit: cover !important;
+            display: block !important;
+            margin-bottom: 15px !important;
+            border-bottom: 1px solid #f8f8f8 !important;
+        }
+
+        /* 4. Typography & Spacing */
+        body.woocommerce ul.products li.product .woocommerce-loop-product__title {
+            font-family: 'Libre Baskerville', serif !important;
+            font-size: 16px !important;
+            font-weight: 700 !important;
+            color: #2c3e23 !important;
+            margin: 10px 15px 5px !important;
+            padding: 0 !important;
+            line-height: 1.3 !important;
+            text-align: center !important;
+        }
+
+        body.woocommerce ul.products li.product .price {
+            font-family: 'Inter', sans-serif !important;
+            font-size: 15px !important;
+            color: #5a7d4e !important;
+            font-weight: 600 !important;
+            margin: 0 15px 15px !important;
+            display: block !important;
+            text-align: center !important;
+        }
+
+        /* 5. Star Ratings */
+        body.woocommerce ul.products li.product .star-rating {
+            margin: 0 auto 10px !important;
+            float: none !important;
+        }
+
+        /* 6. Add to Cart Button */
+        body.woocommerce ul.products li.product .button {
+            margin: auto 15px 0 !important;
+            width: calc(100% - 30px) !important;
+            background-color: #2c3e23 !important;
+            color: white !important;
+            text-align: center !important;
+            padding: 12px !important;
+            border-radius: 4px !important;
+            font-weight: 600 !important;
+            font-size: 13px !important;
+            text-transform: uppercase !important;
+            letter-spacing: 0.5px !important;
+        }
+
+        body.woocommerce ul.products li.product .button:hover {
+            background-color: #1a2515 !important;
+        }
+
+        /* Mobile Responsive */
+        @media (max-width: 900px) {
+            body.woocommerce ul.products {
+                grid-template-columns: repeat(2, 1fr) !important;
+                gap: 15px !important;
+            }
+        }
+
+        @media (max-width: 480px) {
+            body.woocommerce ul.products {
+                grid-template-columns: 1fr !important;
+            }
+        }
+
+        /* ============================================
+   FORCE OVERRIDE - ADD THIS AT BOTTOM IF STYLES NOT SHOWING
+   ============================================ */
+
+        /* Force product page layout */
+        .single-product div.product {
+            max-width: 1400px !important;
+            margin: 0 auto !important;
+            padding: 60px 20px !important;
+        }
+
+        .single-product .product-images {
+            width: 50% !important;
+            float: left !important;
+        }
+
+        .single-product .entry-summary {
+            width: 45% !important;
+            float: right !important;
+        }
+
+        /* Force big add to cart button */
+        .single-product .single_add_to_cart_button {
+            width: 100% !important;
+            font-size: 20px !important;
+            padding: 20px !important;
+            background-color: #2c3e23 !important;
+            color: #ffffff !important;
+            border-radius: 8px !important;
+            border: none !important;
+            font-weight: 600 !important;
+            text-transform: uppercase !important;
+            letter-spacing: 0.5px !important;
+            cursor: pointer !important;
+            transition: all 0.3s ease !important;
+        }
+
+        .single-product .single_add_to_cart_button:hover {
+            background-color: #1a2616 !important;
+            transform: translateY(-2px) !important;
+            box-shadow: 0 4px 12px rgba(44, 62, 35, 0.3) !important;
+        }
+
+        /* Force product images large */
+        .single-product .woocommerce-product-gallery__image img {
+            width: 100% !important;
+            height: auto !important;
+            border-radius: 12px !important;
+        }
+
+        /* Force remove sidebar */
+        .single-product .sidebar {
+            display: none !important;
+        }
+
+        /* Force clean product grid */
+        .woocommerce ul.products li.product {
+            background: #ffffff !important;
+            border: 1px solid #f0f0f0 !important;
+            border-radius: 12px !important;
+            padding: 20px !important;
+            margin-bottom: 30px !important;
+            transition: all 0.3s ease !important;
+        }
+
+        .woocommerce ul.products li.product:hover {
+            transform: translateY(-8px) !important;
+            box-shadow: 0 12px 24px rgba(0, 0, 0, 0.1) !important;
+            border-color: #2c3e23 !important;
+        }
+
+        /* Force mobile responsive */
+        @media (max-width: 768px) {
+
+            .single-product .product-images,
+            .single-product .entry-summary {
+                width: 100% !important;
+                float: none !important;
+            }
+
+            .woocommerce ul.products li.product {
+                width: 48% !important;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .woocommerce ul.products li.product {
+                width: 100% !important;
+            }
+        }
+
+        /* ==========================================================================
+   WOOCOMMERCE STYLES
+   ========================================================================== */
+        /* Copied from global-styles logic but applied to WC selectors */
+
+        /* 1. Reset Typography & Colors */
+        .woocommerce-page,
+        .woocommerce-page .woocommerce {
+            --color-primary: #2c3e23;
+            --color-accent: #d4a574;
+            --font-serif: 'Libre Baskerville', serif;
+            --font-sans: 'Montserrat', sans-serif;
+            font-family: var(--font-sans);
+            color: var(--color-primary);
+        }
+
+        .woocommerce-page h1,
+        .woocommerce-page h2,
+        .woocommerce-page h3 {
+            font-family: var(--font-serif);
+            color: var(--color-primary);
+        }
+
+        /* 2. Buttons */
+        .woocommerce button.button.alt,
+        .woocommerce a.button.alt,
+        .woocommerce #respond input#submit.alt {
+            background-color: var(--color-primary) !important;
+            color: white !important;
+            border-radius: 4px !important;
+            text-transform: uppercase !important;
+            font-weight: 600 !important;
+            padding: 12px 24px !important;
+            border: none !important;
+        }
+
+        .woocommerce button.button.alt:hover,
+        .woocommerce a.button.alt:hover {
+            background-color: #1a2515 !important;
+        }
+
+        /* 3. Product Grid */
+        ul.products {
+            display: grid !important;
+            grid-template-columns: repeat(4, 1fr) !important;
+            gap: 30px !important;
+        }
+
+        ul.products li.product {
+            float: none !important;
+            width: 100% !important;
+            margin: 0 !important;
+            background: white;
+            border-radius: 8px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            border: 1px solid #eee;
+            padding-bottom: 20px;
+            display: flex !important;
+            flex-direction: column !important;
+        }
+
+        ul.products li.product:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+        }
+
+        ul.products li.product img {
+            margin: 0 auto 15px !important;
+            border-radius: 8px 8px 0 0;
+            width: 100% !important;
+            height: auto !important;
+            aspect-ratio: 1/1;
+            object-fit: cover;
+        }
+
+        ul.products li.product .woocommerce-loop-product__title {
+            padding: 0 15px !important;
+            font-family: var(--font-serif) !important;
+            font-size: 1.1em !important;
+            margin-bottom: 8px !important;
+        }
+
+        ul.products li.product .price {
+            padding: 0 15px !important;
+            color: var(--color-primary) !important;
+            font-weight: 700 !important;
+            margin-bottom: 15px !important;
+            margin-top: auto !important;
+            /* Push to bottom */
+        }
+
+        ul.products li.product .button {
+            margin: 0 15px !important;
+            text-align: center;
+        }
+
+        /* 4. Single Product Page */
+        .single-product div.product {
+            display: grid !important;
+            grid-template-columns: 1fr 1fr !important;
+            gap: 50px !important;
+        }
+
+        .single-product .woocommerce-product-gallery {
+            width: 100% !important;
+            float: none !important;
+        }
+
+        .single-product .summary {
+            width: 100% !important;
+            float: none !important;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+        }
+
+        .single-product .product_title {
+            font-size: 2.5rem !important;
+            margin-bottom: 1rem !important;
+        }
+
+        .single-product .price {
+            font-size: 1.5rem !important;
+            color: var(--color-accent) !important;
+        }
+
+        .single-product .cart {
+            display: flex !important;
+            gap: 10px !important;
+            margin-top: 2rem !important;
+        }
+
+        .quantity .qty {
+            height: 46px !important;
+            border: 1px solid #ddd !important;
+            border-radius: 4px !important;
+        }
+
+        /* 5. Checkout & Cart */
+        .woocommerce-cart-form,
+        .woocommerce-checkout {
+            background: white;
+            padding: 40px;
+            border-radius: 12px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+        }
+
+        .input-text {
+            padding: 12px !important;
+            border: 1px solid #ddd !important;
+            border-radius: 4px !important;
+        }
+
+        .input-text:focus {
+            border-color: var(--color-primary) !important;
+            outline: none !important;
+        }
+
+        /* 6. Notices */
+        .woocommerce-message,
+        .woocommerce-info,
+        .woocommerce-error {
+            border-radius: 4px;
+            padding: 15px 15px 15px 50px !important;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+        }
+
+        .woocommerce-message {
+            border-top-color: var(--color-primary) !important;
+        }
+
+        .woocommerce-info {
+            border-top-color: var(--color-accent) !important;
+        }
+
+        /* 7. Responsive */
+        @media (max-width: 768px) {
+            ul.products {
+                grid-template-columns: repeat(2, 1fr) !important;
+            }
+
+            .single-product div.product {
+                grid-template-columns: 1fr !important;
+            }
+        }
+
+        @media (max-width: 480px) {
+            ul.products {
+                grid-template-columns: 1fr !important;
+            }
+        }
+
+/* Hide legacy Our Approach button in hero */
+.lm-hero .lm-btn.secondary {
+  display: none !important;
+}
+
+
+/* Blog sidebar conversion CTA */
+.lm-blog-sidebar .lm-cta-widget__inner{
+  border-radius: 14px;
+  padding: 18px 16px;
+  background: #f3f7ff;
+  border: 1px solid rgba(0,0,0,0.06);
+}
+.lm-blog-sidebar .lm-cta-widget__title{
+  margin: 0 0 8px;
+  font-size: 1.05rem;
+  line-height: 1.25;
+}
+.lm-blog-sidebar .lm-cta-widget__body{
+  margin: 0 0 12px;
+  font-size: 0.98rem;
+  line-height: 1.45;
+}
+.lm-blog-sidebar .lm-cta-widget__actions{
+  margin: 0;
+}
+.lm-blog-sidebar .lm-cta-widget__button{
+  display: inline-block;
+  padding: 10px 14px;
+  border-radius: 10px;
+  text-decoration: none;
+  font-weight: 600;
+  background: #1f5eff;
+  color: #fff;
+}
+.lm-blog-sidebar .lm-cta-widget__button:hover{
+  opacity: 0.92;
+}

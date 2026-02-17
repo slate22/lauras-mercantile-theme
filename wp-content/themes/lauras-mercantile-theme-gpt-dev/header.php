@@ -77,7 +77,7 @@
 
 <?php if ( function_exists('is_front_page') && is_front_page() ) : ?>
   <div class="lm-promo-banner" role="region" aria-label="Promotion">
-    Take 20% off CBD Chocolates and Mushroom Supplements. <a href="/product-category/full-spectrum-cbd-oil/" style="color: #fff; text-decoration: underline;">See our Full Spectrum CBD Oil Speciaals</a>. No coupon required.
+    Take 20% off CBD Chocolates and Mushroom Supplements. <a href="/product-category/full-spectrum-cbd-oil/" style="color: #fff; text-decoration: underline;">See our Full Spectrum CBD Oil Specials</a>. No coupon required.
   </div>
 <?php endif; ?>
 
@@ -122,9 +122,6 @@
           $account_url = function_exists('wc_get_page_permalink') ? wc_get_page_permalink('myaccount') : home_url('/my-account/');
           $cart_url    = function_exists('wc_get_cart_url') ? wc_get_cart_url() : home_url('/cart/');
         ?>
-        <button class="lm-mobile-toggle lm-icon-btn" aria-label="Open menu" aria-controls="lm-mobile-drawer" aria-expanded="false" type="button">
-          <span class="lm-mobile-toggle-bars" aria-hidden="true"></span>
-        </button>
 
         <button type="button" class="lm-icon-btn lm-search-toggle" aria-label="Search">
           <svg width="20" height="20" viewBox="0 0 24 24" fill="none">
@@ -145,6 +142,10 @@
             <circle cx="17" cy="19" r="1.2" fill="currentColor" />
           </svg>
         </a>
+
+        <button class="lm-mobile-toggle lm-icon-btn" aria-label="Open menu" aria-controls="lm-mobile-drawer" aria-expanded="false" type="button">
+          <span class="lm-mobile-toggle-bars" aria-hidden="true"></span>
+        </button>
       </div>
       <div class="lm-search-bar" aria-hidden="true">
     <div class="lm-search-bar-inner">

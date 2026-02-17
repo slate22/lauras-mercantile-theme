@@ -6073,3 +6073,78 @@ html.lm-mobile-open .lm-mobile-overlay {
     background-position: center bottom !important;
   }
 }
+
+/* =========================================================
+   CHECKOUT & CART LAYOUT FIXES (SHIP)
+   Goal: prevent "squishing" of order tables and price columns.
+   ========================================================= */
+
+.woocommerce-checkout #order_review .shop_table th.product-name,
+.woocommerce-checkout #order_review .shop_table td.product-name {
+  padding-right: 24px !important;
+  line-height: 1.4 !important;
+}
+
+.woocommerce-checkout #order_review .shop_table .product-total,
+.woocommerce-checkout #order_review .shop_table .cart-subtotal td,
+.woocommerce-checkout #order_review .shop_table .order-total td {
+  text-align: right !important;
+  white-space: nowrap !important;
+  padding-left: 20px !important;
+  min-width: 100px !important;
+}
+
+/* Ensure the review table doesn't get too cramped in the grid sidebar */
+@media (min-width: 981px) {
+  .woocommerce-checkout #order_review {
+    position: sticky;
+    top: 100px;
+  }
+}
+
+/* Cart page legibility improvements */
+.woocommerce-cart-form .product-thumbnail {
+  width: 80px !important;
+}
+
+.woocommerce-cart .cart-collaterals .cart_totals {
+  width: 100% !important;
+  max-width: 480px;
+  float: right;
+}
+
+.woocommerce-cart .cart-collaterals .cart_totals table {
+  width: 100% !important;
+}
+
+/* Coupon section spacing */
+.woocommerce-cart .coupon {
+  display: flex !important;
+  gap: 10px !important;
+  padding: 15px 0 !important;
+  flex-wrap: wrap;
+}
+
+.woocommerce-cart .coupon input#coupon_code {
+  width: 200px !important;
+  height: 48px !important;
+  margin: 0 !important;
+}
+
+.woocommerce-cart .coupon button.button {
+  height: 48px !important;
+  padding: 0 24px !important;
+}
+
+
+/* NOW Turmeric Capsules */
+.post-138510 img,
+.single-product.postid-138510 .woocommerce-product-gallery__image img {
+  content: url('https://laurasmercantile.com/wp-content/uploads/2022/07/turmeric-website1-500x750.jpg') !important;
+}
+
+/* Turmeric & CBD Bundles */
+.post-139017 img,
+.single-product.postid-139017 .woocommerce-product-gallery__image img {
+  content: url('https://laurasmercantile.com/wp-content/uploads/2022/07/WEBSITE-Turmeric-1500MG-CBD-Bundle-5-Savings-600x900.jpg') !important;
+}

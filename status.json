@@ -1,6 +1,6 @@
 {
     "project_id": "lauras-mercantile-theme",
     "current_status": "success",
-    "latest_artifact_url": "https://github.com/slate22/lauras-mercantile-theme/commit/40c5e0852fbad01826d2a751f7e7200cfd9fb8d7",
-    "next_recommended_step": "Verify the GitHub Action deployment and then use the SFTP commands in UPLOAD_COMMANDS.md to deploy the theme package to WP Engine."
+    "latest_artifact_url": "/Users/slate22/antigravity/lauras-mercantile-theme/lauras-mercantile-theme/wp-content/themes/lauras-mercantile-theme-gpt-dev/functions.php",
+    "next_recommended_step": "Verify the shop product ordering (CBD Bundles first) and the visibility of the Outcomes section on the homepage."
 }

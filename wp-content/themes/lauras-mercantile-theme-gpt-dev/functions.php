@@ -22,7 +22,7 @@ function lm_should_mount_app(): bool {
   if (lm_react_disabled()) return false;
   if (lm_is_woo_protected_path()) return false;
 
-  if (is_front_page()) return true;
+  if (is_front_page() || is_home()) return true;
   if (is_page_template('page-react.php')) return true;
 
   // NOTE: we intentionally do NOT mount React automatically on Woo shop/category/product pages yet.
@@ -140,7 +140,7 @@ add_action('wp_enqueue_scripts', 'lm_enqueue_global_scripts', 30);
  * Scoped + auditable. Does not affect checkout/cart/product pages.
  */
 function lm_enqueue_home_outcomes_editorial() {
-  if (!is_front_page()) return;
+  if (!is_front_page() && !is_home()) return;
   if (!lm_should_mount_app()) return;
 
   $theme_path = get_stylesheet_directory();
@@ -769,16 +769,21 @@ add_filter('posts_orderby', function($orderby, $query) {
     $turmeric_ids = [166466, 139017, 166471, 166473, 163552, 165372];
     $turmeric_ids_str = implode(',', $turmeric_ids);
 
+    $bundles_slug   = 'cbd-products-and-bundles';
+    $mushrooms_slug = 'functional-mushrooms';
+    $tippens_slug   = 'joe-tippens-protocol-products';
+
     // Build the priority logic
     $priority_sql = " (
         CASE 
-            WHEN {$wpdb->posts}.ID IN ($turmeric_ids_str) THEN 0
+            WHEN {$wpdb->posts}.ID IN ($turmeric_ids_str) THEN 1
             ELSE (
                 SELECT COALESCE(MIN(CASE 
-                    WHEN t.slug = '$mushrooms_slug' THEN 1 
-                    WHEN t.slug = '$tippens_slug' THEN 2 
-                    ELSE 3 
-                END), 3)
+                    WHEN t.slug = '$bundles_slug' THEN 0 
+                    WHEN t.slug = '$mushrooms_slug' THEN 2 
+                    WHEN t.slug = '$tippens_slug' THEN 3 
+                    ELSE 4 
+                END), 4)
                 FROM {$wpdb->term_relationships} tr_p
                 INNER JOIN {$wpdb->term_taxonomy} tt_p ON tr_p.term_taxonomy_id = tt_p.term_taxonomy_id
                 INNER JOIN {$wpdb->terms} t ON tt_p.term_id = t.term_id
@@ -794,6 +799,14 @@ add_filter('posts_orderby', function($orderby, $query) {
 
     return $priority_sql . ", " . $orderby;
 }, 99999, 2);
+
+/**
+ * Remove pagination from the shop and category pages to show all products at once.
+ */
+add_filter('loop_shop_per_page', function($cols) {
+    if (is_admin()) return $cols;
+    return -1; // -1 shows all products
+}, 9999);
 
 
 

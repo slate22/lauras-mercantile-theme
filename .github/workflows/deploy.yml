@@ -1,41 +1,39 @@
-name: Deploy theme to WP Engine
+name: Deploy theme to WP Engine Staging
 
 on:
+  push:
+    branches: ["stage"]
   workflow_dispatch:
+
 jobs:
-  deploy:
+  deploy-staging:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
 
-      - name: Create deployment artifact
-        run: |
-          echo "Creating theme deployment package..."
-          echo "Checking theme structure..."
-          ls -la wp-content/themes/lauras-mercantile-hybrid-gpt/
-          echo "Verifying style.css exists..."
-          if [ -f "wp-content/themes/lauras-mercantile-hybrid-gpt/style.css" ]; then
-            echo "✅ style.css found"
-            head -10 wp-content/themes/lauras-mercantile-hybrid-gpt/style.css
-          else
-            echo "❌ style.css missing - this will cause installation failure!"
-            exit 1
-          fi
-          echo "Creating proper WordPress theme package..."
-          cd wp-content/themes/
-          tar -czf ../../lauras-mercantile-hybrid-gpt.tar.gz lauras-mercantile-hybrid-gpt/
-          cd ../../
-          echo "Package contents (should start with lauras-mercantile-hybrid-gpt/):"
-          tar -tzf lauras-mercantile-hybrid-gpt.tar.gz | head -20
-          echo "Package size:"
-          ls -la lauras-mercantile-hybrid-gpt.tar.gz
-
-      - name: Upload artifact for manual deployment
-        uses: actions/upload-artifact@v4
+      - name: Setup Node
+        uses: actions/setup-node@v4
         with:
-          name: theme-package
-          path: lauras-mercantile-hybrid-gpt.tar.gz
-          retention-days: 30
+          node-version: "20"
+
+      - name: Install React deps
+        working-directory: "wp-content/themes/lauras-mercantile-theme-gpt-dev/react-src"
+        run: npm install --no-audit --no-fund
+
+      - name: Build React
+        working-directory: "wp-content/themes/lauras-mercantile-theme-gpt-dev/react-src"
+        run: npm run build
+
+      - name: Deploy to Staging via SSH
+        uses: easingthemes/ssh-deploy@main
+        with:
+          SSH_PRIVATE_KEY: ${{ secrets.WPE_STAGING_SSH_KEY }}
+          ARGS: "-rlgoDzvc -i --delete"
+          SOURCE: "wp-content/themes/lauras-mercantile-theme-gpt-dev/"
+          REMOTE_HOST: ${{ secrets.WPE_STAGING_HOST }}
+          REMOTE_USER: ${{ secrets.WPE_STAGING_USER }}
+          TARGET: "/sites/merc22/wp-content/themes/lauras-mercantile-theme-gpt-dev/"
+          EXCLUDE: "/node_modules/, /react-src/, .git/"
 
       - name: Deployment Summary
         run: |
@@ -43,19 +41,4 @@ jobs:
           echo "=================================="
           echo "Branch: ${{ github.ref_name }}"
           echo "Commit: ${{ github.sha }}"
-          echo "Theme: lauras-mercantile-hybrid-gpt"
-          echo "Status: Ready for manual deployment"
-          echo ""
-          echo "📦 Download the theme package from:"
-          echo "GitHub Actions → Artifacts → theme-package"
-          echo ""
-          echo "🔧 Manual deployment steps:"
-          echo "1. Download lauras-mercantile-hybrid-gpt.tar.gz"
-          echo "2. Extract and upload to wp-content/themes/"
-          echo "3. Activate theme if needed"
-          echo ""
-          echo "✨ Changes included:"
-          echo "- Bigger logo (120px height)"
-          echo "- Promotional banner (20% off mushrooms/chocolates)"
-          echo "- JavaScript banner fallback"
-          echo "- CSS improvements"
+          echo "Status: Pushed to Staging"

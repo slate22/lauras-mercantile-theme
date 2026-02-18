@@ -5278,16 +5278,21 @@ main#lm-react-root img {
   flex-direction: column !important;
   justify-content: flex-end !important;
   padding: 40px 28px !important;
-  background: #1a1a1a !important;
-  /* Fallback for slow loads */
+  background: transparent !important;
   border: none !important;
+  position: relative;
+  overflow: hidden;
 }
 
-/* soften the photographic moments (not cards; just print-like corners) */
+/* ensure the photograph fills the entire container as a backdrop */
 .home .lm-outcomes.lm-outcomes--editorial .lm-outcome-panel::before {
-  border-radius: 22px;
+  content: '' !important;
+  position: absolute !important;
+  inset: 0 !important;
   background-size: cover !important;
   background-position: center !important;
+  z-index: 0;
+  border-radius: 0 !important;
 }
 
 /* ensure the updated images always render crisply */
@@ -5307,11 +5312,12 @@ main#lm-react-root img {
 }
 
 /* High-contrast legibility layer */
+/* robust photographic overlay for white text readability */
 .home .lm-outcomes.lm-outcomes--editorial .lm-outcome-panel::after {
-  content: '';
-  position: absolute;
-  inset: 0;
-  background: linear-gradient(180deg, rgba(0, 0, 0, 0) 0%, rgba(0, 0, 0, 0.4) 60%, rgba(0, 0, 0, 0.7) 100%);
+  content: '' !important;
+  position: absolute !important;
+  inset: 0 !important;
+  background: linear-gradient(180deg, rgba(0, 0, 0, 0) 0%, rgba(0, 0, 0, 0.2) 50%, rgba(0, 0, 0, 0.8) 100%) !important;
   z-index: 1;
   pointer-events: none;
 }

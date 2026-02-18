@@ -776,15 +776,23 @@ add_filter('posts_orderby', function($orderby, $query) {
     // Build the priority logic
     $priority_sql = " (
         CASE 
-            WHEN {$wpdb->posts}.post_title LIKE '%Turmeric%' THEN 1
-            WHEN {$wpdb->posts}.post_title LIKE '%Curcumin%' THEN 1
-            WHEN {$wpdb->posts}.post_title LIKE '%Circumen%' THEN 1
-            WHEN {$wpdb->posts}.ID IN ($turmeric_ids_str) THEN 1
+            WHEN (
+                SELECT COUNT(*)
+                FROM {$wpdb->term_relationships} tr_m
+                INNER JOIN {$wpdb->term_taxonomy} tt_m ON tr_m.term_taxonomy_id = tt_m.term_taxonomy_id
+                INNER JOIN {$wpdb->terms} t_m ON tt_m.term_id = t_m.term_id
+                WHERE tr_m.object_id = {$wpdb->posts}.ID
+                  AND tt_m.taxonomy = 'product_cat'
+                  AND t_m.slug = '$mushrooms_slug'
+            ) > 0 THEN 1
+            WHEN {$wpdb->posts}.post_title LIKE '%Turmeric%' THEN 2
+            WHEN {$wpdb->posts}.post_title LIKE '%Curcumin%' THEN 2
+            WHEN {$wpdb->posts}.post_title LIKE '%Circumen%' THEN 2
+            WHEN {$wpdb->posts}.ID IN ($turmeric_ids_str) THEN 2
             ELSE (
                 SELECT COALESCE(MIN(CASE 
-                    WHEN t.slug = '$bundles_slug' THEN 0 
-                    WHEN t.slug = '$mushrooms_slug' THEN 2 
-                    WHEN t.slug = '$tippens_slug' THEN 3 
+                    WHEN t.slug = '$bundles_slug' THEN 2
+                    WHEN t.slug = '$tippens_slug' THEN 3
                     ELSE 4 
                 END), 4)
                 FROM {$wpdb->term_relationships} tr_p

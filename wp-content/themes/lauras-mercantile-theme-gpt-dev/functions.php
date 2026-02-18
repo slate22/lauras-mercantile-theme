@@ -756,6 +756,7 @@ add_filter('posts_orderby', function($orderby, $query) {
 
     global $wpdb;
     $mushrooms_slug = 'functional-mushrooms';
+    $cbd_slug       = 'cbd-products-and-bundles';
     $tippens_slug   = 'joe-tippens-protocol-products';
     $turmeric_ids = [166466, 139017, 166471, 166473, 163552, 165372];
     $turmeric_ids_str = implode(',', $turmeric_ids);
@@ -771,6 +772,15 @@ add_filter('posts_orderby', function($orderby, $query) {
                   AND tt_m.taxonomy = 'product_cat'
                   AND t_m.slug = '$mushrooms_slug'
             ) > 0 THEN 10
+            WHEN (
+                SELECT COUNT(*)
+                FROM {$wpdb->term_relationships} tr_cbd
+                INNER JOIN {$wpdb->term_taxonomy} tt_cbd ON tr_cbd.term_taxonomy_id = tt_cbd.term_taxonomy_id
+                INNER JOIN {$wpdb->terms} t_cbd ON tt_cbd.term_id = t_cbd.term_id
+                WHERE tr_cbd.object_id = {$wpdb->posts}.ID
+                  AND tt_cbd.taxonomy = 'product_cat'
+                  AND t_cbd.slug = '$cbd_slug'
+            ) > 0 THEN 15
             WHEN {$wpdb->posts}.post_title LIKE '%Turmeric%' THEN 20
             WHEN {$wpdb->posts}.post_title LIKE '%Curcumin%' THEN 20
             WHEN {$wpdb->posts}.ID IN ($turmeric_ids_str) THEN 20
@@ -790,6 +800,14 @@ add_filter('posts_orderby', function($orderby, $query) {
     if (empty($orderby)) return $priority_sql;
     return $priority_sql . ", " . $orderby;
 }, 99999, 2);
+
+/**
+ * Set the default shop sorting to "menu_order" (Default sorting) 
+ * so our custom category priorities are respected by default.
+ */
+add_filter('woocommerce_default_catalog_orderby', function($orderby) {
+    return 'menu_order';
+});
 
 /**
  * Remove pagination from the shop and category pages to show all products at once.

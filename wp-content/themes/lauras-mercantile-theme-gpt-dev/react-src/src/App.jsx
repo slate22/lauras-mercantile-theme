@@ -54,6 +54,7 @@ export default function App() {
         <Route path="/my-account/*" element={<HardRedirect to="/my-account/" />} />
         <Route path="/checkout/*" element={<HardRedirect to="/checkout/" />} />
         <Route path="/cart/*" element={<HardRedirect to="/cart/" />} />
+        <Route path="/outcomes/*" element={<HardRedirect to={window.location.pathname} />} />
 
         <Route path="*" element={<Navigate to="/" replace />} />
       </Routes>

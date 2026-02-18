@@ -27,29 +27,29 @@ export default function Home() {
           <h2 className="lm-section-title">Shop by Outcome</h2>
           <div className="lm-kicker">Find the right routine for your goals.</div>
           <div className="lm-outcome-grid">
-            <Link className="lm-outcome-panel lm-outcome-panel--sleep" to="/outcomes/sleep-better/">
+            <a className="lm-outcome-panel lm-outcome-panel--sleep" href="/outcomes/sleep-better/">
               <div className="lm-outcome-media" aria-hidden="true" />
               <div className="lm-outcome-eyebrow">Outcome</div>
               <div className="lm-outcome-title">Sleep Better</div>
               <div className="lm-outcome-micro">A healthier evening routine.</div>
               <div className="lm-outcome-cta">Explore Sleep Support</div>
-            </Link>
+            </a>
 
-            <Link className="lm-outcome-panel lm-outcome-panel--move" to="/outcomes/move-without-pain/">
+            <a className="lm-outcome-panel lm-outcome-panel--move" href="/outcomes/move-without-pain/">
               <div className="lm-outcome-media" aria-hidden="true" />
               <div className="lm-outcome-eyebrow">Outcome</div>
               <div className="lm-outcome-title">Move Without Pain</div>
               <div className="lm-outcome-micro">Targeted relief and recovery.</div>
               <div className="lm-outcome-cta">Explore Relief & Recovery</div>
-            </Link>
+            </a>
 
-            <Link className="lm-outcome-panel lm-outcome-panel--brain" to="/outcomes/brain-health/">
+            <a className="lm-outcome-panel lm-outcome-panel--brain" href="/outcomes/brain-health/">
               <div className="lm-outcome-media" aria-hidden="true" />
               <div className="lm-outcome-eyebrow">Outcome</div>
               <div className="lm-outcome-title">Keep Your Brain Healthy</div>
               <div className="lm-outcome-micro">Daily wellness and clarity.</div>
               <div className="lm-outcome-cta">Explore Brain & Focus</div>
-            </Link>
+            </a>
           </div>
         </section>
 

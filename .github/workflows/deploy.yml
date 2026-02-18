@@ -32,7 +32,7 @@ jobs:
           SOURCE: "wp-content/themes/lauras-mercantile-theme-gpt-dev/"
           REMOTE_HOST: ${{ secrets.WPE_STAGING_HOST }}
           REMOTE_USER: ${{ secrets.WPE_STAGING_USER }}
-          TARGET: "/sites/merc22/wp-content/themes/lauras-mercantile-theme-gpt-dev/"
+          TARGET: "/sites/merc22stg/wp-content/themes/lauras-mercantile-theme-gpt-dev/"
           EXCLUDE: "/node_modules/, /react-src/, .git/"
 
       - name: Deployment Summary

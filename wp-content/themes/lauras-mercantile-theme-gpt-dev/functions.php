@@ -156,7 +156,7 @@ function lm_enqueue_home_outcomes_editorial() {
     );
   }
 }
-// add_action('wp_enqueue_scripts', 'lm_enqueue_home_outcomes_editorial', 95);
+add_action('wp_enqueue_scripts', 'lm_enqueue_home_outcomes_editorial', 95);
 
 function lm_theme_setup() {
   add_theme_support('title-tag');

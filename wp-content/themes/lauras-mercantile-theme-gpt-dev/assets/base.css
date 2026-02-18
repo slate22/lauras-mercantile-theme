@@ -5266,6 +5266,10 @@ main#lm-react-root img {
   /* create breathing room so rounded corners read against the page */
   margin-left: clamp(14px, 2vw, 22px);
   margin-right: clamp(14px, 2vw, 22px);
+  margin-top: 80px;
+  /* Separate from founder section */
+  margin-bottom: 80px;
+  /* Separate from features section */
 }
 
 /* soften the photographic moments (not cards; just print-like corners) */
@@ -5287,6 +5291,33 @@ main#lm-react-root img {
 .home .lm-outcomes.lm-outcomes--editorial .lm-outcome-panel--brain::before {
   background-image: url("./images/outcome-brain-photo-v2.jpg") !important;
   background-position: center;
+}
+
+/* High-contrast legibility layer */
+.home .lm-outcomes.lm-outcomes--editorial .lm-outcome-panel::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(180deg, rgba(0, 0, 0, 0) 0%, rgba(0, 0, 0, 0.4) 60%, rgba(0, 0, 0, 0.7) 100%);
+  z-index: 1;
+  pointer-events: none;
+}
+
+.home .lm-outcomes.lm-outcomes--editorial .lm-outcome-eyebrow,
+.home .lm-outcomes.lm-outcomes--editorial .lm-outcome-title,
+.home .lm-outcomes.lm-outcomes--editorial .lm-outcome-cta {
+  text-shadow: 0 2px 4px rgba(0, 0, 0, 0.5);
+  color: #ffffff !important;
+}
+
+.home .lm-outcomes.lm-outcomes--editorial .lm-outcome-eyebrow {
+  opacity: 0.95;
+  font-weight: 700;
+}
+
+.home .lm-outcomes.lm-outcomes--editorial .lm-outcome-title {
+  font-size: clamp(24px, 4vw, 32px);
+  margin-bottom: 24px;
 }
 
 

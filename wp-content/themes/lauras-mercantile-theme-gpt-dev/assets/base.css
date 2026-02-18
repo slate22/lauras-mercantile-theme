@@ -5273,15 +5273,21 @@ main#lm-react-root img {
 }
 
 .home .lm-outcomes.lm-outcomes--editorial .lm-outcome-panel {
-  min-height: 520px;
+  min-height: 540px;
   display: flex !important;
   flex-direction: column !important;
   justify-content: flex-end !important;
-  padding: 40px 28px !important;
-  background: transparent !important;
+  padding: 48px 32px !important;
+  background: #111 !important;
   border: none !important;
   position: relative;
   overflow: hidden;
+  text-decoration: none !important;
+  transition: transform 0.4s cubic-bezier(0.2, 1, 0.3, 1) !important;
+}
+
+.home .lm-outcomes.lm-outcomes--editorial .lm-outcome-panel:hover {
+  transform: translateY(-4px) !important;
 }
 
 /* ensure the photograph fills the entire container as a backdrop */
@@ -5293,6 +5299,11 @@ main#lm-react-root img {
   background-position: center !important;
   z-index: 0;
   border-radius: 0 !important;
+  transition: transform 0.6s cubic-bezier(0.2, 1, 0.3, 1) !important;
+}
+
+.home .lm-outcomes.lm-outcomes--editorial .lm-outcome-panel:hover::before {
+  transform: scale(1.05) !important;
 }
 
 /* ensure the updated images always render crisply */
@@ -5313,40 +5324,74 @@ main#lm-react-root img {
 
 /* High-contrast legibility layer */
 /* robust photographic overlay for white text readability */
+/* robust photographic overlay for white text readability */
 .home .lm-outcomes.lm-outcomes--editorial .lm-outcome-panel::after {
   content: '' !important;
   position: absolute !important;
   inset: 0 !important;
-  background: linear-gradient(180deg, rgba(0, 0, 0, 0) 0%, rgba(0, 0, 0, 0.2) 50%, rgba(0, 0, 0, 0.8) 100%) !important;
+  background: linear-gradient(180deg, rgba(0, 0, 0, 0) 40%, rgba(0, 0, 0, 0.4) 70%, rgba(0, 0, 0, 0.9) 100%) !important;
   z-index: 1;
   pointer-events: none;
+  transition: opacity 0.4s ease !important;
+}
+
+.home .lm-outcomes.lm-outcomes--editorial .lm-outcome-panel:hover::after {
+  opacity: 0.85 !important;
 }
 
 .home .lm-outcomes.lm-outcomes--editorial .lm-outcome-eyebrow,
 .home .lm-outcomes.lm-outcomes--editorial .lm-outcome-title,
-.home .lm-outcomes.lm-outcomes--editorial .lm-outcome-cta {
-  text-shadow: 0 2px 4px rgba(0, 0, 0, 0.5);
+.home .lm-outcomes.lm-outcomes--editorial .lm-outcome-cta,
+.home .lm-outcomes.lm-outcomes--editorial .lm-outcome-micro {
+  position: relative;
+  z-index: 2;
   color: #ffffff !important;
 }
 
 .home .lm-outcomes.lm-outcomes--editorial .lm-outcome-eyebrow {
-  opacity: 0.95;
+  font-size: 13px;
   font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  margin-bottom: 8px;
+  opacity: 0.8;
 }
 
 .home .lm-outcomes.lm-outcomes--editorial .lm-outcome-title {
-  font-size: clamp(24px, 4vw, 32px);
+  font-size: clamp(28px, 4vw, 36px);
+  font-weight: 800;
   line-height: 1.1;
-  margin-bottom: 20px;
-  max-width: 90%;
+  margin-bottom: 12px;
+  letter-spacing: -0.02em;
+}
+
+.home .lm-outcomes.lm-outcomes--editorial .lm-outcome-micro {
+  font-size: 16px;
+  line-height: 1.4;
+  margin-bottom: 32px;
+  opacity: 0.9;
+  max-width: 260px;
 }
 
 .home .lm-outcomes.lm-outcomes--editorial .lm-outcome-cta {
+  display: inline-block;
+  padding: 12px 24px;
+  background: rgba(255, 255, 255, 0.15);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+  border: 1px solid rgba(255, 255, 255, 0.3);
+  border-radius: 50px;
   font-size: 14px;
-  font-weight: 600;
-  text-transform: uppercase;
-  letter-spacing: 0.05em;
-  opacity: 0.9;
+  font-weight: 700;
+  text-transform: none;
+  letter-spacing: 0;
+  transition: all 0.3s ease !important;
+}
+
+.home .lm-outcomes.lm-outcomes--editorial .lm-outcome-panel:hover .lm-outcome-cta {
+  background: #ffffff !important;
+  color: #000000 !important;
+  transform: scale(1.05);
 }
 
 

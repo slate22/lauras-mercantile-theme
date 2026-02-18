@@ -743,26 +743,18 @@ add_filter('posts_orderby', function($orderby, $query) {
         return $orderby;
     }
 
-    // Only target the main query to avoid messing with sidebars/footer
-    if (!$query->is_main_query()) {
-        return $orderby;
-    }
-
-    // Target the main shop/category archive queries
-    $is_woo_archive = false;
-    if (function_exists('is_shop') && (is_shop() || is_product_category() || is_product_tag() || is_post_type_archive('product'))) {
-        $is_woo_archive = true;
-    }
-
-    // Check if this is explicitly a product query
+    // Target product queries specifically
     $pt = $query->get('post_type');
     $is_product_query = ($pt === 'product' || (is_array($pt) && in_array('product', $pt)));
 
-    if (!$is_woo_archive && !$is_product_query) {
+    // Target cases where taxonomy is product_cat (like in REST API / Store API)
+    $is_product_cat_query = !empty($query->get('product_cat')) || !empty($query->get('tax_query'));
+
+    if (!$is_product_query && !$is_product_cat_query) {
         return $orderby;
     }
 
-    // Don't interfere with search results
+    // Don't interfere with search results unless explicitly requested
     if ($query->get('s')) return $orderby;
 
     global $wpdb;
@@ -805,6 +797,7 @@ add_filter('posts_orderby', function($orderby, $query) {
         return $priority_sql;
     }
 
+    // Prepend our priority to whatever else is there
     return $priority_sql . ", " . $orderby;
 }, 99999, 2);
 

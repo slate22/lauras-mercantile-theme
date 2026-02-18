@@ -3,11 +3,11 @@ import { Link } from 'react-router-dom';
 import ProductCard from '../components/ProductCard.jsx';
 
 export default function Shop() {
-  const [state, setState] = React.useState({ 
-    loading: true, 
-    error: null, 
-    categories: [], 
-    products: [] 
+  const [state, setState] = React.useState({
+    loading: true,
+    error: null,
+    categories: [],
+    products: []
   });
   const [view, setView] = React.useState('categories'); // 'categories' or 'products'
 
@@ -17,38 +17,38 @@ export default function Shop() {
       try {
         // Try Woo Store API first
         const [catRes, prodRes] = await Promise.all([
-          fetch('/wp-json/wc/store/v1/products/categories?per_page=40', { 
-            credentials: 'same-origin' 
+          fetch('/wp-json/wc/store/v1/products/categories?per_page=40', {
+            credentials: 'same-origin'
           }),
-          fetch('/wp-json/wc/store/v1/products?per_page=16&orderby=popularity', { 
-            credentials: 'same-origin' 
+          fetch('/wp-json/wc/store/v1/products?per_page=24', {
+            credentials: 'same-origin'
           }),
         ]);
-        
+
         if (!catRes.ok || !prodRes.ok) {
           throw new Error('Woo Store API not available (blocked or disabled).');
         }
 
         const [categories, products] = await Promise.all([
-          catRes.json(), 
+          catRes.json(),
           prodRes.json()
         ]);
-        
+
         if (!cancelled) {
-          setState({ 
-            loading: false, 
-            error: null, 
-            categories, 
-            products 
+          setState({
+            loading: false,
+            error: null,
+            categories,
+            products
           });
         }
       } catch (e) {
         if (!cancelled) {
-          setState({ 
-            loading: false, 
-            error: e.message, 
-            categories: [], 
-            products: [] 
+          setState({
+            loading: false,
+            error: e.message,
+            categories: [],
+            products: []
           });
         }
       }
@@ -70,7 +70,7 @@ export default function Shop() {
               Premium CBD and functional mushroom products, sustainably sourced and third-party tested.
             </p>
           </div>
-          
+
           {/* View Toggle */}
           {!state.loading && !state.error && (
             <div className="lm-view-toggle">
@@ -130,7 +130,7 @@ export default function Shop() {
                 <div className="lm-kicker" style={{ textAlign: 'left', maxWidth: '100%' }}>
                   Browse our curated collections of CBD oils, topicals, and wellness products.
                 </div>
-                
+
                 <div className="lm-category-grid">
                   {topLevelCategories.slice(0, 12).map((category) => (
                     <Link
@@ -140,8 +140,8 @@ export default function Shop() {
                     >
                       <div className="lm-category-image">
                         {category.image?.src ? (
-                          <img 
-                            src={category.image.src} 
+                          <img
+                            src={category.image.src}
                             alt={category.name}
                             loading="lazy"
                           />
@@ -181,7 +181,7 @@ export default function Shop() {
                 <div className="lm-kicker" style={{ textAlign: 'left', maxWidth: '100%' }}>
                   Our most popular wellness products, loved by customers.
                 </div>
-                
+
                 <div className="lm-product-grid">
                   {state.products.slice(0, 12).map((product) => (
                     <ProductCard key={product.id} product={product} />

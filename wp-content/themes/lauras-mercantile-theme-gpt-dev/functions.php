@@ -739,32 +739,27 @@ add_filter('woocommerce_single_product_image_thumbnail_html', 'lm_fix_turmeric_i
  * Force specific products to the top of the shop and category pages.
  */
 add_filter('posts_orderby', function($orderby, $query) {
-    if (is_admin()) {
-        return $orderby;
-    }
-
-    // Target product queries specifically
+    if (is_admin()) return $orderby;
+    
+    // Target both PHP archives and Store/REST API queries
+    $is_product_query = false;
     $pt = $query->get('post_type');
-    $is_product_query = ($pt === 'product' || (is_array($pt) && in_array('product', $pt)));
-
-    // Target cases where taxonomy is product_cat (like in REST API / Store API)
-    $is_product_cat_query = !empty($query->get('product_cat')) || !empty($query->get('tax_query'));
-
-    if (!$is_product_query && !$is_product_cat_query) {
-        return $orderby;
+    if ($pt === 'product' || (is_array($pt) && in_array('product', $pt))) $is_product_query = true;
+    if (!empty($query->get('product_cat')) || !empty($query->get('tax_query'))) $is_product_query = true;
+    
+    if (function_exists('is_shop') && (is_shop() || is_product_category() || is_product_tag() || is_post_type_archive('product'))) {
+        $is_product_query = true;
     }
 
-    // Don't interfere with search results unless explicitly requested
+    if (!$is_product_query) return $orderby;
     if ($query->get('s')) return $orderby;
 
     global $wpdb;
-
     $mushrooms_slug = 'functional-mushrooms';
     $tippens_slug   = 'joe-tippens-protocol-products';
     $turmeric_ids = [166466, 139017, 166471, 166473, 163552, 165372];
     $turmeric_ids_str = implode(',', $turmeric_ids);
 
-    // Build the priority logic using higher numbers to clearly separate groups
     $priority_sql = " (
         CASE 
             WHEN (
@@ -778,7 +773,6 @@ add_filter('posts_orderby', function($orderby, $query) {
             ) > 0 THEN 10
             WHEN {$wpdb->posts}.post_title LIKE '%Turmeric%' THEN 20
             WHEN {$wpdb->posts}.post_title LIKE '%Curcumin%' THEN 20
-            WHEN {$wpdb->posts}.post_title LIKE '%Circumen%' THEN 20
             WHEN {$wpdb->posts}.ID IN ($turmeric_ids_str) THEN 20
             WHEN (
                 SELECT COUNT(*)
@@ -793,11 +787,7 @@ add_filter('posts_orderby', function($orderby, $query) {
         END
     ) ASC ";
 
-    if (empty($orderby)) {
-        return $priority_sql;
-    }
-
-    // Prepend our priority to whatever else is there
+    if (empty($orderby)) return $priority_sql;
     return $priority_sql . ", " . $orderby;
 }, 99999, 2);
 

@@ -132,3 +132,82 @@ add_action('wp', function () {
         add_filter('is_active_sidebar', '__return_false');
     }
 });
+
+/**
+ * Force specific products to the top of the shop and category pages.
+ */
+add_filter('posts_orderby', function($orderby, $query) {
+    if (is_admin()) return $orderby;
+    
+    // Target both PHP archives and Store/REST API queries
+    $is_product_query = false;
+    $pt = $query->get('post_type');
+    if ($pt === 'product' || (is_array($pt) && in_array('product', $pt))) $is_product_query = true;
+    if (!empty($query->get('product_cat')) || !empty($query->get('tax_query'))) $is_product_query = true;
+    
+    if (function_exists('is_shop') && (is_shop() || is_product_category() || is_product_tag() || is_post_type_archive('product'))) {
+        $is_product_query = true;
+    }
+
+    if (!$is_product_query) return $orderby;
+    if ($query->get('s')) return $orderby;
+
+    global $wpdb;
+    $mushrooms_slug = 'functional-mushrooms';
+    $tippens_slug   = 'joe-tippens-protocol-products';
+    $turmeric_ids = [166466, 139017, 166471, 166473, 163552, 165372];
+    $turmeric_ids_str = implode(',', $turmeric_ids);
+
+    $priority_sql = " (
+        CASE 
+            WHEN (
+                SELECT COUNT(*)
+                FROM {$wpdb->term_relationships} tr_m
+                INNER JOIN {$wpdb->term_taxonomy} tt_m ON tr_m.term_taxonomy_id = tt_m.term_taxonomy_id
+                INNER JOIN {$wpdb->terms} t_m ON tt_m.term_id = t_m.term_id
+                WHERE tr_m.object_id = {$wpdb->posts}.ID
+                  AND tt_m.taxonomy = 'product_cat'
+                  AND t_m.slug = '$mushrooms_slug'
+            ) > 0 THEN 10
+            WHEN {$wpdb->posts}.post_title LIKE '%Turmeric%' THEN 20
+            WHEN {$wpdb->posts}.post_title LIKE '%Curcumin%' THEN 20
+            WHEN {$wpdb->posts}.ID IN ($turmeric_ids_str) THEN 20
+            WHEN (
+                SELECT COUNT(*)
+                FROM {$wpdb->term_relationships} tr_t
+                INNER JOIN {$wpdb->term_taxonomy} tt_t ON tr_t.term_taxonomy_id = tt_t.term_taxonomy_id
+                INNER JOIN {$wpdb->terms} t_t ON tt_t.term_id = t_t.term_id
+                WHERE tr_t.object_id = {$wpdb->posts}.ID
+                  AND tt_t.taxonomy = 'product_cat'
+                  AND t_t.slug = '$tippens_slug'
+            ) > 0 THEN 30
+            ELSE 40
+        END
+    ) ASC ";
+
+    if (empty($orderby)) return $priority_sql;
+    return $priority_sql . ", " . $orderby;
+}, 99999, 2);
+
+/**
+ * Homepage-only: editorialize the Outcomes section.
+ */
+function lm_enqueue_home_outcomes_editorial() {
+    if (!is_front_page() && !is_home()) return;
+    // Note: this depends on lm_should_mount_app() logic which should already be in this file.
+    if (function_exists('lm_should_mount_app') && !lm_should_mount_app()) return;
+
+    $theme_path = get_stylesheet_directory();
+    $theme_uri  = get_stylesheet_directory_uri();
+    $js_path = $theme_path . '/assets/js/home-outcomes-editorial.js';
+    if (file_exists($js_path)) {
+        wp_enqueue_script(
+            'lm-home-outcomes-editorial',
+            $theme_uri . '/assets/js/home-outcomes-editorial.js',
+            [],
+            filemtime($js_path),
+            true
+        );
+    }
+}
+add_action('wp_enqueue_scripts', 'lm_enqueue_home_outcomes_editorial', 100);

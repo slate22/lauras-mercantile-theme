@@ -10,7 +10,7 @@
 
 <!-- PROMOTIONAL BANNER - JAVASCRIPT FALLBACK -->
 <div id="promo-banner" style="display:none; position: fixed; top: 0; left: 0; right: 0; background: #28a745; color: white; padding: 20px; text-align: center; font-weight: 700; font-size: 18px; z-index: 999999; box-shadow: 0 4px 20px rgba(40, 167, 69, 0.4); font-family: Arial, sans-serif; line-height: 1.4;">
-  🍄 Take 20% off Functional Mushrooms, CBD Bundles and Functional Chocolates. <a href="/product-category/on-sale/cbd-products-and-bundles/" style="color: #fff; text-decoration: underline;">See our CBD Selection and Bundles Specials</a>. No coupon required. 🍄
+  🍄 Take 20% off <a href="/product-category/full-spectrum-cbd-oil/" style="color: #fff; text-decoration: underline;">Full Spectrum CBD Oil</a>, <a href="/product-category/on-sale/cbd-products-and-bundles/" style="color: #fff; text-decoration: underline;">CBD Selection and Bundles Specials</a> and Functional Mushrooms. No coupon required. 🍄
 </div>
 
 <script>

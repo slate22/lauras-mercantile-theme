@@ -809,42 +809,52 @@ add_filter('posts_orderby', function($orderby, $query) {
 }, 99999, 2);
 
 /**
- * Set the default shop sorting to "menu_order" (Default sorting) 
- * so our custom category priorities are respected by default.
+ * Force WooCommerce sorting logic to be registered late via init hook.
  */
-add_filter('woocommerce_default_catalog_orderby', function($orderby) {
-    return 'menu_order';
-}, 999999);
+add_action('init', function() {
+    /**
+     * Set the default shop sorting to "menu_order" (Default sorting) 
+     */
+    add_filter('woocommerce_default_catalog_orderby', function($orderby) {
+        return 'menu_order';
+    }, 999999);
+
+    /**
+     * Ensure 'Default sorting' (menu_order) is available in the sorting dropdown.
+     */
+    add_filter('woocommerce_catalog_orderby', function($sortby) {
+        // Debugging: rename popularity to see if this filter is active
+        if (isset($sortby['popularity'])) {
+            $sortby['popularity'] = 'Sort by Popularity (Active Filter)';
+        }
+        
+        // Force menu_order to be the very first item
+        $sortby = array('menu_order' => 'Default sorting') + $sortby;
+        
+        return $sortby;
+    }, 999999);
+
+    /**
+     * Forcibly set the ordering args for the catalog.
+     */
+    add_filter('woocommerce_get_catalog_ordering_args', function($args) {
+        if (!isset($_GET['orderby'])) {
+            $args['orderby'] = 'menu_order';
+            $args['order']   = 'ASC';
+        }
+        return $args;
+    }, 999999);
+}, 9999);
 
 /**
- * Ensure 'Default sorting' (menu_order) is available in the sorting dropdown.
+ * Filter for WooCommerce Store API (used by blocks and React app)
  */
-add_filter('woocommerce_catalog_orderby', function($sortby) {
-    // Debugging: rename popularity to see if this filter is active
-    if (isset($sortby['popularity'])) {
-        $sortby['popularity'] = 'Sort by Popularity (Active Filter)';
-    }
-    
-    // Force menu_order to be the very first item
-    $sortby = array('menu_order' => 'Default sorting') + $sortby;
-    
-    // Add HTML comment to verify filter execution
-    if (!is_admin()) {
-        echo "<!-- WOOC_CATALOG_ORDERBY_FILTER_EXECUTED -->";
-    }
-    
-    return $sortby;
-}, 999999);
-
-/**
- * Forcibly set the ordering args for the catalog.
- */
-add_filter('woocommerce_get_catalog_ordering_args', function($args) {
+add_filter('woocommerce_store_api_products_query', function($query_args) {
     if (!isset($_GET['orderby'])) {
-        $args['orderby'] = 'menu_order';
-        $args['order']   = 'ASC';
+        $query_args['orderby'] = 'menu_order';
+        $query_args['order']   = 'ASC';
     }
-    return $args;
+    return $query_args;
 }, 999999);
 
 /**
@@ -872,23 +882,20 @@ add_action('pre_get_posts', function($query) {
 }, 999999);
 
 /**
- * Specific filter for WooCommerce Store API (used by blocks and React app)
- */
-add_filter('woocommerce_store_api_products_query', function($query_args) {
-    if (!isset($_GET['orderby'])) {
-        $query_args['orderby'] = 'menu_order';
-        $query_args['order']   = 'ASC';
-    }
-    return $query_args;
-}, 999999);
-
-/**
  * Remove pagination from the shop and category pages to show all products at once.
  */
 add_filter('loop_shop_per_page', function($cols) {
     if (is_admin()) return $cols;
     return -1; // -1 shows all products
 }, 9999);
+
+/**
+ * Debug: Verify active theme in footer.
+ */
+add_action('wp_footer', function() {
+    echo "<!-- ACTIVE_THEME_SLUG: " . esc_html(get_stylesheet()) . " -->";
+    echo "<!-- FILTERS_REGISTERED_CHECK: " . (has_filter('woocommerce_catalog_orderby') ? 'YES' : 'NO') . " -->";
+}, 999999);
 
 
 

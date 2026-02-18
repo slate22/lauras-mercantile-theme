@@ -52,10 +52,11 @@ jobs:
 
       - name: Remote Discovery & Cache Flush
         run: |
+          echo "Server Environment Check:"
+          ssh -p 22 -o StrictHostKeyChecking=no ${{ secrets.WPE_STAGING_USER }}@${{ secrets.WPE_STAGING_HOST }} "pwd; ls -la; ls -la /sites/ || echo 'No /sites/ dir'; ls -la /sites/merc22stg/ || echo 'No /sites/merc22stg/ dir'"
           echo "Listing assets on server..."
-          ssh -p 22 -o StrictHostKeyChecking=no ${{ secrets.WPE_STAGING_USER }}@${{ secrets.WPE_STAGING_HOST }} "ls -la /sites/merc22stg/wp-content/themes/lauras-mercantile-theme-gpt-dev/assets/dist/"
+          ssh -p 22 -o StrictHostKeyChecking=no ${{ secrets.WPE_STAGING_USER }}@${{ secrets.WPE_STAGING_HOST }} "ls -la /sites/merc22stg/wp-content/themes/lauras-mercantile-theme-gpt-dev/assets/dist/ || echo 'Assets not found at full path'"
           echo "Flushing WP Engine Cache..."
-          # Try both standard WP-CLI and a potential WPE-specific purge if available
           ssh -p 22 -o StrictHostKeyChecking=no ${{ secrets.WPE_STAGING_USER }}@${{ secrets.WPE_STAGING_HOST }} "wp cache flush || true"
 
       - name: Deployment Summary

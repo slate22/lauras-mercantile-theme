@@ -29,6 +29,12 @@ jobs:
         working-directory: "wp-content/themes/lauras-mercantile-theme-gpt-dev/react-src"
         run: npm run build
 
+      - name: Connectivity Check
+        run: |
+          echo "Testing connection to ${{ secrets.WPE_STAGING_HOST }} on port 2222..."
+          nc -zv -w 5 ${{ secrets.WPE_STAGING_HOST }} 2222 || echo "Port 2222 unreachable on host"
+          nc -zv -w 5 ${{ secrets.WPE_STAGING_HOST }} 22 || echo "Port 22 unreachable on host"
+
       - name: Deploy to Staging via SSH
         uses: easingthemes/ssh-deploy@main
         with:

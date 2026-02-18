@@ -807,17 +807,16 @@ add_filter('posts_orderby', function($orderby, $query) {
  */
 add_filter('woocommerce_default_catalog_orderby', function($orderby) {
     return 'menu_order';
-}, 9999);
+}, 99999);
 
 /**
  * Ensure 'Default sorting' (menu_order) is available in the sorting dropdown.
  */
 add_filter('woocommerce_catalog_orderby', function($sortby) {
-    if (!isset($sortby['menu_order'])) {
-        $sortby = array('menu_order' => 'Default sorting') + $sortby;
-    }
+    // Ensure menu_order is at the very top and labeled correctly
+    $sortby = array('menu_order' => 'Default sorting') + $sortby;
     return $sortby;
-}, 9999);
+}, 99999);
 
 /**
  * Forcibly set the shop sorting to menu_order if no explicit sorting is requested by the user.
@@ -827,23 +826,38 @@ add_filter('woocommerce_catalog_orderby', function($sortby) {
 add_action('pre_get_posts', function($query) {
     if (is_admin() || !$query->is_main_query()) return;
     
-    // Check if we are on a shop or product category page
+    // Target both standard archives and REST/Store API queries
     $is_product_query = false;
+    $pt = $query->get('post_type');
+    if ($pt === 'product' || (is_array($pt) && in_array('product', $pt))) {
+        $is_product_query = true;
+    }
+
     if (function_exists('is_shop') && (is_shop() || is_product_category() || is_product_tag() || is_post_type_archive('product'))) {
         $is_product_query = true;
     }
 
     if ($is_product_query) {
         $current_orderby = $query->get('orderby');
-        // If no sort is set, or it's defaulting to popularity, force it to our custom menu_order
-        if (!$current_orderby || $current_orderby === 'popularity') {
-            // Check if there's an explicit orderby in the URL to respect user choice
-            if (!isset($_GET['orderby'])) {
-                $query->set('orderby', 'menu_order');
-                $query->set('order', 'ASC');
-            }
+        // If no sort is set, or it's defaulting to popularity/date, force it to our custom menu_order
+        // But only if the user hasn't explicitly clicked a sort option (?orderby=...)
+        if (!isset($_GET['orderby'])) {
+            $query->set('orderby', 'menu_order');
+            $query->set('order', 'ASC');
         }
     }
+}, 9999);
+
+/**
+ * Specific filter for WooCommerce Store API (used by blocks and React app)
+ * to ensure default sorting is 'menu_order'.
+ */
+add_filter('woocommerce_store_api_products_query', function($query_args) {
+    if (!isset($_GET['orderby'])) {
+        $query_args['orderby'] = 'menu_order';
+        $query_args['order']   = 'ASC';
+    }
+    return $query_args;
 }, 9999);
 
 /**

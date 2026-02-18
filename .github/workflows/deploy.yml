@@ -44,7 +44,7 @@ jobs:
           REMOTE_HOST: ${{ secrets.WPE_STAGING_HOST }}
           REMOTE_USER: ${{ secrets.WPE_STAGING_USER }}
           REMOTE_PORT: 22
-          TARGET: "/wp-content/themes/lauras-mercantile-theme-gpt-dev/"
+          TARGET: "/sites/merc22stg/wp-content/themes/lauras-mercantile-theme-gpt-dev/"
           EXCLUDE: "/node_modules/, /react-src/, .git/"
           SSH_CMD_ARGS: "-o StrictHostKeyChecking=no"
 

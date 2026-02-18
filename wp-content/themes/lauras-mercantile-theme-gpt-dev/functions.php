@@ -776,6 +776,9 @@ add_filter('posts_orderby', function($orderby, $query) {
     // Build the priority logic
     $priority_sql = " (
         CASE 
+            WHEN {$wpdb->posts}.post_title LIKE '%Turmeric%' THEN 1
+            WHEN {$wpdb->posts}.post_title LIKE '%Curcumin%' THEN 1
+            WHEN {$wpdb->posts}.post_title LIKE '%Circumen%' THEN 1
             WHEN {$wpdb->posts}.ID IN ($turmeric_ids_str) THEN 1
             ELSE (
                 SELECT COALESCE(MIN(CASE 

@@ -1,5 +1,12 @@
 <?php
-if (!defined('ABSPATH')) exit;
+/**
+ * Laura's Mercantile Theme GPT-DEV Functions
+ */
+echo "<!-- FUNCTIONS_PHP_LOADED_V3 -->";
+
+if ( ! defined( 'ABSPATH' ) ) {
+	exit; // Exit if accessed directly.
+}
 
 require_once get_stylesheet_directory() . '/inc/class-lm-walker-nav.php';
 

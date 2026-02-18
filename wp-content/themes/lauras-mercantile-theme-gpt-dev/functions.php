@@ -810,6 +810,20 @@ add_filter('woocommerce_default_catalog_orderby', function($orderby) {
 });
 
 /**
+ * Forcibly set the shop sorting to menu_order if no explicit sorting is requested.
+ * This ensures our custom priority logic (Functional Mushrooms first) is applied by default.
+ */
+add_action('pre_get_posts', function($query) {
+    if (is_admin() || !$query->is_main_query()) return;
+    if (function_exists('is_shop') && (is_shop() || is_product_category() || is_product_tag())) {
+        if (!$query->get('orderby')) {
+            $query->set('orderby', 'menu_order');
+            $query->set('order', 'ASC');
+        }
+    }
+}, 9999);
+
+/**
  * Remove pagination from the shop and category pages to show all products at once.
  */
 add_filter('loop_shop_per_page', function($cols) {

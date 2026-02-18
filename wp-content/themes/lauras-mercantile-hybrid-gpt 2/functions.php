@@ -199,21 +199,23 @@ add_filter('posts_orderby', function($orderby, $query) {
     return $priority_sql . ", " . $orderby;
 }, 99999, 2);
 
-/**
- * Set the default shop sorting to "menu_order" (Default sorting) 
- * so our custom category priorities are respected by default.
- */
 add_filter('woocommerce_default_catalog_orderby', function($orderby) {
     return 'menu_order';
 });
 
 /**
- * Set the default shop sorting to "menu_order" (Default sorting) 
- * so our custom category priorities are respected by default.
+ * Forcibly set the shop sorting to menu_order if no explicit sorting is requested.
+ * This ensures our custom priority logic (Functional Mushrooms first) is applied by default.
  */
-add_filter('woocommerce_default_catalog_orderby', function($orderby) {
-    return 'menu_order';
-});
+add_action('pre_get_posts', function($query) {
+    if (is_admin() || !$query->is_main_query()) return;
+    if (function_exists('is_shop') && (is_shop() || is_product_category() || is_product_tag())) {
+        if (!$query->get('orderby')) {
+            $query->set('orderby', 'menu_order');
+            $query->set('order', 'ASC');
+        }
+    }
+}, 9999);
 
 /**
  * Homepage-only: editorialize the Outcomes section.

@@ -743,9 +743,14 @@ add_filter('posts_orderby', function($orderby, $query) {
         return $orderby;
     }
 
+    // Only target the main query to avoid messing with sidebars/footer
+    if (!$query->is_main_query()) {
+        return $orderby;
+    }
+
     // Target the main shop/category archive queries
     $is_woo_archive = false;
-    if (function_exists('is_shop') && (is_shop() || is_product_category() || is_product_tag())) {
+    if (function_exists('is_shop') && (is_shop() || is_product_category() || is_product_tag() || is_post_type_archive('product'))) {
         $is_woo_archive = true;
     }
 
@@ -764,16 +769,10 @@ add_filter('posts_orderby', function($orderby, $query) {
 
     $mushrooms_slug = 'functional-mushrooms';
     $tippens_slug   = 'joe-tippens-protocol-products';
-
-    // Specific Product IDs for Ancient Nutrition Turmeric and Turmeric Bundles
     $turmeric_ids = [166466, 139017, 166471, 166473, 163552, 165372];
     $turmeric_ids_str = implode(',', $turmeric_ids);
 
-    $bundles_slug   = 'cbd-products-and-bundles';
-    $mushrooms_slug = 'functional-mushrooms';
-    $tippens_slug   = 'joe-tippens-protocol-products';
-
-    // Build the priority logic
+    // Build the priority logic using higher numbers to clearly separate groups
     $priority_sql = " (
         CASE 
             WHEN (
@@ -784,23 +783,21 @@ add_filter('posts_orderby', function($orderby, $query) {
                 WHERE tr_m.object_id = {$wpdb->posts}.ID
                   AND tt_m.taxonomy = 'product_cat'
                   AND t_m.slug = '$mushrooms_slug'
-            ) > 0 THEN 1
-            WHEN {$wpdb->posts}.post_title LIKE '%Turmeric%' THEN 2
-            WHEN {$wpdb->posts}.post_title LIKE '%Curcumin%' THEN 2
-            WHEN {$wpdb->posts}.post_title LIKE '%Circumen%' THEN 2
-            WHEN {$wpdb->posts}.ID IN ($turmeric_ids_str) THEN 2
-            ELSE (
-                SELECT COALESCE(MIN(CASE 
-                    WHEN t.slug = '$bundles_slug' THEN 2
-                    WHEN t.slug = '$tippens_slug' THEN 3
-                    ELSE 4 
-                END), 4)
-                FROM {$wpdb->term_relationships} tr_p
-                INNER JOIN {$wpdb->term_taxonomy} tt_p ON tr_p.term_taxonomy_id = tt_p.term_taxonomy_id
-                INNER JOIN {$wpdb->terms} t ON tt_p.term_id = t.term_id
-                WHERE tr_p.object_id = {$wpdb->posts}.ID
-                  AND tt_p.taxonomy = 'product_cat'
-            )
+            ) > 0 THEN 10
+            WHEN {$wpdb->posts}.post_title LIKE '%Turmeric%' THEN 20
+            WHEN {$wpdb->posts}.post_title LIKE '%Curcumin%' THEN 20
+            WHEN {$wpdb->posts}.post_title LIKE '%Circumen%' THEN 20
+            WHEN {$wpdb->posts}.ID IN ($turmeric_ids_str) THEN 20
+            WHEN (
+                SELECT COUNT(*)
+                FROM {$wpdb->term_relationships} tr_t
+                INNER JOIN {$wpdb->term_taxonomy} tt_t ON tr_t.term_taxonomy_id = tt_t.term_taxonomy_id
+                INNER JOIN {$wpdb->terms} t_t ON tt_t.term_id = t_t.term_id
+                WHERE tr_t.object_id = {$wpdb->posts}.ID
+                  AND tt_t.taxonomy = 'product_cat'
+                  AND t_t.slug = '$tippens_slug'
+            ) > 0 THEN 30
+            ELSE 40
         END
     ) ASC ";
 

@@ -23,11 +23,13 @@ jobs:
 
       - name: Install React deps
         working-directory: "wp-content/themes/lauras-mercantile-theme-gpt-dev/react-src"
-        run: npm install --no-audit --no-fund
+        run: npm ci --no-audit --no-fund
 
       - name: Build React
         working-directory: "wp-content/themes/lauras-mercantile-theme-gpt-dev/react-src"
-        run: npm run build
+        run: |
+          rm -rf ../assets/dist/
+          npm run build
 
       - name: Connectivity Check
         run: |
@@ -39,7 +41,7 @@ jobs:
         uses: easingthemes/ssh-deploy@main
         with:
           SSH_PRIVATE_KEY: ${{ secrets.WPE_STAGING_SSH_KEY }}
-          ARGS: "-rlgoDzvc -i --delete"
+          ARGS: "-rlgoDzvvc -i --delete"
           SOURCE: "wp-content/themes/lauras-mercantile-theme-gpt-dev/"
           REMOTE_HOST: ${{ secrets.WPE_STAGING_HOST }}
           REMOTE_USER: ${{ secrets.WPE_STAGING_USER }}
@@ -47,6 +49,14 @@ jobs:
           TARGET: "/sites/merc22stg/wp-content/themes/lauras-mercantile-theme-gpt-dev/"
           EXCLUDE: "/node_modules/, /react-src/, .git/"
           SSH_CMD_ARGS: "-o StrictHostKeyChecking=no"
+
+      - name: Remote Discovery & Cache Flush
+        run: |
+          echo "Listing assets on server..."
+          ssh -p 22 -o StrictHostKeyChecking=no ${{ secrets.WPE_STAGING_USER }}@${{ secrets.WPE_STAGING_HOST }} "ls -la /sites/merc22stg/wp-content/themes/lauras-mercantile-theme-gpt-dev/assets/dist/"
+          echo "Flushing WP Engine Cache..."
+          # Try both standard WP-CLI and a potential WPE-specific purge if available
+          ssh -p 22 -o StrictHostKeyChecking=no ${{ secrets.WPE_STAGING_USER }}@${{ secrets.WPE_STAGING_HOST }} "wp cache flush || true"
 
       - name: Deployment Summary
         run: |

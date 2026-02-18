@@ -807,26 +807,45 @@ add_filter('posts_orderby', function($orderby, $query) {
  */
 add_filter('woocommerce_default_catalog_orderby', function($orderby) {
     return 'menu_order';
-}, 99999);
+}, 999999);
 
 /**
  * Ensure 'Default sorting' (menu_order) is available in the sorting dropdown.
  */
 add_filter('woocommerce_catalog_orderby', function($sortby) {
-    // Ensure menu_order is at the very top and labeled correctly
+    // Debugging: rename popularity to see if this filter is active
+    if (isset($sortby['popularity'])) {
+        $sortby['popularity'] = 'Sort by Popularity (Active Filter)';
+    }
+    
+    // Force menu_order to be the very first item
     $sortby = array('menu_order' => 'Default sorting') + $sortby;
+    
+    // Add HTML comment to verify filter execution
+    if (!is_admin()) {
+        echo "<!-- WOOC_CATALOG_ORDERBY_FILTER_EXECUTED -->";
+    }
+    
     return $sortby;
-}, 99999);
+}, 999999);
+
+/**
+ * Forcibly set the ordering args for the catalog.
+ */
+add_filter('woocommerce_get_catalog_ordering_args', function($args) {
+    if (!isset($_GET['orderby'])) {
+        $args['orderby'] = 'menu_order';
+        $args['order']   = 'ASC';
+    }
+    return $args;
+}, 999999);
 
 /**
  * Forcibly set the shop sorting to menu_order if no explicit sorting is requested by the user.
- * This ensures our custom priority logic (Functional Mushrooms first) is applied by default,
- * even if WooCommerce or another plugin tries to default to 'popularity'.
  */
 add_action('pre_get_posts', function($query) {
     if (is_admin() || !$query->is_main_query()) return;
     
-    // Target both standard archives and REST/Store API queries
     $is_product_query = false;
     $pt = $query->get('post_type');
     if ($pt === 'product' || (is_array($pt) && in_array('product', $pt))) {
@@ -838,19 +857,15 @@ add_action('pre_get_posts', function($query) {
     }
 
     if ($is_product_query) {
-        $current_orderby = $query->get('orderby');
-        // If no sort is set, or it's defaulting to popularity/date, force it to our custom menu_order
-        // But only if the user hasn't explicitly clicked a sort option (?orderby=...)
         if (!isset($_GET['orderby'])) {
             $query->set('orderby', 'menu_order');
             $query->set('order', 'ASC');
         }
     }
-}, 9999);
+}, 999999);
 
 /**
  * Specific filter for WooCommerce Store API (used by blocks and React app)
- * to ensure default sorting is 'menu_order'.
  */
 add_filter('woocommerce_store_api_products_query', function($query_args) {
     if (!isset($_GET['orderby'])) {
@@ -858,7 +873,7 @@ add_filter('woocommerce_store_api_products_query', function($query_args) {
         $query_args['order']   = 'ASC';
     }
     return $query_args;
-}, 9999);
+}, 999999);
 
 /**
  * Remove pagination from the shop and category pages to show all products at once.

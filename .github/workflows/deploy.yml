@@ -16,6 +16,11 @@ jobs:
         with:
           node-version: "20"
 
+      - name: Debug Output
+        run: |
+          echo "Theme directory structure:"
+          ls -R wp-content/themes/lauras-mercantile-theme-gpt-dev/
+
       - name: Install React deps
         working-directory: "wp-content/themes/lauras-mercantile-theme-gpt-dev/react-src"
         run: npm install --no-audit --no-fund

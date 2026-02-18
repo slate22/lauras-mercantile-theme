@@ -5272,9 +5272,22 @@ main#lm-react-root img {
   /* Separate from features section */
 }
 
+.home .lm-outcomes.lm-outcomes--editorial .lm-outcome-panel {
+  min-height: 520px;
+  display: flex !important;
+  flex-direction: column !important;
+  justify-content: flex-end !important;
+  padding: 40px 28px !important;
+  background: #1a1a1a !important;
+  /* Fallback for slow loads */
+  border: none !important;
+}
+
 /* soften the photographic moments (not cards; just print-like corners) */
 .home .lm-outcomes.lm-outcomes--editorial .lm-outcome-panel::before {
   border-radius: 22px;
+  background-size: cover !important;
+  background-position: center !important;
 }
 
 /* ensure the updated images always render crisply */
@@ -5317,7 +5330,17 @@ main#lm-react-root img {
 
 .home .lm-outcomes.lm-outcomes--editorial .lm-outcome-title {
   font-size: clamp(24px, 4vw, 32px);
-  margin-bottom: 24px;
+  line-height: 1.1;
+  margin-bottom: 20px;
+  max-width: 90%;
+}
+
+.home .lm-outcomes.lm-outcomes--editorial .lm-outcome-cta {
+  font-size: 14px;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  opacity: 0.9;
 }
 
 

@@ -23,27 +23,6 @@ export default function Home() {
         </section>
 
 
-        <section className="lm-founder">
-          <div className="lm-founder-card">
-            <div className="lm-founder-media">
-              <img
-                src={(lm.assetBase || '/wp-content/themes/lauras-mercantile-hybrid/assets/') + 'images/laura-field-1200.jpg'}
-                alt="Laura in the field"
-                loading="lazy"
-              />
-            </div>
-            <div className="lm-founder-body">
-              <div className="lm-founder-eyebrow">Meet Laura</div>
-              <h2 className="lm-founder-title">A farmer’s integrity, a scientist’s standard.</h2>
-              <p className="lm-founder-text">For decades, Laura has pushed for cleaner food systems—standing up for farmers, demanding transparency, and holding every ingredient to a higher standard. That same integrity guides everything we make: responsibly sourced, clearly labeled, and third-party tested.</p>
-              <div className="lm-founder-actions">
-                <Link className="lm-btn" to="/lauras-story-from-lauras-lean-beef-to-full-spectrum-cbd">Read Laura’s Story</Link>
-                <a className="lm-btn secondary" href={lm.shopUrl || '/shop/'}>Explore the Shop</a>
-              </div>
-            </div>
-          </div>
-        </section>
-
         <section className="lm-outcomes" style={{ marginTop: 44 }}>
           <h2 className="lm-section-title">Shop by Outcome</h2>
           <div className="lm-kicker">Find the right routine for your goals.</div>
@@ -71,6 +50,27 @@ export default function Home() {
               <div className="lm-outcome-micro">Daily wellness and clarity.</div>
               <div className="lm-outcome-cta">Explore Brain & Focus</div>
             </Link>
+          </div>
+        </section>
+
+        <section className="lm-founder">
+          <div className="lm-founder-card">
+            <div className="lm-founder-media">
+              <img
+                src={(lm.assetBase || '/wp-content/themes/lauras-mercantile-hybrid/assets/') + 'images/laura-field-1200.jpg'}
+                alt="Laura in the field"
+                loading="lazy"
+              />
+            </div>
+            <div className="lm-founder-body">
+              <div className="lm-founder-eyebrow">Meet Laura</div>
+              <h2 className="lm-founder-title">A farmer’s integrity, a scientist’s standard.</h2>
+              <p className="lm-founder-text">For decades, Laura has pushed for cleaner food systems—standing up for farmers, demanding transparency, and holding every ingredient to a higher standard. That same integrity guides everything we make: responsibly sourced, clearly labeled, and third-party tested.</p>
+              <div className="lm-founder-actions">
+                <Link className="lm-btn" to="/lauras-story-from-lauras-lean-beef-to-full-spectrum-cbd">Read Laura’s Story</Link>
+                <a className="lm-btn secondary" href={lm.shopUrl || '/shop/'}>Explore the Shop</a>
+              </div>
+            </div>
           </div>
         </section>
 

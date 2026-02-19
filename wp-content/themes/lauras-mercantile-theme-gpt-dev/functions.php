@@ -822,6 +822,22 @@ function lm_force_popularity_args($args) {
 add_filter('woocommerce_get_catalog_ordering_args', 'lm_force_popularity_args', 999999);
 
 /**
+ * Remove pagination from the shop and category pages to show all products at once.
+ */
+add_filter('loop_shop_per_page', function($cols) {
+    return 999;
+}, 999999);
+
+/**
+ * Alternative push for pagination removal via pre_get_posts.
+ */
+add_action('pre_get_posts', function($query) {
+    if (!is_admin() && $query->is_main_query() && (is_shop() || is_product_category() || is_product_tag())) {
+        $query->set('posts_per_page', -1);
+    }
+}, 999999);
+
+/**
  * Diagnostic debug feedback in footer.
  */
 add_action('wp_footer', function() {

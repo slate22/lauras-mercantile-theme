@@ -2,7 +2,7 @@
 /**
  * Laura's Mercantile Theme GPT-DEV Functions
  */
-echo "<!-- FUNCTIONS_PHP_LOADED_V9 -->";
+echo "<!-- FUNCTIONS_PHP_LOADED_V10 -->";
 echo "<!-- INIT_HOOK_REGISTERED: YES -->";
 
 if ( ! defined( 'ABSPATH' ) ) {
@@ -751,6 +751,15 @@ function lm_custom_posts_orderby($orderby, $query) {
         return $orderby;
     }
 
+    // ONLY apply custom ordering if the user has explicitly selected 'Default sorting' (menu_order)
+    // OR if no orderby is set and we want to experiment. 
+    // BUT the user says live is better, and live is popularity.
+    // So we ONLY trigger this if menu_order is requested.
+    $current_orderby = $query->get('orderby');
+    if ($current_orderby !== 'menu_order' && $current_orderby !== 'default') {
+        return $orderby;
+    }
+
     global $wpdb;
 
     // Correct IDs for Staging
@@ -793,24 +802,24 @@ function lm_add_default_sorting_to_dropdown($sortby) {
 add_filter('woocommerce_catalog_orderby', 'lm_add_default_sorting_to_dropdown', 999999);
 
 /**
- * Force Default sorting (menu_order) as the base orderby.
+ * REVERT DEFAULT: Set the default shop sorting to "popularity" to match live.
  */
-function lm_force_menu_order_default($orderby) {
-    return 'menu_order';
+function lm_set_popularity_as_default($orderby) {
+    return 'popularity';
 }
-add_filter('woocommerce_default_catalog_orderby', 'lm_force_menu_order_default', 999999);
+add_filter('woocommerce_default_catalog_orderby', 'lm_set_popularity_as_default', 999999);
 
 /**
- * Ensure the main query actually defaults to menu_order.
+ * Ensure the main query defaults to popularity if no explicit sorting is requested.
  */
-function lm_force_default_sorting_args($args) {
+function lm_force_popularity_args($args) {
     if (!isset($_GET['orderby'])) {
-        $args['orderby'] = 'menu_order';
-        $args['order']   = 'ASC';
+        $args['orderby'] = 'popularity';
+        $args['order']   = 'DESC';
     }
     return $args;
 }
-add_filter('woocommerce_get_catalog_ordering_args', 'lm_force_default_sorting_args', 999999);
+add_filter('woocommerce_get_catalog_ordering_args', 'lm_force_popularity_args', 999999);
 
 /**
  * Diagnostic debug feedback in footer.
@@ -818,7 +827,7 @@ add_filter('woocommerce_get_catalog_ordering_args', 'lm_force_default_sorting_ar
 add_action('wp_footer', function() {
     echo "<!-- ACTIVE_THEME_SLUG: " . esc_html(get_stylesheet()) . " -->";
     echo "<!-- FILTERS_REGISTERED_CHECK: " . (has_filter('woocommerce_catalog_orderby', 'lm_add_default_sorting_to_dropdown') ? 'YES' : 'NO') . " -->";
-    echo "<!-- DEFAULT_ORDERBY_CHECK: " . (has_filter('woocommerce_default_catalog_orderby', 'lm_force_menu_order_default') ? 'YES' : 'NO') . " -->";
+    echo "<!-- DEFAULT_ORDERBY_CHECK: " . (has_filter('woocommerce_default_catalog_orderby', 'lm_set_popularity_as_default') ? 'YES' : 'NO') . " -->";
     global $wp_query;
     echo "<!-- IS_PRODUCT_QUERY_MAIN: " . (($wp_query->get('post_type') === 'product' || is_shop() || is_product_category()) ? 'YES' : 'NO') . " -->";
     echo "<!-- POSTS_ORDERBY_FILTER_COUNT: " . (has_filter('posts_orderby', 'lm_custom_posts_orderby') ? 'YES' : 'NO') . " -->";

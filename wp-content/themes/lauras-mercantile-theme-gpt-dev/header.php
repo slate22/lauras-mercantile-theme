@@ -95,8 +95,8 @@
           ]);
         } else {
           echo '<ul class="lm-top-bar-menu">';
-          echo '<li><a href="'.esc_url(home_url('/military/')).'">Military Discount</a></li>';
-          echo '<li><a href="'.esc_url(home_url('/loyalty/')).'">Loyalty Program</a></li>';
+          echo '<li><a href="'.esc_url(home_url('/cbd-military-veteran-discount-program/')).'">Military Discount</a></li>';
+          echo '<li><a href="'.esc_url(home_url('/becoming-a-friend-of-laura-a-loyalty-program/')).'">Loyalty Program</a></li>';
           echo '</ul>';
         }
       ?>
@@ -209,8 +209,8 @@
           ['Shop', '/shop/'],
           ['Meet Laura', '/meet-laura/'],
           ['Questions', '/questions/'],
-          ['Military', '/military/'],
-          ['Loyalty', '/loyalty/'],
+          ['Military', '/cbd-military-veteran-discount-program/'],
+          ['Loyalty', '/becoming-a-friend-of-laura-a-loyalty-program/'],
         ];
         foreach ($items as $it) {
           echo '<li><a href="'.esc_url(home_url($it[1])).'">'.esc_html($it[0]).'</a></li>';

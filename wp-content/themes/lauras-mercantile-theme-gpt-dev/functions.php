@@ -426,11 +426,6 @@ function lm_normalize_outcome_menu_urls( $items, $args ) {
     'sleep' => home_url('/outcomes/sleep-better/'),
     'pain' => home_url('/outcomes/move-without-pain/'),
     'brain health' => home_url('/outcomes/brain-health/'),
-    // Programs
-    'loyalty program' => home_url('/becoming-a-friend-of-laura-a-loyalty-program/'),
-    'loyalty' => home_url('/becoming-a-friend-of-laura-a-loyalty-program/'),
-    'military discount' => home_url('/cbd-military-veteran-discount-program/'),
-    'military' => home_url('/cbd-military-veteran-discount-program/'),
   );
 
   foreach ( $items as $item ) {

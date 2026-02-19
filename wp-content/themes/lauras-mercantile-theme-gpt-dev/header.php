@@ -95,8 +95,8 @@
           ]);
         } else {
           echo '<ul class="lm-top-bar-menu">';
-          echo '<li><a href="'.esc_url(home_url('/cbd-military-veteran-discount-program/')).'">Military Discount</a></li>';
-          echo '<li><a href="'.esc_url(home_url('/becoming-a-friend-of-laura-a-loyalty-program/')).'">Loyalty Program</a></li>';
+          echo '<li><a href="'.esc_url(home_url('/military/')).'">Military Discount</a></li>';
+          echo '<li><a href="'.esc_url(home_url('/loyalty/')).'">Loyalty Program</a></li>';
           echo '</ul>';
         }
       ?>

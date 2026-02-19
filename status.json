@@ -1,6 +1,6 @@
 {
-    "project_id": "lauras-mercantile-theme",
-    "current_status": "success",
-    "latest_artifact_url": "N/A",
-    "next_recommended_step": "Manual verification of product sorting on /shop/ page and top bar links."
+  "project_id": "lauras-mercantile-theme",
+  "current_status": "success",
+  "latest_artifact_url": "https://laurasmercantile.com/",
+  "next_recommended_step": "Monitor production for any further layout reports and begin investigating the root cause of the V12 breakage in a local dev environment."
 }

@@ -7,7 +7,9 @@ get_header();
   <div class="lm-prose">
     <?php
       while (have_posts()) : the_post();
-        the_title('<header class="lm-entry-header"><h1 class="lm-entry-title">', '</h1></header>');
+        if (!function_exists('is_woocommerce') || !is_woocommerce()) {
+            the_title('<header class="lm-entry-header"><h1 class="lm-entry-title">', '</h1></header>');
+        }
         echo '<div class="entry-content">';
         the_content();
         echo '</div>'; 

@@ -311,6 +311,35 @@ add_action('wp_footer', function() {
 }, 999999);
 
 /**
+ * URL Normalization Map
+ * Ensures common variations of links point to their canonical long-form counterparts.
+ */
+function lm_normalize_menu_urls($url) {
+    if (empty($url)) return $url;
+    
+    $map = [
+        'military' => home_url('/cbd-military-veteran-discount-program/'),
+        'military-discount' => home_url('/cbd-military-veteran-discount-program/'),
+        'loyalty' => home_url('/becoming-a-friend-of-laura-a-loyalty-program/'),
+        'loyalty-program' => home_url('/becoming-a-friend-of-laura-a-loyalty-program/'),
+    ];
+
+    foreach ($map as $key => $target) {
+        if (strpos($url, '/'.$key.'/') !== false || substr($url, -strlen($key)-1) === '/'.$key) {
+            return $target;
+        }
+    }
+    return $url;
+}
+add_filter('nav_menu_link_attributes', function($atts) {
+    if (isset($atts['href'])) {
+        $atts['href'] = lm_normalize_menu_urls($atts['href']);
+    }
+    return $atts;
+}, 10, 1);
+
+
+/**
  * Homepage-only: editorialize the Outcomes section.
  */
 function lm_enqueue_home_outcomes_editorial() {

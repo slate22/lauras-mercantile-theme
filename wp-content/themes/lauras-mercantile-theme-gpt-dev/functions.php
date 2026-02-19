@@ -2,7 +2,7 @@
 /**
  * Laura's Mercantile Theme GPT-DEV Functions
  */
-echo "<!-- FUNCTIONS_PHP_LOADED_V5 -->";
+echo "<!-- FUNCTIONS_PHP_LOADED_V6 -->";
 echo "<!-- INIT_HOOK_REGISTERED: YES -->";
 
 if ( ! defined( 'ABSPATH' ) ) {
@@ -840,7 +840,8 @@ add_filter('woocommerce_default_catalog_orderby', function($orderby) {
 /**
  * Ensure 'Default sorting' (menu_order) is available in the sorting dropdown.
  */
-add_filter('woocommerce_catalog_orderby', function($sortby) {
+function lm_add_default_sorting_to_dropdown($sortby) {
+    echo "<!-- LM_CATALOG_ORDERBY_TRIGGERED: YES -->";
     // Debugging: rename popularity to see if this filter is active
     if (isset($sortby['popularity'])) {
         $sortby['popularity'] = 'Sort by Popularity (Active Filter)';
@@ -852,7 +853,8 @@ add_filter('woocommerce_catalog_orderby', function($sortby) {
     }
     
     return $sortby;
-}, 999999);
+}
+add_filter('woocommerce_catalog_orderby', 'lm_add_default_sorting_to_dropdown', 999999);
 
 add_action('init', function() {
 
@@ -916,10 +918,11 @@ add_filter('loop_shop_per_page', function($cols) {
  */
 add_action('wp_footer', function() {
     echo "<!-- ACTIVE_THEME_SLUG: " . esc_html(get_stylesheet()) . " -->";
-    echo "<!-- FILTERS_REGISTERED_CHECK: " . (has_filter('woocommerce_catalog_orderby') ? 'YES' : 'NO') . " -->";
+    echo "<!-- FILTERS_REGISTERED_CHECK: " . (has_filter('woocommerce_catalog_orderby', 'lm_add_default_sorting_to_dropdown') ? 'YES' : 'NO') . " -->";
     echo "<!-- DEFAULT_ORDERBY_CHECK: " . (has_filter('woocommerce_default_catalog_orderby') ? 'YES' : 'NO') . " -->";
     global $wp_query;
     echo "<!-- IS_PRODUCT_QUERY_MAIN: " . (($wp_query->get('post_type') === 'product' || is_shop() || is_product_category()) ? 'YES' : 'NO') . " -->";
+    echo "<!-- POSTS_ORDERBY_FILTER_COUNT: " . (has_filter('posts_orderby') ? 'YES' : 'NO') . " -->";
 }, 999999);
 
 

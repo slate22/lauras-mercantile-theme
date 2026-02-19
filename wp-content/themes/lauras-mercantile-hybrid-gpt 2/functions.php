@@ -119,6 +119,7 @@ function lm_theme_setup() {
   add_theme_support('woocommerce');
   register_nav_menus([
     'primary' => __('Primary Menu', 'lauras-hybrid'),
+    'top_bar' => __('Top Bar Menu', 'lauras-hybrid'),
     'footer'  => __('Footer Menu', 'lauras-hybrid'),
   ]);
 }
@@ -139,14 +140,25 @@ add_action('wp', function () {
 add_filter('posts_orderby', function($orderby, $query) {
     if (is_admin()) return $orderby;
     
-    // Target both PHP archives and Store/REST API queries
+    // Robust detection for product queries (Archives, Store API, REST)
     $is_product_query = false;
     $pt = $query->get('post_type');
-    if ($pt === 'product' || (is_array($pt) && in_array('product', $pt))) $is_product_query = true;
-    if (!empty($query->get('product_cat')) || !empty($query->get('tax_query'))) $is_product_query = true;
     
+    if ($pt === 'product' || (is_array($pt) && in_array('product', $pt))) {
+        $is_product_query = true;
+    }
+    
+    // Explicit check for shop-related globals
     if (function_exists('is_shop') && (is_shop() || is_product_category() || is_product_tag() || is_post_type_archive('product'))) {
         $is_product_query = true;
+    }
+    
+    // Check if we are in a WooCommerce Store API/REST request for products
+    if (defined('REST_REQUEST') && REST_REQUEST) {
+        $path = $_SERVER['REQUEST_URI'] ?? '';
+        if (strpos($path, '/wc/store/v1/products') !== false || strpos($path, '/wc/store/products') !== false) {
+            $is_product_query = true;
+        }
     }
 
     if (!$is_product_query) return $orderby;
@@ -172,24 +184,24 @@ add_filter('posts_orderby', function($orderby, $query) {
             ) > 0 THEN 10
             WHEN (
                 SELECT COUNT(*)
-                FROM {$wpdb->term_relationships} tr_cbd
-                INNER JOIN {$wpdb->term_taxonomy} tt_cbd ON tr_cbd.term_taxonomy_id = tt_cbd.term_taxonomy_id
-                INNER JOIN {$wpdb->terms} t_cbd ON tt_cbd.term_id = t_cbd.term_id
-                WHERE tr_cbd.object_id = {$wpdb->posts}.ID
-                  AND tt_cbd.taxonomy = 'product_cat'
-                  AND t_cbd.slug = '$cbd_slug'
-            ) > 0 THEN 15
-            WHEN {$wpdb->posts}.post_title LIKE '%Turmeric%' THEN 20
-            WHEN {$wpdb->posts}.post_title LIKE '%Curcumin%' THEN 20
-            WHEN {$wpdb->posts}.ID IN ($turmeric_ids_str) THEN 20
-            WHEN (
-                SELECT COUNT(*)
                 FROM {$wpdb->term_relationships} tr_t
                 INNER JOIN {$wpdb->term_taxonomy} tt_t ON tr_t.term_taxonomy_id = tt_t.term_taxonomy_id
                 INNER JOIN {$wpdb->terms} t_t ON tt_t.term_id = t_t.term_id
                 WHERE tr_t.object_id = {$wpdb->posts}.ID
                   AND tt_t.taxonomy = 'product_cat'
                   AND t_t.slug = '$tippens_slug'
+            ) > 0 THEN 15
+            WHEN {$wpdb->posts}.post_title LIKE '%Turmeric%' THEN 20
+            WHEN {$wpdb->posts}.post_title LIKE '%Curcumin%' THEN 20
+            WHEN {$wpdb->posts}.ID IN ($turmeric_ids_str) THEN 20
+            WHEN (
+                SELECT COUNT(*)
+                FROM {$wpdb->term_relationships} tr_cbd
+                INNER JOIN {$wpdb->term_taxonomy} tt_cbd ON tr_cbd.term_taxonomy_id = tt_cbd.term_taxonomy_id
+                INNER JOIN {$wpdb->terms} t_cbd ON tt_cbd.term_id = t_cbd.term_id
+                WHERE tr_cbd.object_id = {$wpdb->posts}.ID
+                  AND tt_cbd.taxonomy = 'product_cat'
+                  AND t_cbd.slug = '$cbd_slug'
             ) > 0 THEN 30
             ELSE 40
         END
@@ -254,14 +266,24 @@ add_filter('woocommerce_store_api_products_query', function($query_args) {
 add_action('pre_get_posts', function($query) {
     if (is_admin() || !$query->is_main_query()) return;
     
+    // Robust detection for product queries
     $is_product_query = false;
     $pt = $query->get('post_type');
+    
     if ($pt === 'product' || (is_array($pt) && in_array('product', $pt))) {
         $is_product_query = true;
     }
-
+    
     if (function_exists('is_shop') && (is_shop() || is_product_category() || is_product_tag() || is_post_type_archive('product'))) {
         $is_product_query = true;
+    }
+    
+    // Check for Store API requests (though they usually don't hit pre_get_posts main query)
+    if (defined('REST_REQUEST') && REST_REQUEST) {
+        $path = $_SERVER['REQUEST_URI'] ?? '';
+        if (strpos($path, '/wc/store/v1/products') !== false || strpos($path, '/wc/store/products') !== false) {
+            $is_product_query = true;
+        }
     }
 
     if ($is_product_query) {

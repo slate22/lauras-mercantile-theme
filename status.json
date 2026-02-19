@@ -1,6 +1,6 @@
 {
     "project_id": "lauras-mercantile-theme",
     "current_status": "success",
-    "latest_artifact_url": "https://merc22stg.wpenginepowered.com",
-    "next_recommended_step": "Deploy the updated theme to production after verifying on staging."
+    "latest_artifact_url": "N/A",
+    "next_recommended_step": "Manual verification of product sorting on /shop/ page and top bar links."
 }

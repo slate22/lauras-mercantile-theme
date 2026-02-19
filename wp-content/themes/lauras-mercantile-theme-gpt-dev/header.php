@@ -82,6 +82,29 @@
   </div>
 <?php endif; ?>
 
+<div class="lm-top-bar">
+  <div class="lm-shell">
+    <div class="lm-top-bar-inner">
+      <?php
+        if (has_nav_menu('top_bar')) {
+          wp_nav_menu([
+            'theme_location' => 'top_bar',
+            'container' => false,
+            'items_wrap' => '<ul class="lm-top-bar-menu">%3$s</ul>',
+            'fallback_cb' => false,
+          ]);
+        } else {
+          echo '<ul class="lm-top-bar-menu">';
+          echo '<li><a href="'.esc_url(home_url('/military/')).'">Military Discount</a></li>';
+          echo '<li><a href="'.esc_url(home_url('/loyalty/')).'">Loyalty Program</a></li>';
+          echo '</ul>';
+        }
+      ?>
+    </div>
+  </div>
+</div>
+
+
 
 <header class="lm-header">
   <div class="lm-shell">

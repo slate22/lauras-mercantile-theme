@@ -11,6 +11,8 @@
   --lm-max: 1200px;
   --lm-serif: ui-serif, Georgia, "Times New Roman", Times, serif;
   --lm-sans: ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial, "Apple Color Emoji", "Segoe UI Emoji";
+  --color-top-bar: #2c3e23;
+  /* Dark green for top bar */
 }
 
 html,
@@ -380,13 +382,24 @@ a:hover {
   text-decoration: underline;
 }
 
-.lm-topbar {
+.lm-top-bar {
+  background-color: var(--color-top-bar);
+  color: #ffffff;
   font-size: 12px;
   letter-spacing: 0.12em;
   text-transform: uppercase;
   padding: 10px 16px;
-  text-align: center;
-  color: var(--lm-muted);
+  border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+}
+
+.lm-top-bar a {
+  color: #ffffff !important;
+  font-weight: 600;
+}
+
+.lm-top-bar a:hover {
+  text-decoration: underline;
+  color: #e0e0e0 !important;
 }
 
 .lm-shell {

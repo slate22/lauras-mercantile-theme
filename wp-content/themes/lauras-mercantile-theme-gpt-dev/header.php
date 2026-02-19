@@ -1,5 +1,5 @@
 <!doctype html>
-<!-- THEME_GPT_DEV_ACTIVE_V3 -->
+<!-- THEME_GPT_DEV_ACTIVE_V4 -->
 <html <?php language_attributes(); ?>>
 <head>
   <meta charset="<?php bloginfo('charset'); ?>" />

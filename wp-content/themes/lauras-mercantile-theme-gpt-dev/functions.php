@@ -2,7 +2,7 @@
 /**
  * Laura's Mercantile Theme GPT-DEV Functions
  */
-echo "<!-- FUNCTIONS_PHP_LOADED_V4 -->";
+echo "<!-- FUNCTIONS_PHP_LOADED_V5 -->";
 echo "<!-- INIT_HOOK_REGISTERED: YES -->";
 
 if ( ! defined( 'ABSPATH' ) ) {
@@ -44,6 +44,12 @@ function lm_enqueue_base_styles() {
   $base_css_path = get_stylesheet_directory() . '/assets/base.css';
   if (file_exists($base_css_path)) {
     wp_enqueue_style('lm-base', get_stylesheet_directory_uri() . '/assets/base.css', [], filemtime($base_css_path));
+  }
+  
+  // Explicitly enqueue main style.css to ensure it loads
+  $style_css_path = get_stylesheet_directory() . '/style.css';
+  if (file_exists($style_css_path)) {
+    wp_enqueue_style('lm-style', get_stylesheet_uri(), ['lm-base'], filemtime($style_css_path));
   }
 }
 // Load base styles after any Vite/dist CSS so our theme rules reliably win.
@@ -801,8 +807,8 @@ add_filter('posts_orderby', function($orderby, $query) {
                   AND tt_t.taxonomy = 'product_cat'
                   AND t_t.slug = '$tippens_slug'
             ) > 0 THEN 15
-            WHEN {$wpdb->posts}.post_title LIKE '%Turmeric%' THEN 20
-            WHEN {$wpdb->posts}.post_title LIKE '%Curcumin%' THEN 20
+            WHEN {$wpdb->posts}.post_title LIKE '%Turmeric%' OR {$wpdb->posts}.post_title LIKE '%turmeric%' THEN 20
+            WHEN {$wpdb->posts}.post_title LIKE '%Curcumin%' OR {$wpdb->posts}.post_title LIKE '%curcumin%' THEN 20
             WHEN {$wpdb->posts}.ID IN ($turmeric_ids_str) THEN 20
             WHEN (
                 SELECT COUNT(*)
@@ -812,8 +818,8 @@ add_filter('posts_orderby', function($orderby, $query) {
                 WHERE tr_cbd.object_id = {$wpdb->posts}.ID
                   AND tt_cbd.taxonomy = 'product_cat'
                   AND t_cbd.slug = '$cbd_slug'
-            ) > 0 THEN 30
-            ELSE 40
+            ) > 0 THEN 35 -- Lower priority (higher number) so Turmeric (20) wins
+            ELSE 45
         END
     ) ASC ";
 
@@ -824,28 +830,31 @@ add_filter('posts_orderby', function($orderby, $query) {
 /**
  * Force WooCommerce sorting logic to be registered late via init hook.
  */
-add_action('init', function() {
-    /**
-     * Set the default shop sorting to "menu_order" (Default sorting) 
-     */
-    add_filter('woocommerce_default_catalog_orderby', function($orderby) {
-        return 'menu_order';
-    }, 999999);
+/**
+ * Set the default shop sorting to "menu_order" (Default sorting) 
+ */
+add_filter('woocommerce_default_catalog_orderby', function($orderby) {
+    return 'menu_order';
+}, 999999);
 
-    /**
-     * Ensure 'Default sorting' (menu_order) is available in the sorting dropdown.
-     */
-    add_filter('woocommerce_catalog_orderby', function($sortby) {
-        // Debugging: rename popularity to see if this filter is active
-        if (isset($sortby['popularity'])) {
-            $sortby['popularity'] = 'Sort by Popularity (Active Filter)';
-        }
-        
-        // Force menu_order to be the very first item
+/**
+ * Ensure 'Default sorting' (menu_order) is available in the sorting dropdown.
+ */
+add_filter('woocommerce_catalog_orderby', function($sortby) {
+    // Debugging: rename popularity to see if this filter is active
+    if (isset($sortby['popularity'])) {
+        $sortby['popularity'] = 'Sort by Popularity (Active Filter)';
+    }
+    
+    // Force menu_order to be the very first item
+    if (!isset($sortby['menu_order'])) {
         $sortby = array('menu_order' => 'Default sorting') + $sortby;
-        
-        return $sortby;
-    }, 999999);
+    }
+    
+    return $sortby;
+}, 999999);
+
+add_action('init', function() {
 
     /**
      * Forcibly set the ordering args for the catalog.
@@ -908,6 +917,9 @@ add_filter('loop_shop_per_page', function($cols) {
 add_action('wp_footer', function() {
     echo "<!-- ACTIVE_THEME_SLUG: " . esc_html(get_stylesheet()) . " -->";
     echo "<!-- FILTERS_REGISTERED_CHECK: " . (has_filter('woocommerce_catalog_orderby') ? 'YES' : 'NO') . " -->";
+    echo "<!-- DEFAULT_ORDERBY_CHECK: " . (has_filter('woocommerce_default_catalog_orderby') ? 'YES' : 'NO') . " -->";
+    global $wp_query;
+    echo "<!-- IS_PRODUCT_QUERY_MAIN: " . (($wp_query->get('post_type') === 'product' || is_shop() || is_product_category()) ? 'YES' : 'NO') . " -->";
 }, 999999);
 
 

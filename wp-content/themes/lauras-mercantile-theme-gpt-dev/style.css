@@ -15,6 +15,8 @@ Version: 2.0.0
     --color-text: #333333;
     --color-text-muted: #666666;
     --color-border: #E5E5E5;
+    --color-top-bar: #2c3e23;
+    /* Dark green for top bar */
 
     /* Typography */
     --font-heading: 'Libre Baskerville', 'Georgia', serif;
@@ -60,13 +62,22 @@ ul {
 
 /* --- Top Bar --- */
 .lm-top-bar {
-    background-color: #f2efed;
-    color: var(--color-text-muted);
+    background-color: var(--color-top-bar);
+    color: #ffffff;
     font-size: 0.75rem;
     letter-spacing: 1px;
     text-transform: uppercase;
-    border-bottom: 1px solid rgba(0, 0, 0, 0.05);
-    padding: 8px 0;
+    border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+    padding: 10px 0;
+}
+
+.lm-top-bar .lm-top-bar-menu a {
+    color: #ffffff;
+    font-weight: 600;
+}
+
+.lm-top-bar .lm-top-bar-menu a:hover {
+    color: #e0e0e0;
 }
 
 .lm-top-bar-inner {

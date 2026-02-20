@@ -25,7 +25,17 @@ function lm_is_woo_protected_path(): bool {
   return (is_cart() || is_checkout() || is_account_page() || is_wc_endpoint_url());
 }
 
+/**
+ * REJECT DUPLICATE TITLES: If this is a single product page, we let WooCommerce handle the title.
+ * Otherwise, we end up with two H1s.
+ */
+function lm_should_show_theme_title(): bool {
+    if (function_exists('is_product') && is_product()) return false;
+    return true;
+}
+
 /** Determine whether to mount the app on this request. */
+
 function lm_should_mount_app(): bool {
   if (lm_react_disabled()) return false;
   if (lm_is_woo_protected_path()) return false;
@@ -738,6 +748,12 @@ add_filter('woocommerce_single_product_image_thumbnail_html', 'lm_fix_turmeric_i
 /**
  * Product Sorting Logic - Refined for Staging Environment IDs
  */
+/**
+ * Product Sorting Logic - Refined for Staging Environment
+ */
+/**
+ * Product Sorting Logic - Refined for Staging Environment
+ */
 function lm_custom_posts_orderby($orderby, $query) {
     if (is_admin() || !$query->is_main_query()) {
         return $orderby;
@@ -756,75 +772,104 @@ function lm_custom_posts_orderby($orderby, $query) {
         return $orderby;
     }
 
-    // ONLY apply custom ordering if the user has explicitly selected 'Default sorting' (menu_order)
-    // OR if no orderby is set and we want to experiment. 
-    // BUT the user says live is better, and live is popularity.
-    // So we ONLY trigger this if menu_order is requested.
+    // We MUST apply this if no explicit sort is set OR if 'popularity' is set (which is often the default)
     $current_orderby = $query->get('orderby');
-    if ($current_orderby !== 'menu_order' && $current_orderby !== 'default') {
+    if (!empty($current_orderby) && !in_array($current_orderby, ['menu_order', 'default', 'relevance', 'popularity'])) {
         return $orderby;
     }
 
     global $wpdb;
 
-    // Correct IDs for Staging
-    $mushrooms_ids = [165275, 165279, 165274, 165277];
-    $jtp_ids = [150318, 150315, 157876, 164145];
-    $turmeric_ids = [163552, 166466, 166471, 166473];
+    // Define search terms for robustness
+    $mushrooms_slug = 'functional-mushrooms';
+    $jtp_slug       = 'jtp-pathway';
+    $bundles_slug   = 'cbd-products-and-bundles';
 
-    $mushrooms_ids_str = implode(',', $mushrooms_ids);
-    $jtp_ids_str = implode(',', $jtp_ids);
-    $turmeric_ids_str = implode(',', $turmeric_ids);
-
-    // Build Priority CASE statement with fallbacks for titles
+    // Priority CASE statement
     $priority_sql = " (CASE 
-        WHEN {$wpdb->posts}.ID IN ($mushrooms_ids_str) THEN 10
+        /* 1. Functional Mushrooms (Highest Priority) */
+        WHEN (
+            SELECT COUNT(*)
+            FROM {$wpdb->term_relationships} tr_m
+            INNER JOIN {$wpdb->term_taxonomy} tt_m ON tr_m.term_taxonomy_id = tt_m.term_taxonomy_id
+            INNER JOIN {$wpdb->terms} t_m ON tt_m.term_id = t_m.term_id
+            WHERE tr_m.object_id = {$wpdb->posts}.ID
+              AND tt_m.taxonomy = 'product_cat'
+              AND (t_m.slug = '$mushrooms_slug' OR t_m.slug LIKE '%mushroom%')
+        ) > 0 THEN 10
         WHEN {$wpdb->posts}.post_title LIKE '%Mushroom%' THEN 15
-        WHEN {$wpdb->posts}.ID IN ($jtp_ids_str) THEN 20
+
+        /* 2. Joe Tippens Protocol (Next) */
+        WHEN (
+            SELECT COUNT(*)
+            FROM {$wpdb->term_relationships} tr_j
+            INNER JOIN {$wpdb->term_taxonomy} tt_j ON tr_j.term_taxonomy_id = tt_j.term_taxonomy_id
+            INNER JOIN {$wpdb->terms} t_j ON tt_j.term_id = t_j.term_id
+            WHERE tr_j.object_id = {$wpdb->posts}.ID
+              AND tt_j.taxonomy = 'product_cat'
+              AND (t_j.slug = '$jtp_slug' OR t_j.slug LIKE '%tippens%')
+        ) > 0 THEN 20
         WHEN {$wpdb->posts}.post_title LIKE '%ONCO-ADJUNCT%' THEN 25
-        WHEN {$wpdb->posts}.ID IN ($turmeric_ids_str) THEN 30
-        WHEN {$wpdb->posts}.post_title LIKE '%Turmeric%' THEN 35
-        ELSE 45 
+
+        /* 3. Turmeric Products */
+        WHEN {$wpdb->posts}.post_title LIKE '%Turmeric%' THEN 30
+        WHEN {$wpdb->posts}.post_title LIKE '%Curcumin%' THEN 30
+
+        /* 4. CBD Bundles */
+        WHEN (
+            SELECT COUNT(*)
+            FROM {$wpdb->term_relationships} tr_b
+            INNER JOIN {$wpdb->term_taxonomy} tt_b ON tr_b.term_taxonomy_id = tt_b.term_taxonomy_id
+            INNER JOIN {$wpdb->terms} t_b ON tt_b.term_id = t_b.term_id
+            WHERE tr_b.object_id = {$wpdb->posts}.ID
+              AND tt_b.taxonomy = 'product_cat'
+              AND t_b.slug = '$bundles_slug'
+        ) > 0 THEN 40
+        
+        ELSE 100 
     END) ASC";
 
     if (empty($orderby)) {
-        return $priority_sql;
+        return $priority_sql . ", {$wpdb->posts}.post_date DESC";
     }
     
     return $priority_sql . ", " . $orderby;
 }
 add_filter('posts_orderby', 'lm_custom_posts_orderby', 999999, 2);
 
+
+add_filter('woocommerce_default_catalog_orderby', function($orderby) {
+    return 'menu_order';
+}, 999999);
+
 /**
- * Ensure 'Default sorting' (menu_order) is available in the sorting dropdown.
+ * Robustly ensure 'Default sorting' (menu_order) is available and first in the dropdown.
  */
-function lm_add_default_sorting_to_dropdown($sortby) {
+add_filter('woocommerce_catalog_orderby', function($sortby) {
+    // If menu_order is missing, add it.
     if (!isset($sortby['menu_order'])) {
         $sortby = array('menu_order' => 'Default sorting') + $sortby;
+    } else {
+        // Move it to the top
+        $val = $sortby['menu_order'];
+        unset($sortby['menu_order']);
+        $sortby = array('menu_order' => $val) + $sortby;
     }
     return $sortby;
-}
-add_filter('woocommerce_catalog_orderby', 'lm_add_default_sorting_to_dropdown', 999999);
+}, 999999);
 
 /**
- * REVERT DEFAULT: Set the default shop sorting to "popularity" to match live.
+ * Ensure the main query defaults to menu_order if no explicit sorting is requested.
  */
-function lm_set_popularity_as_default($orderby) {
-    return 'popularity';
-}
-add_filter('woocommerce_default_catalog_orderby', 'lm_set_popularity_as_default', 999999);
-
-/**
- * Ensure the main query defaults to popularity if no explicit sorting is requested.
- */
-function lm_force_popularity_args($args) {
+function lm_force_default_sorting_args($args) {
     if (!isset($_GET['orderby'])) {
-        $args['orderby'] = 'popularity';
-        $args['order']   = 'DESC';
+        $args['orderby'] = 'menu_order';
+        $args['order']   = 'ASC';
     }
     return $args;
 }
-add_filter('woocommerce_get_catalog_ordering_args', 'lm_force_popularity_args', 999999);
+add_filter('woocommerce_get_catalog_ordering_args', 'lm_force_default_sorting_args', 999999);
+
 
 /**
  * Remove pagination from the shop and category pages to show all products at once.
@@ -847,9 +892,9 @@ add_action('pre_get_posts', function($query) {
  */
 add_action('wp_footer', function() {
     echo "<!-- ACTIVE_THEME_SLUG: " . esc_html(get_stylesheet()) . " -->";
-    echo "<!-- FILTERS_REGISTERED_CHECK: " . (has_filter('woocommerce_catalog_orderby', 'lm_add_default_sorting_to_dropdown') ? 'YES' : 'NO') . " -->";
-    echo "<!-- DEFAULT_ORDERBY_CHECK: " . (has_filter('woocommerce_default_catalog_orderby', 'lm_set_popularity_as_default') ? 'YES' : 'NO') . " -->";
-    global $wp_query;
-    echo "<!-- IS_PRODUCT_QUERY_MAIN: " . (($wp_query->get('post_type') === 'product' || is_shop() || is_product_category()) ? 'YES' : 'NO') . " -->";
+    echo "<!-- DEFAULT_ORDERBY_VAL: " . esc_html(get_option('woocommerce_default_catalog_orderby')) . " -->";
+    echo "<!-- IS_PRODUCT_QUERY_MAIN: " . ((is_shop() || is_product_category()) ? 'YES' : 'NO') . " -->";
     echo "<!-- POSTS_ORDERBY_FILTER_COUNT: " . (has_filter('posts_orderby', 'lm_custom_posts_orderby') ? 'YES' : 'NO') . " -->";
+    global $wp_query;
+    echo "<!-- CURRENT_ORDERBY: " . esc_html($wp_query->get('orderby')) . " -->";
 }, 999999);

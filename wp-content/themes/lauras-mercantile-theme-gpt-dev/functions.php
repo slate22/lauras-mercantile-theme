@@ -2,7 +2,7 @@
 /**
  * Laura's Mercantile Theme GPT-DEV Functions
  */
-echo "<!-- FUNCTIONS_PHP_LOADED_V10 -->";
+echo "<!-- FUNCTIONS_PHP_LOADED_V11 -->";
 echo "<!-- INIT_HOOK_REGISTERED: YES -->";
 
 if ( ! defined( 'ABSPATH' ) ) {

@@ -759,72 +759,86 @@ add_filter('woocommerce_single_product_image_thumbnail_html', 'lm_fix_turmeric_i
  * Product Sorting Logic - Refined for Staging Environment
  */
 /**
- * Extremely Robust Sorting - Targets all product queries including popularity fallback.
+ * ULTRA-AGGRESSIVE PRODUCT SORTING (V18)
+ * Targets: Main Query, REST API (Store API), and GraphQL.
  */
-function lm_custom_posts_orderby($orderby, $query) {
-    if (is_admin() || !$query->is_main_query()) {
-        return $orderby;
-    }
 
-    // Identify product queries more broadly
-    $is_product = (
-        $query->get('post_type') === 'product' || 
-        is_shop() || is_product_category() || is_product_tag() ||
-        (is_array($query->get('post_type')) && in_array('product', $query->get('post_type')))
-    );
-
-    if (!$is_product) {
-        return $orderby;
-    }
-
+// 1. Logic for MySQL ORDER BY
+function lm_apply_mushroom_priority_sql($orderby) {
     global $wpdb;
-    
-    // Mushroom IDs for absolute priority
     $priority_ids = "165274, 165275, 165277, 165279";
-    
     $priority_sql = "(CASE 
         WHEN {$wpdb->posts}.ID IN ($priority_ids) THEN 1
         WHEN {$wpdb->posts}.post_title LIKE '%Mushroom%' THEN 5
         WHEN {$wpdb->posts}.post_title LIKE '%Turmeric%' THEN 15
         ELSE 100 
     END) ASC";
-
-    // Secondary sort: ID DESC (Newest products first as requested)
+    
     $secondary_sql = "{$wpdb->posts}.ID DESC";
 
-    // Determine if we should override the current sort
-    $current_orderby = $query->get('orderby');
-    
-    // If it's a default sort mode, we swap it for our custom logic
-    if (empty($current_orderby) || in_array($current_orderby, ['menu_order', 'default', 'popularity', 'relevance'])) {
+    if (empty($orderby)) {
         return "$priority_sql, $secondary_sql";
     }
-
-    // If a specific sort is selected (like price), we still prepend our priority
+    // Prepend priority to existing sort
     return "$priority_sql, $orderby";
 }
-add_filter('posts_orderby', 'lm_custom_posts_orderby', 999999, 2);
 
-add_filter('woocommerce_default_catalog_orderby', function($orderby) {
-    return 'menu_order';
+// 2. Hook into WP_Query
+add_filter('posts_orderby', function($orderby, $query) {
+    if (is_admin() || !$query->is_main_query()) return $orderby;
+    
+    $is_product = (
+        $query->get('post_type') === 'product' || 
+        is_shop() || is_product_category() || is_product_tag() ||
+        (is_array($query->get('post_type')) && in_array('product', $query->get('post_type')))
+    );
+
+    if ($is_product) {
+        return lm_apply_mushroom_priority_sql($orderby);
+    }
+    return $orderby;
+}, 999999, 2);
+
+// 3. Hook into WooCommerce Orderby Args (Bypasses many plugins)
+add_filter('woocommerce_get_catalog_ordering_args', function($args) {
+    // If no specific orderby is in URL, force our custom default
+    if (!isset($_GET['orderby'])) {
+        $args['orderby'] = 'ID'; // Use ID as base
+        $args['order'] = 'DESC'; // Newest first
+    }
+    return $args;
 }, 999999);
 
+// 4. Hook into WooCommerce REST API (Store API)
+add_filter('woocommerce_rest_product_object_query', function($args, $request) {
+    $args['orderby'] = 'ID';
+    $args['order'] = 'DESC';
+    return $args;
+}, 999999, 2);
+
+// 5. Hook into GraphQL (For headless/React)
+add_filter('graphql_product_connection_query_args', function($query_args) {
+    $query_args['orderby'] = array(
+        array('field' => 'ID', 'order' => 'DESC')
+    );
+    return $query_args;
+}, 999999);
+
+// 6. Fix labels and defaults
+add_filter('woocommerce_default_catalog_orderby', function() { return 'menu_order'; }, 999999);
 add_filter('woocommerce_catalog_orderby', function($sortby) {
-    // Labels for the dropdown
-    $sortby['menu_order'] = 'Default (Mushrooms First)';
     $sortby['popularity'] = 'Default (Mushrooms First)';
+    $sortby['menu_order'] = 'Default (Mushrooms First)';
     return $sortby;
 }, 999999);
 
-/**
- * Diagnostic debug in footer.
- */
+// 7. Update Debug Banner
+add_action('wp_head', function() {
+    echo "<div style='position:fixed; top:0; left:0; background:red; color:white; padding:5px; z-index:99999; pointer-events:none;'>DEBUG: V18</div>";
+}, 1);
+
 add_action('wp_footer', function() {
-    global $wp_query, $wpdb;
-    echo "<!-- V17_ACTIVE -->";
-    echo "<!-- QUERY_POST_TYPE: " . (is_array($wp_query->get('post_type')) ? implode(',', $wp_query->get('post_type')) : $wp_query->get('post_type')) . " -->";
+    global $wp_query;
+    echo "<!-- V18_ACTIVE -->";
     echo "<!-- CURRENT_ORDERBY: " . esc_html($wp_query->get('orderby')) . " -->";
-    
-    $active_plugins = get_option('active_plugins');
-    echo "<!-- ACTIVE_PLUGINS: " . implode(', ', $active_plugins) . " -->";
 }, 999999);

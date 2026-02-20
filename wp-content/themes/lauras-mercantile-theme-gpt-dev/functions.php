@@ -766,12 +766,47 @@ add_filter('woocommerce_single_product_image_thumbnail_html', 'lm_fix_turmeric_i
 // 1. Logic for MySQL ORDER BY
 function lm_apply_mushroom_priority_sql($orderby) {
     global $wpdb;
-    $priority_ids = "165274, 165275, 165277, 165279";
+    
+    // Slugs for priority categories
+    $mushrooms_slug = 'functional-mushrooms';
+    $tippens_slug   = 'joe-tippens-protocol-products';
+    $cbd_slug       = 'cbd-products-and-bundles';
+    
+    // Known Turmeric IDs for fallback
+    $turmeric_ids = "166466, 139017, 166471, 166473, 163552, 165372";
+
     $priority_sql = "(CASE 
-        WHEN {$wpdb->posts}.ID IN ($priority_ids) THEN 1
-        WHEN {$wpdb->posts}.post_title LIKE '%Mushroom%' THEN 5
-        WHEN {$wpdb->posts}.post_title LIKE '%Turmeric%' THEN 15
-        ELSE 100 
+        /* 10: HIGHEST - Functional Mushrooms */
+        WHEN (
+            SELECT COUNT(*) FROM {$wpdb->term_relationships} tr 
+            JOIN {$wpdb->term_taxonomy} tt ON tr.term_taxonomy_id = tt.term_taxonomy_id
+            JOIN {$wpdb->terms} t ON tt.term_id = t.term_id
+            WHERE tr.object_id = {$wpdb->posts}.ID AND tt.taxonomy = 'product_cat' AND t.slug = '$mushrooms_slug'
+        ) > 0 THEN 10
+        
+        /* 15: SECOND - Joe Tippens Protocol */
+        WHEN (
+            SELECT COUNT(*) FROM {$wpdb->term_relationships} tr 
+            JOIN {$wpdb->term_taxonomy} tt ON tr.term_taxonomy_id = tt.term_taxonomy_id
+            JOIN {$wpdb->terms} t ON tt.term_id = t.term_id
+            WHERE tr.object_id = {$wpdb->posts}.ID AND tt.taxonomy = 'product_cat' AND t.slug = '$tippens_slug'
+        ) > 0 THEN 15
+        
+        /* 20: THIRD - CBD Products (Main line) */
+        WHEN (
+            SELECT COUNT(*) FROM {$wpdb->term_relationships} tr 
+            JOIN {$wpdb->term_taxonomy} tt ON tr.term_taxonomy_id = tt.term_taxonomy_id
+            JOIN {$wpdb->terms} t ON tt.term_id = t.term_id
+            WHERE tr.object_id = {$wpdb->posts}.ID AND tt.taxonomy = 'product_cat' AND t.slug = '$cbd_slug'
+        ) > 0 THEN 20
+        
+        /* 30: MIDDLE - Turmeric Products */
+        WHEN {$wpdb->posts}.post_title LIKE '%Turmeric%' THEN 30
+        WHEN {$wpdb->posts}.post_title LIKE '%Curcumin%' THEN 30
+        WHEN {$wpdb->posts}.ID IN ($turmeric_ids) THEN 30
+        
+        /* 40: BOTTOM - Everything Else */
+        ELSE 40 
     END) ASC";
     
     $secondary_sql = "{$wpdb->posts}.ID DESC";
@@ -832,13 +867,25 @@ add_filter('woocommerce_catalog_orderby', function($sortby) {
     return $sortby;
 }, 999999);
 
-// 7. Update Debug Banner
+// 7. Remove Pagination (Show all products)
+add_filter('loop_shop_per_page', function($cols) {
+    return -1;
+}, 9999);
+
+add_action('pre_get_posts', function($query) {
+    if (is_admin() || !$query->is_main_query()) return;
+    if (function_exists('is_shop') && (is_shop() || is_product_category() || is_product_tag())) {
+        $query->set('posts_per_page', -1);
+    }
+}, 9999);
+
+// 8. Update Debug Banner
 add_action('wp_head', function() {
-    echo "<div style='position:fixed; top:0; left:0; background:red; color:white; padding:5px; z-index:99999; pointer-events:none;'>DEBUG: V18</div>";
+    echo "<div style='position:fixed; top:0; left:0; background:red; color:white; padding:5px; z-index:99999; pointer-events:none;'>DEBUG: V19</div>";
 }, 1);
 
 add_action('wp_footer', function() {
     global $wp_query;
-    echo "<!-- V18_ACTIVE -->";
+    echo "<!-- V19_ACTIVE -->";
     echo "<!-- CURRENT_ORDERBY: " . esc_html($wp_query->get('orderby')) . " -->";
 }, 999999);

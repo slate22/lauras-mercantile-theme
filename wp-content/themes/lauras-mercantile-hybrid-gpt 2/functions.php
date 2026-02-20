@@ -191,9 +191,6 @@ add_filter('posts_orderby', function($orderby, $query) {
                   AND tt_t.taxonomy = 'product_cat'
                   AND t_t.slug = '$tippens_slug'
             ) > 0 THEN 15
-            WHEN {$wpdb->posts}.post_title LIKE '%Turmeric%' THEN 20
-            WHEN {$wpdb->posts}.post_title LIKE '%Curcumin%' THEN 20
-            WHEN {$wpdb->posts}.ID IN ($turmeric_ids_str) THEN 20
             WHEN (
                 SELECT COUNT(*)
                 FROM {$wpdb->term_relationships} tr_cbd
@@ -202,7 +199,10 @@ add_filter('posts_orderby', function($orderby, $query) {
                 WHERE tr_cbd.object_id = {$wpdb->posts}.ID
                   AND tt_cbd.taxonomy = 'product_cat'
                   AND t_cbd.slug = '$cbd_slug'
-            ) > 0 THEN 30
+            ) > 0 THEN 20
+            WHEN {$wpdb->posts}.post_title LIKE '%Turmeric%' THEN 30
+            WHEN {$wpdb->posts}.post_title LIKE '%Curcumin%' THEN 30
+            WHEN {$wpdb->posts}.ID IN ($turmeric_ids_str) THEN 30
             ELSE 40
         END
     ) ASC ";

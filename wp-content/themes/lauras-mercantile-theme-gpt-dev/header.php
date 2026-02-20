@@ -129,7 +129,7 @@
             $items = [
               ['Shop', '/shop/'],
               ['Our Approach', 'https://laurasmercantile.com/agricultural-sustainability-efforts-of-mt-folly-farm/'],
-              ['Lab Results', '/lab-results/'],
+              ['Lab Results', 'https://laurasmercantile.com/cbd-legal/'],
               ['Education', '/hemp-and-cbd-oil-education/'],
               ['About Laura', '/about-laura/'],
             ];

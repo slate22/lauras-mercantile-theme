@@ -83,7 +83,7 @@ document.addEventListener('DOMContentLoaded', function() {
             $items = [
               ['Shop', '/shop/'],
               ['Our Approach', '/our-approach/'],
-              ['Lab Results', '/lab-results/'],
+              ['Lab Results', 'https://laurasmercantile.com/cbd-legal/'],
               ['Education', '/education/'],
               ['About Laura', '/about-laura/'],
             ];

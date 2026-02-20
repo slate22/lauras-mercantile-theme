@@ -717,3 +717,63 @@ This block restores a predictable two-column layout:
     width: 100% !important;
   }
 }
+
+/**
+ * STAGING PRODUCT PAGE LAYOUT FIXES
+ * Ensure side-by-side gallery and summary.
+ */
+.single-product div.product {
+  display: grid !important;
+  grid-template-columns: minmax(0, 5fr) minmax(0, 5fr) !important;
+  gap: 60px !important;
+  max-width: 1200px !important;
+  margin: 40px auto !important;
+  align-items: flex-start !important;
+}
+
+@media (max-width: 1024px) {
+  .single-product div.product {
+    grid-template-columns: 1fr !important;
+    gap: 30px !important;
+  }
+}
+
+.single-product .woocommerce-product-gallery {
+  width: 100% !important;
+  max-width: 100% !important;
+  margin: 0 !important;
+  float: none !important;
+}
+
+.single-product .summary {
+  width: 100% !important;
+  max-width: 100% !important;
+  margin: 0 !important;
+  float: none !important;
+}
+
+/* Fix for thumbnails being squashed */
+.flex-control-nav.flex-control-thumbs {
+  display: flex !important;
+  padding: 0 !important;
+  margin: 15px 0 0 !important;
+  gap: 10px !important;
+  flex-wrap: wrap !important;
+  list-style: none !important;
+}
+
+.flex-control-nav.flex-control-thumbs li {
+  width: 80px !important;
+  margin: 0 !important;
+}
+
+.single-product .woocommerce-tabs {
+  grid-column: 1 / -1 !important;
+  width: 100% !important;
+  margin-top: 50px !important;
+}
+
+/* Hide duplicated titles if they persist */
+.single-product .ai-optimize-30 {
+  display: none !important;
+}

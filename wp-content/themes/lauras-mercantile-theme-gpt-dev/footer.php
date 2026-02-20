@@ -42,7 +42,7 @@
         <h4 class="lm-footer-heading">Information</h4>
         <ul class="lm-footer-menu">
            <li><a href="/shop">Shop All</a></li>
-           <li><a href="/lab-results">Lab Results</a></li>
+           <li><a href="https://laurasmercantile.com/cbd-legal/">Lab Results</a></li>
            <li><a href="/hemp-and-cbd-oil-education/">Education</a></li>
            <li><a href="/blog">Wellness Blog</a></li>
            <li><a href="/wholesale">Wholesale</a></li>

@@ -84,7 +84,7 @@ export default function SiteHeader() {
             <nav className={`lm-nav ${isMenuOpen ? 'is-open' : ''}`} aria-label="Primary">
               <NavLink to="/shop" end>Shop</NavLink>
               <NavLink to="/our-approach">Our Approach</NavLink>
-              <NavLink to="/lab-results">Lab Results</NavLink>
+              <a href="https://laurasmercantile.com/cbd-legal/">Lab Results</a>
               <NavLink to="/education">Education</NavLink>
               <NavLink to="/about-laura">About Laura</NavLink>
             </nav>

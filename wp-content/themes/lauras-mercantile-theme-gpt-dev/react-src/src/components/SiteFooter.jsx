@@ -25,7 +25,7 @@ export default function SiteFooter() {
               <a href="/shop">Shop All</a>
               <a href="/product-category/cbd-oil-tinctures">CBD Oil</a>
               <a href="/product-category/cbd-chocolates">Chocolates</a>
-              <a href="/lab-results">Lab Results</a>
+              <a href="https://laurasmercantile.com/cbd-legal/">Lab Results</a>
               <a href="/faq">FAQ</a>
             </div>
           </div>

@@ -26,7 +26,7 @@ export default function App() {
 
         {/* Top nav content */}
         <Route path="/our-approach" element={<ContentPage slug="our-approach" titleFallback="Our Approach" />} />
-        <Route path="/lab-results" element={<LabResultsPage />} />
+        <Route path="/lab-results" element={<HardRedirect to="https://laurasmercantile.com/cbd-legal/" />} />
         <Route path="/education" element={<ContentPage slug="education" titleFallback="Education" />} />
         <Route path="/about-laura" element={<ContentPage slug="about-laura" titleFallback="About Laura" />} />
         <Route path="/meet-laura" element={<ContentPage slug="lauras-story-from-lauras-lean-beef-to-full-spectrum-cbd" titleFallback="Laura’s Story" />} />

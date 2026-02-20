@@ -9,7 +9,9 @@ get_header();
       <div class="lm-blog-main">
         <?php
           while (have_posts()) : the_post();
-            the_title('<header class="lm-entry-header"><h1 class="lm-entry-title">', '</h1></header>');
+            if (lm_should_show_theme_title()) {
+              the_title('<header class="lm-entry-header"><h1 class="lm-entry-title">', '</h1></header>');
+            }
             echo '<div class="entry-content">';
             if (is_page('hemp-and-cbd-oil-education')) {
               $content = get_the_content();
@@ -28,7 +30,9 @@ get_header();
     <div class="lm-prose">
       <?php
         while (have_posts()) : the_post();
-          the_title('<header class="lm-entry-header"><h1 class="lm-entry-title">', '</h1></header>');
+          if (lm_should_show_theme_title()) {
+            the_title('<header class="lm-entry-header"><h1 class="lm-entry-title">', '</h1></header>');
+          }
           echo '<div class="entry-content">';
           if (is_page('hemp-and-cbd-oil-education')) {
               $content = get_the_content();

@@ -10,7 +10,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 }
 
 add_action('wp_head', function() {
-    echo "<div style='position:fixed; top:0; left:0; background:red; color:white; padding:5px; z-index:99999; pointer-events:none;'>DEBUG: V15</div>";
+    echo "<div style='position:fixed; top:0; left:0; background:red; color:white; padding:5px; z-index:99999; pointer-events:none;'>DEBUG: V16</div>";
 }, 1);
 
 require_once get_stylesheet_directory() . '/inc/class-lm-walker-nav.php';
@@ -759,99 +759,69 @@ add_filter('woocommerce_single_product_image_thumbnail_html', 'lm_fix_turmeric_i
  * Product Sorting Logic - Refined for Staging Environment
  */
 /**
- * Robust Product Sorting - Pins Mushrooms to the top using IDs, then sorts by ID DESC.
+ * Extremely Robust Sorting - Targets all product queries including popularity fallback.
  */
 function lm_custom_posts_orderby($orderby, $query) {
     if (is_admin() || !$query->is_main_query()) {
         return $orderby;
     }
 
-    if (is_shop() || is_product_category() || is_product_tag()) {
-        global $wpdb;
-        
-        // Current ordering mode
-        $current_orderby = $query->get('orderby');
-        
-        // We only override if it's the default sort, popularity, or none.
-        if (empty($current_orderby) || in_array($current_orderby, ['menu_order', 'default', 'popularity', 'relevance'])) {
-            // Mushroom IDs from staging inspection
-            $mushroom_ids = array(165274, 165275, 165277, 165279);
-            $ids_str = implode(',', $mushroom_ids);
-            
-            $priority_sql = "(CASE 
-                WHEN {$wpdb->posts}.ID IN ($ids_str) THEN 10
-                WHEN {$wpdb->posts}.post_title LIKE '%Mushroom%' THEN 20
-                WHEN {$wpdb->posts}.post_title LIKE '%Turmeric%' THEN 30
-                ELSE 100 
-            END) ASC";
+    // Identify product queries more broadly
+    $is_product = (
+        $query->get('post_type') === 'product' || 
+        is_shop() || is_product_category() || is_product_tag() ||
+        (is_array($query->get('post_type')) && in_array('product', $query->get('post_type')))
+    );
 
-            return "$priority_sql, {$wpdb->posts}.ID DESC";
-        }
+    if (!$is_product) {
+        return $orderby;
     }
-    return $orderby;
+
+    global $wpdb;
+    
+    // Mushroom IDs for absolute priority
+    $priority_ids = "165274, 165275, 165277, 165279";
+    
+    $priority_sql = "(CASE 
+        WHEN {$wpdb->posts}.ID IN ($priority_ids) THEN 1
+        WHEN {$wpdb->posts}.post_title LIKE '%Mushroom%' THEN 5
+        WHEN {$wpdb->posts}.post_title LIKE '%Turmeric%' THEN 15
+        ELSE 100 
+    END) ASC";
+
+    // Secondary sort: ID DESC (Newest products first as requested)
+    $secondary_sql = "{$wpdb->posts}.ID DESC";
+
+    // Determine if we should override the current sort
+    $current_orderby = $query->get('orderby');
+    
+    // If it's a default sort mode, we swap it for our custom logic
+    if (empty($current_orderby) || in_array($current_orderby, ['menu_order', 'default', 'popularity', 'relevance'])) {
+        return "$priority_sql, $secondary_sql";
+    }
+
+    // If a specific sort is selected (like price), we still prepend our priority
+    return "$priority_sql, $orderby";
 }
 add_filter('posts_orderby', 'lm_custom_posts_orderby', 999999, 2);
-
 
 add_filter('woocommerce_default_catalog_orderby', function($orderby) {
     return 'menu_order';
 }, 999999);
 
-/**
- * Robustly ensure 'Default sorting' (menu_order) is available and first in the dropdown.
- */
 add_filter('woocommerce_catalog_orderby', function($sortby) {
-    // If menu_order is missing, add it.
-    if (!isset($sortby['menu_order'])) {
-        $sortby = array('menu_order' => 'Default (Mushrooms First)') + $sortby;
-    } else {
-        // Move it to the top
-        $val = $sortby['menu_order'];
-        unset($sortby['menu_order']);
-        $sortby = array('menu_order' => $val) + $sortby;
-    }
+    // Labels for the dropdown
+    $sortby['menu_order'] = 'Default (Mushrooms First)';
+    $sortby['popularity'] = 'Default (Mushrooms First)';
     return $sortby;
 }, 999999);
 
 /**
- * Ensure the main query defaults to menu_order if no explicit sorting is requested.
- */
-function lm_force_default_sorting_args($args) {
-    if (!isset($_GET['orderby'])) {
-        $args['orderby'] = 'menu_order';
-        $args['order']   = 'ASC';
-    }
-    return $args;
-}
-add_filter('woocommerce_get_catalog_ordering_args', 'lm_force_default_sorting_args', 999999);
-
-
-/**
- * Remove pagination from the shop and category pages to show all products at once.
- */
-add_filter('loop_shop_per_page', function($cols) {
-    return 999;
-}, 999999);
-
-/**
- * Alternative push for pagination removal via pre_get_posts.
- */
-add_action('pre_get_posts', function($query) {
-    if (!is_admin() && $query->is_main_query() && (is_shop() || is_product_category() || is_product_tag())) {
-        $query->set('posts_per_page', -1);
-    }
-}, 999999);
-
-/**
- * Diagnostic debug feedback in footer.
+ * Diagnostic debug in footer.
  */
 add_action('wp_footer', function() {
-    echo "<!-- ACTIVE_THEME_SLUG: " . esc_html(get_stylesheet()) . " -->";
-    echo "<!-- DEFAULT_ORDERBY_VAL: " . esc_html(get_option('woocommerce_default_catalog_orderby')) . " -->";
-    echo "<!-- IS_PRODUCT_QUERY_MAIN: " . ((is_shop() || is_product_category()) ? 'YES' : 'NO') . " -->";
-    echo "<!-- POSTS_ORDERBY_FILTER_COUNT: " . (has_filter('posts_orderby', 'lm_custom_posts_orderby') ? 'YES' : 'NO') . " -->";
     global $wp_query, $wpdb;
+    echo "<!-- V16_ACTIVE -->";
+    echo "<!-- QUERY_POST_TYPE: " . (is_array($wp_query->get('post_type')) ? implode(',', $wp_query->get('post_type')) : $wp_query->get('post_type')) . " -->";
     echo "<!-- CURRENT_ORDERBY: " . esc_html($wp_query->get('orderby')) . " -->";
-    echo "<!-- DEFAULT_ORDERBY_SETTING: " . esc_html(get_option('woocommerce_default_catalog_orderby')) . " -->";
-    echo "<!-- ACTUAL_CATALOG_ORDERBY: " . esc_html(apply_filters('woocommerce_default_catalog_orderby', get_option('woocommerce_default_catalog_orderby'))) . " -->";
 }, 999999);

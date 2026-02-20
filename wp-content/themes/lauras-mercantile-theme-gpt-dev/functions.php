@@ -899,6 +899,8 @@ add_action('wp_footer', function() {
     echo "<!-- DEFAULT_ORDERBY_VAL: " . esc_html(get_option('woocommerce_default_catalog_orderby')) . " -->";
     echo "<!-- IS_PRODUCT_QUERY_MAIN: " . ((is_shop() || is_product_category()) ? 'YES' : 'NO') . " -->";
     echo "<!-- POSTS_ORDERBY_FILTER_COUNT: " . (has_filter('posts_orderby', 'lm_custom_posts_orderby') ? 'YES' : 'NO') . " -->";
-    global $wp_query;
+    global $wp_query, $wpdb;
     echo "<!-- CURRENT_ORDERBY: " . esc_html($wp_query->get('orderby')) . " -->";
+    echo "<!-- DEFAULT_ORDERBY_SETTING: " . esc_html(get_option('woocommerce_default_catalog_orderby')) . " -->";
+    echo "<!-- ACTUAL_CATALOG_ORDERBY: " . esc_html(apply_filters('woocommerce_default_catalog_orderby', get_option('woocommerce_default_catalog_orderby'))) . " -->";
 }, 999999);

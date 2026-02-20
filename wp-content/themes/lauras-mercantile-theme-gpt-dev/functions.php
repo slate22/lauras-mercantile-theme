@@ -821,7 +821,10 @@ add_filter('woocommerce_catalog_orderby', function($sortby) {
  */
 add_action('wp_footer', function() {
     global $wp_query, $wpdb;
-    echo "<!-- V16_ACTIVE -->";
+    echo "<!-- V17_ACTIVE -->";
     echo "<!-- QUERY_POST_TYPE: " . (is_array($wp_query->get('post_type')) ? implode(',', $wp_query->get('post_type')) : $wp_query->get('post_type')) . " -->";
     echo "<!-- CURRENT_ORDERBY: " . esc_html($wp_query->get('orderby')) . " -->";
+    
+    $active_plugins = get_option('active_plugins');
+    echo "<!-- ACTIVE_PLUGINS: " . implode(', ', $active_plugins) . " -->";
 }, 999999);

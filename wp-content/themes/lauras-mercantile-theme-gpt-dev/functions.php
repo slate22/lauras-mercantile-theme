@@ -888,4 +888,5 @@ add_action('wp_footer', function() {
     global $wp_query;
     echo "<!-- V19_ACTIVE -->";
     echo "<!-- CURRENT_ORDERBY: " . esc_html($wp_query->get('orderby')) . " -->";
+    echo "<!-- SQL_ORDERBY: " . esc_html($wp_query->request) . " -->";
 }, 999999);

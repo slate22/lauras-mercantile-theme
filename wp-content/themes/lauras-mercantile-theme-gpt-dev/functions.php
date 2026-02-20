@@ -9,6 +9,10 @@ if ( ! defined( 'ABSPATH' ) ) {
 	exit; // Exit if accessed directly.
 }
 
+add_action('wp_head', function() {
+    echo '<div id="debug-deploy-banner" style="background:red; color:white; padding:10px; z-index:9999; position:fixed; top:0; left:0;">DEBUG: V13</div>';
+}, 1);
+
 require_once get_stylesheet_directory() . '/inc/class-lm-walker-nav.php';
 
 /**

@@ -10,7 +10,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 }
 
 add_action('wp_head', function() {
-    echo '<div id="debug-deploy-banner" style="background:red; color:white; padding:10px; z-index:9999; position:fixed; top:0; left:0;">DEBUG: V13</div>';
+    echo "<div style='position:fixed; top:0; left:0; background:red; color:white; padding:5px; z-index:99999; pointer-events:none;'>DEBUG: V15</div>";
 }, 1);
 
 require_once get_stylesheet_directory() . '/inc/class-lm-walker-nav.php';
@@ -758,86 +758,37 @@ add_filter('woocommerce_single_product_image_thumbnail_html', 'lm_fix_turmeric_i
 /**
  * Product Sorting Logic - Refined for Staging Environment
  */
+/**
+ * Robust Product Sorting - Pins Mushrooms to the top using IDs, then sorts by ID DESC.
+ */
 function lm_custom_posts_orderby($orderby, $query) {
     if (is_admin() || !$query->is_main_query()) {
         return $orderby;
     }
 
-    // Check if it's a product query
-    $is_product_query = (
-        $query->get('post_type') === 'product' || 
-        is_shop() || 
-        is_product_category() || 
-        is_product_tag() || 
-        is_post_type_archive('product')
-    );
-
-    if (!$is_product_query || $query->get('s')) {
-        return $orderby;
-    }
-
-    // We MUST apply this if no explicit sort is set OR if 'popularity' is set (which is often the default)
-    $current_orderby = $query->get('orderby');
-    if (!empty($current_orderby) && !in_array($current_orderby, ['menu_order', 'default', 'relevance', 'popularity'])) {
-        return $orderby;
-    }
-
-    global $wpdb;
-
-    // Define search terms for robustness
-    $mushrooms_slug = 'functional-mushrooms';
-    $jtp_slug       = 'jtp-pathway';
-    $bundles_slug   = 'cbd-products-and-bundles';
-
-    // Priority CASE statement
-    $priority_sql = " (CASE 
-        /* 1. Functional Mushrooms (Highest Priority) */
-        WHEN (
-            SELECT COUNT(*)
-            FROM {$wpdb->term_relationships} tr_m
-            INNER JOIN {$wpdb->term_taxonomy} tt_m ON tr_m.term_taxonomy_id = tt_m.term_taxonomy_id
-            INNER JOIN {$wpdb->terms} t_m ON tt_m.term_id = t_m.term_id
-            WHERE tr_m.object_id = {$wpdb->posts}.ID
-              AND tt_m.taxonomy = 'product_cat'
-              AND (t_m.slug = '$mushrooms_slug' OR t_m.slug LIKE '%mushroom%')
-        ) > 0 THEN 10
-        WHEN {$wpdb->posts}.post_title LIKE '%Mushroom%' THEN 15
-
-        /* 2. Joe Tippens Protocol (Next) */
-        WHEN (
-            SELECT COUNT(*)
-            FROM {$wpdb->term_relationships} tr_j
-            INNER JOIN {$wpdb->term_taxonomy} tt_j ON tr_j.term_taxonomy_id = tt_j.term_taxonomy_id
-            INNER JOIN {$wpdb->terms} t_j ON tt_j.term_id = t_j.term_id
-            WHERE tr_j.object_id = {$wpdb->posts}.ID
-              AND tt_j.taxonomy = 'product_cat'
-              AND (t_j.slug = '$jtp_slug' OR t_j.slug LIKE '%tippens%')
-        ) > 0 THEN 20
-        WHEN {$wpdb->posts}.post_title LIKE '%ONCO-ADJUNCT%' THEN 25
-
-        /* 3. Turmeric Products */
-        WHEN {$wpdb->posts}.post_title LIKE '%Turmeric%' THEN 30
-        WHEN {$wpdb->posts}.post_title LIKE '%Curcumin%' THEN 30
-
-        /* 4. CBD Bundles */
-        WHEN (
-            SELECT COUNT(*)
-            FROM {$wpdb->term_relationships} tr_b
-            INNER JOIN {$wpdb->term_taxonomy} tt_b ON tr_b.term_taxonomy_id = tt_b.term_taxonomy_id
-            INNER JOIN {$wpdb->terms} t_b ON tt_b.term_id = t_b.term_id
-            WHERE tr_b.object_id = {$wpdb->posts}.ID
-              AND tt_b.taxonomy = 'product_cat'
-              AND t_b.slug = '$bundles_slug'
-        ) > 0 THEN 40
+    if (is_shop() || is_product_category() || is_product_tag()) {
+        global $wpdb;
         
-        ELSE 100 
-    END) ASC";
+        // Current ordering mode
+        $current_orderby = $query->get('orderby');
+        
+        // We only override if it's the default sort, popularity, or none.
+        if (empty($current_orderby) || in_array($current_orderby, ['menu_order', 'default', 'popularity', 'relevance'])) {
+            // Mushroom IDs from staging inspection
+            $mushroom_ids = array(165274, 165275, 165277, 165279);
+            $ids_str = implode(',', $mushroom_ids);
+            
+            $priority_sql = "(CASE 
+                WHEN {$wpdb->posts}.ID IN ($ids_str) THEN 10
+                WHEN {$wpdb->posts}.post_title LIKE '%Mushroom%' THEN 20
+                WHEN {$wpdb->posts}.post_title LIKE '%Turmeric%' THEN 30
+                ELSE 100 
+            END) ASC";
 
-    if (empty($orderby)) {
-        return $priority_sql . ", {$wpdb->posts}.post_date DESC";
+            return "$priority_sql, {$wpdb->posts}.ID DESC";
+        }
     }
-    
-    return $priority_sql . ", " . $orderby;
+    return $orderby;
 }
 add_filter('posts_orderby', 'lm_custom_posts_orderby', 999999, 2);
 
@@ -852,7 +803,7 @@ add_filter('woocommerce_default_catalog_orderby', function($orderby) {
 add_filter('woocommerce_catalog_orderby', function($sortby) {
     // If menu_order is missing, add it.
     if (!isset($sortby['menu_order'])) {
-        $sortby = array('menu_order' => 'Default sorting') + $sortby;
+        $sortby = array('menu_order' => 'Default (Mushrooms First)') + $sortby;
     } else {
         // Move it to the top
         $val = $sortby['menu_order'];

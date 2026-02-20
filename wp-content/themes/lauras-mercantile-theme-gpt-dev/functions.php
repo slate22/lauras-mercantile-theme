@@ -770,10 +770,12 @@ function lm_apply_mushroom_priority_sql($orderby) {
     // Slugs for priority categories
     $mushrooms_slug = 'functional-mushrooms';
     $tippens_slug   = 'joe-tippens-protocol-products';
-    $cbd_slug       = 'cbd-products-and-bundles';
+    // Include more CBD slugs
+    $cbd_slugs      = array('cbd-products-and-bundles', 'full-spectrum-cbd-oil', 'mf-hemp-extracts', 'cbd-for-dogs');
+    $cbd_slugs_str  = "'" . implode("','", $cbd_slugs) . "'";
     
     // Known Turmeric IDs for fallback
-    $turmeric_ids = "166466, 139017, 166471, 166473, 163552, 165372";
+    $turmeric_ids = "166466, 139017, 166471, 166473, 163552, 165372, 166474";
 
     $priority_sql = "(CASE 
         /* 10: HIGHEST - Functional Mushrooms */
@@ -797,7 +799,7 @@ function lm_apply_mushroom_priority_sql($orderby) {
             SELECT COUNT(*) FROM {$wpdb->term_relationships} tr 
             JOIN {$wpdb->term_taxonomy} tt ON tr.term_taxonomy_id = tt.term_taxonomy_id
             JOIN {$wpdb->terms} t ON tt.term_id = t.term_id
-            WHERE tr.object_id = {$wpdb->posts}.ID AND tt.taxonomy = 'product_cat' AND t.slug = '$cbd_slug'
+            WHERE tr.object_id = {$wpdb->posts}.ID AND tt.taxonomy = 'product_cat' AND t.slug IN ($cbd_slugs_str)
         ) > 0 THEN 20
         
         /* 30: MIDDLE - Turmeric Products */
@@ -820,19 +822,21 @@ function lm_apply_mushroom_priority_sql($orderby) {
 
 // 2. Hook into WP_Query
 add_filter('posts_orderby', function($orderby, $query) {
-    if (is_admin() || !$query->is_main_query()) return $orderby;
+    if (is_admin()) return $orderby;
     
-    $is_product = (
-        $query->get('post_type') === 'product' || 
-        is_shop() || is_product_category() || is_product_tag() ||
-        (is_array($query->get('post_type')) && in_array('product', $query->get('post_type')))
+    $post_type = $query->get('post_type');
+    $is_product_query = (
+        $post_type === 'product' || 
+        (is_array($post_type) && in_array('product', $post_type)) ||
+        (function_exists('is_shop') && is_shop()) ||
+        (function_exists('is_product_category') && is_product_category())
     );
 
-    if ($is_product) {
+    if ($is_product_query) {
         return lm_apply_mushroom_priority_sql($orderby);
     }
     return $orderby;
-}, 999999, 2);
+}, 9999999, 2);
 
 // 3. Hook into WooCommerce Orderby Args (Bypasses many plugins)
 add_filter('woocommerce_get_catalog_ordering_args', function($args) {

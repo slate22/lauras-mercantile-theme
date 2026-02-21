@@ -820,9 +820,9 @@ function lm_apply_mushroom_priority_sql($orderby) {
     return "$priority_sql, $orderby";
 }
 
-// 2. Hook into WP_Query
-add_filter('posts_orderby', function($orderby, $query) {
-    if (is_admin()) return $orderby;
+// 2. Hook into WP_Query via posts_clauses (More robust than posts_orderby)
+add_filter('posts_clauses', function($clauses, $query) {
+    if (is_admin()) return $clauses;
     
     $post_type = $query->get('post_type');
     $is_product_query = (
@@ -833,9 +833,9 @@ add_filter('posts_orderby', function($orderby, $query) {
     );
 
     if ($is_product_query) {
-        return lm_apply_mushroom_priority_sql($orderby);
+        $clauses['orderby'] = lm_apply_mushroom_priority_sql($clauses['orderby']);
     }
-    return $orderby;
+    return $clauses;
 }, 9999999, 2);
 
 // 3. Hook into WooCommerce Orderby Args (Bypasses many plugins)
@@ -866,10 +866,20 @@ add_filter('graphql_product_connection_query_args', function($query_args) {
 // 6. Fix labels and defaults
 add_filter('woocommerce_default_catalog_orderby', function() { return 'menu_order'; }, 999999);
 add_filter('woocommerce_catalog_orderby', function($sortby) {
-    $sortby['popularity'] = 'Default (Mushrooms First)';
     $sortby['menu_order'] = 'Default (Mushrooms First)';
     return $sortby;
 }, 999999);
+
+// Force default order if not set
+add_action('pre_get_posts', function($query) {
+    if (is_admin() || !$query->is_main_query()) return;
+    if (function_exists('is_shop') && (is_shop() || is_product_category())) {
+        if (!$query->get('orderby')) {
+            $query->set('orderby', 'menu_order');
+            $query->set('order', 'ASC');
+        }
+    }
+}, 9999);
 
 // 7. Remove Pagination (Show all products)
 add_filter('loop_shop_per_page', function($cols) {

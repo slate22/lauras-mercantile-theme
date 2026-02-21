@@ -820,29 +820,26 @@ function lm_apply_mushroom_priority_sql($orderby) {
     return "$priority_sql, $orderby";
 }
 
-// 2. Hook into WP_Query via posts_clauses (More robust than posts_orderby)
-add_filter('posts_clauses', function($clauses, $query) {
-    if (is_admin()) return $clauses;
+// 2. Hook into WP_Query via posts_orderby (Exclusive override)
+add_filter('posts_orderby', function($orderby, $query) {
+    if (is_admin()) return $orderby;
     
     // Check if it's a product query
+    $post_type = $query->get('post_type');
     $is_product_query = (
-        $query->get('post_type') === 'product' || 
-        (is_array($query->get('post_type')) && in_array('product', $query->get('post_type'))) ||
+        $post_type === 'product' || 
+        (is_array($post_type) && in_array('product', $post_type)) ||
         (function_exists('is_shop') && is_shop()) ||
-        (function_exists('is_product_category') && is_product_category()) ||
-        (function_exists('is_product_tag') && is_product_tag())
+        (function_exists('is_product_category') && is_product_category())
     );
 
     if ($is_product_query) {
         global $wpdb;
         
-        // Priority 10: Functional Mushrooms
+        // Priority IDs
         $mushroom_ids = "928, 318, 320, 322, 119878, 150671";
-        // Priority 15: Joe Tippens Protocol
         $tippens_ids = "156147, 157471, 157876, 158060, 158199, 158314";
-        // Priority 20: CBD
-        $cbd_ids = "223, 327, 264, 238, 258, 318, 113826, 150315, 150318"; // Note: some might overlap, CASE handles first-match
-        // Priority 30: Turmeric
+        $cbd_ids = "223, 327, 264, 238, 258, 113826, 150315, 150318";
         $turmeric_ids = "166466, 139017, 166471, 166473, 163552, 165372, 166474";
 
         $priority_sql = "(CASE 
@@ -852,14 +849,13 @@ add_filter('posts_clauses', function($clauses, $query) {
             WHEN {$wpdb->posts}.ID IN ($turmeric_ids) OR {$wpdb->posts}.post_title LIKE '%Turmeric%' OR {$wpdb->posts}.post_title LIKE '%Curcumin%' THEN 30
             ELSE 40 END) ASC";
 
-        if (empty($clauses['orderby'])) {
-            $clauses['orderby'] = "$priority_sql, {$wpdb->posts}.ID DESC";
-        } else {
-            // Prepend our priority and make sure it's the dominant sort
-            $clauses['orderby'] = "$priority_sql, " . $clauses['orderby'];
+        // EXCLUSIVE override: Don't allow anything else to sort before our priority
+        if (!empty($orderby)) {
+             return "$priority_sql, $orderby";
         }
+        return "$priority_sql, {$wpdb->posts}.ID DESC";
     }
-    return $clauses;
+    return $orderby;
 }, 9999999, 2);
 
 // 3. Hook into WooCommerce Setting and Args

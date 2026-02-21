@@ -824,14 +824,13 @@ function lm_apply_mushroom_priority_sql($orderby) {
 add_filter('posts_clauses', function($clauses, $query) {
     if (is_admin()) return $clauses;
     
-    // Check if it's a product query more broadly
+    // Check if it's a product query
     $is_product_query = (
         $query->get('post_type') === 'product' || 
         (is_array($query->get('post_type')) && in_array('product', $query->get('post_type'))) ||
-        $query->is_post_type_archive('product') ||
-        $query->is_tax('product_cat') ||
-        $query->is_tax('product_tag') ||
-        (function_exists('is_shop') && is_shop())
+        (function_exists('is_shop') && is_shop()) ||
+        (function_exists('is_product_category') && is_product_category()) ||
+        (function_exists('is_product_tag') && is_product_tag())
     );
 
     if ($is_product_query) {
@@ -934,4 +933,5 @@ add_action('wp_footer', function() {
     global $wp_query;
     echo "<!-- V19_ACTIVE -->";
     echo "<!-- CURRENT_ORDERBY: " . esc_html($wp_query->get('orderby')) . " -->";
+    echo "<!-- SQL_QUERY: " . esc_html($wp_query->request) . " -->";
 }, 999999);

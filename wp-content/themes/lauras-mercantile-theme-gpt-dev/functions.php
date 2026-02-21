@@ -759,145 +759,82 @@ add_filter('woocommerce_single_product_image_thumbnail_html', 'lm_fix_turmeric_i
  * Product Sorting Logic - Refined for Staging Environment
  */
 /**
- * ULTRA-AGGRESSIVE PRODUCT SORTING (V18)
- * Targets: Main Query, REST API (Store API), and GraphQL.
+ * ULTRA-AGGRESSIVE PRODUCT SORTING (V22)
+ * Targets: Main Query, REST API, and GraphQL.
+ * Prioritizes: Mushrooms (10) > Joe Tippens (15) > CBD (20) > Turmeric (30) > Others (40).
+ * Fallback: Sorts by ID DESC within each priority group.
  */
 
-// 1. Logic for MySQL ORDER BY
-function lm_apply_mushroom_priority_sql($orderby) {
-    global $wpdb;
-    
-    // Slugs for priority categories
-    $mushrooms_slug = 'functional-mushrooms';
-    $tippens_slug   = 'joe-tippens-protocol-products';
-    // Include more CBD slugs
-    $cbd_slugs      = array('cbd-products-and-bundles', 'full-spectrum-cbd-oil', 'mf-hemp-extracts', 'cbd-for-dogs');
-    $cbd_slugs_str  = "'" . implode("','", $cbd_slugs) . "'";
-    
-    // Known Turmeric IDs for fallback
-    $turmeric_ids = "166466, 139017, 166471, 166473, 163552, 165372, 166474";
-
-    $priority_sql = "(CASE 
-        /* 10: HIGHEST - Functional Mushrooms */
-        WHEN (
-            SELECT COUNT(*) FROM {$wpdb->term_relationships} tr 
-            JOIN {$wpdb->term_taxonomy} tt ON tr.term_taxonomy_id = tt.term_taxonomy_id
-            JOIN {$wpdb->terms} t ON tt.term_id = t.term_id
-            WHERE tr.object_id = {$wpdb->posts}.ID AND tt.taxonomy = 'product_cat' AND t.slug = '$mushrooms_slug'
-        ) > 0 THEN 10
-        
-        /* 15: SECOND - Joe Tippens Protocol */
-        WHEN (
-            SELECT COUNT(*) FROM {$wpdb->term_relationships} tr 
-            JOIN {$wpdb->term_taxonomy} tt ON tr.term_taxonomy_id = tt.term_taxonomy_id
-            JOIN {$wpdb->terms} t ON tt.term_id = t.term_id
-            WHERE tr.object_id = {$wpdb->posts}.ID AND tt.taxonomy = 'product_cat' AND t.slug = '$tippens_slug'
-        ) > 0 THEN 15
-        
-        /* 20: THIRD - CBD Products (Main line) */
-        WHEN (
-            SELECT COUNT(*) FROM {$wpdb->term_relationships} tr 
-            JOIN {$wpdb->term_taxonomy} tt ON tr.term_taxonomy_id = tt.term_taxonomy_id
-            JOIN {$wpdb->terms} t ON tt.term_id = t.term_id
-            WHERE tr.object_id = {$wpdb->posts}.ID AND tt.taxonomy = 'product_cat' AND t.slug IN ($cbd_slugs_str)
-        ) > 0 THEN 20
-        
-        /* 30: MIDDLE - Turmeric Products */
-        WHEN {$wpdb->posts}.post_title LIKE '%Turmeric%' THEN 30
-        WHEN {$wpdb->posts}.post_title LIKE '%Curcumin%' THEN 30
-        WHEN {$wpdb->posts}.ID IN ($turmeric_ids) THEN 30
-        
-        /* 40: BOTTOM - Everything Else */
-        ELSE 40 
-    END) ASC";
-    
-    $secondary_sql = "{$wpdb->posts}.ID DESC";
-
-    if (empty($orderby)) {
-        return "$priority_sql, $secondary_sql";
-    }
-    // Prepend priority to existing sort
-    return "$priority_sql, $orderby";
-}
-
-// 2. Hook into WP_Query via posts_orderby (Aggressive Early Override)
 add_filter('posts_orderby', function($orderby, $query) {
     if (is_admin()) return $orderby;
     
-    // Check for product query accurately
+    // Target shop, product categories, and product queries
     $post_type = $query->get('post_type');
-    $is_product = ($post_type === 'product' || (is_array($post_type) && in_array('product', $post_type)));
+    $is_product_query = ($post_type === 'product' || (is_array($post_type) && in_array('product', $post_type)));
     
-    if (!$is_product && ! (function_exists('is_shop') && is_shop())) {
-         return $orderby;
+    if (!$is_product_query && !(function_exists('is_shop') && (is_shop() || is_product_category() || is_product_tag()))) {
+        return $orderby;
     }
 
     global $wpdb;
-    
-    // Priority IDs
-    $mushroom_ids = "928, 318, 320, 322, 119878, 150671";
-    $tippens_ids = "156147, 157471, 157876, 158060, 158199, 158314";
-    $cbd_ids = "223, 327, 264, 238, 258, 113826, 150315, 150318";
-    $turmeric_ids = "166466, 139017, 166471, 166473, 163552, 165372, 166474";
 
-    $priority_sql = "(CASE 
-        WHEN {$wpdb->posts}.ID IN ($mushroom_ids) OR {$wpdb->posts}.post_title LIKE '%Mushroom%' THEN 10
-        WHEN {$wpdb->posts}.ID IN ($tippens_ids) OR {$wpdb->posts}.post_title LIKE '%ONCO-ADJUNCT%' THEN 15
-        WHEN {$wpdb->posts}.ID IN ($cbd_ids) OR {$wpdb->posts}.post_title LIKE '%CBD%' OR {$wpdb->posts}.post_title LIKE '%Hemp Extract%' THEN 20
-        WHEN {$wpdb->posts}.ID IN ($turmeric_ids) OR {$wpdb->posts}.post_title LIKE '%Turmeric%' OR {$wpdb->posts}.post_title LIKE '%Curcumin%' THEN 30
-        ELSE 40 END) ASC";
+    $mushrooms_slug = 'functional-mushrooms';
+    $tippens_slug   = 'joe-tippens-protocol-products';
+    $cbd_slugs      = array('full-spectrum-cbd-oil', 'cbd-oil', 'cbd-products-and-bundles');
+    $cbd_slugs_str  = "'" . implode("','", $cbd_slugs) . "'";
 
-    if (empty($orderby)) {
-        return "$priority_sql, {$wpdb->posts}.ID DESC";
-    }
-    return "$priority_sql, $orderby";
-}, 1, 2);
+    $priority_sql = "CASE 
+        /* 10: Mushrooms */
+        WHEN (SELECT COUNT(*) FROM {$wpdb->term_relationships} tr 
+              JOIN {$wpdb->term_taxonomy} tt ON tr.term_taxonomy_id = tt.term_taxonomy_id 
+              JOIN {$wpdb->terms} t ON tt.term_id = t.term_id 
+              WHERE tr.object_id = {$wpdb->posts}.ID AND tt.taxonomy = 'product_cat' AND t.slug = '$mushrooms_slug') > 0 THEN 10
+        WHEN {$wpdb->posts}.post_title LIKE '%Mushroom%' THEN 10
+        
+        /* 15: Joe Tippens Protocol */
+        WHEN (SELECT COUNT(*) FROM {$wpdb->term_relationships} tr 
+              JOIN {$wpdb->term_taxonomy} tt ON tr.term_taxonomy_id = tt.term_taxonomy_id 
+              JOIN {$wpdb->terms} t ON tt.term_id = t.term_id 
+              WHERE tr.object_id = {$wpdb->posts}.ID AND tt.taxonomy = 'product_cat' AND t.slug = '$tippens_slug') > 0 THEN 15
+        WHEN {$wpdb->posts}.post_title LIKE '%ONCO-ADJUNCT%' THEN 15
+        
+        /* 20: CBD Products */
+        WHEN (SELECT COUNT(*) FROM {$wpdb->term_relationships} tr 
+              JOIN {$wpdb->term_taxonomy} tt ON tr.term_taxonomy_id = tt.term_taxonomy_id 
+              JOIN {$wpdb->terms} t ON tt.term_id = t.term_id 
+              WHERE tr.object_id = {$wpdb->posts}.ID AND tt.taxonomy = 'product_cat' AND t.slug IN ($cbd_slugs_str)) > 0 THEN 20
+        WHEN {$wpdb->posts}.post_title LIKE '%CBD%' OR {$wpdb->posts}.post_title LIKE '%Hemp Extract%' THEN 20
+        
+        /* 30: Turmeric/Curcumin */
+        WHEN {$wpdb->posts}.post_title LIKE '%Turmeric%' OR {$wpdb->posts}.post_title LIKE '%Curcumin%' THEN 30
+        
+        /* 40: Everything Else */
+        ELSE 40 END";
 
-// 3. Hook into WooCommerce Setting and Args
-add_action('init', function() {
-    if (get_option('woocommerce_default_catalog_orderby') !== 'menu_order') {
-        update_option('woocommerce_default_catalog_orderby', 'menu_order');
-    }
-});
+    return "$priority_sql ASC, {$wpdb->posts}.ID DESC";
+}, 9999, 2);
 
-add_filter('woocommerce_default_catalog_orderby', function($sortby) {
-    return 'menu_order';
-}, 999999);
-
+// Force WooCommerce to use our default sorting
+add_filter('woocommerce_default_catalog_orderby', function() { return 'menu_order'; }, 9999);
 add_filter('woocommerce_get_catalog_ordering_args', function($args) {
-    if (!isset($_GET['orderby'])) {
+    if (!isset($_GET['orderby']) || $_GET['orderby'] === 'menu_order') {
         $args['orderby'] = 'menu_order';
-        $args['order'] = 'ASC';
+        $args['order'] = 'ASC'; // ASC for our CASE statement priorities
     }
     return $args;
-}, 999999);
+}, 9999);
 
-// 4. Hook into WooCommerce REST API (Store API)
-add_filter('woocommerce_rest_product_object_query', function($args, $request) {
-    $args['orderby'] = 'ID';
-    $args['order'] = 'DESC';
-    return $args;
-}, 999999, 2);
-
-// 5. Hook into GraphQL (For headless/React)
-add_filter('graphql_product_connection_query_args', function($query_args) {
-    $query_args['orderby'] = array(
-        array('field' => 'ID', 'order' => 'DESC')
-    );
-    return $query_args;
-}, 999999);
-
-// 6. Fix labels and defaults
-add_filter('woocommerce_default_catalog_orderby', function() { return 'menu_order'; }, 999999);
+// Sync sorting labels
 add_filter('woocommerce_catalog_orderby', function($sortby) {
     $sortby['menu_order'] = 'Default (Mushrooms First)';
     return $sortby;
-}, 999999);
+}, 9999);
 
-// Force default order if not set
+// Ensure the main query for shop/category pages shows all products and uses our order
 add_action('pre_get_posts', function($query) {
     if (is_admin() || !$query->is_main_query()) return;
-    if (function_exists('is_shop') && (is_shop() || is_product_category())) {
+    if (function_exists('is_shop') && (is_shop() || is_product_category() || is_product_tag())) {
+        $query->set('posts_per_page', -1);
         if (!$query->get('orderby')) {
             $query->set('orderby', 'menu_order');
             $query->set('order', 'ASC');
@@ -905,28 +842,17 @@ add_action('pre_get_posts', function($query) {
     }
 }, 9999);
 
-// 7. Remove Pagination (Show all products)
-add_filter('loop_shop_per_page', function($cols) {
-    return -1;
-}, 9999);
-
-add_action('pre_get_posts', function($query) {
-    if (is_admin() || !$query->is_main_query()) return;
-    if (function_exists('is_shop') && (is_shop() || is_product_category() || is_product_tag())) {
-        $query->set('posts_per_page', -1);
-        $query->set('orderby', 'menu_order');
-        $query->set('order', 'ASC');
-    }
-}, 9999);
-
-// 8. Update Debug Banner
+// Debug banner update
 add_action('wp_head', function() {
-    echo "<div style='position:fixed; top:0; left:0; background:red; color:white; padding:5px; z-index:99999; pointer-events:none;'>DEBUG: V21</div>";
+    if (is_admin()) return;
+    echo "<div id='lm-debug-banner' style='position:fixed; top:0; left:0; background:rgba(0,100,0,0.8); color:white; padding:4px 8px; z-index:999999; font-family:monospace; font-size:10px; pointer-events:none; border-bottom-right-radius:4px;'>v22 Active</div>";
 }, 1);
 
 add_action('wp_footer', function() {
+    if (is_admin()) return;
     global $wp_query;
-    echo "<!-- V21_ACTIVE -->";
-    echo "<!-- CURRENT_ORDERBY: " . esc_html($wp_query->get('orderby')) . " -->";
-    echo "<!-- SQL_QUERY: " . esc_html($wp_query->request) . " -->";
+    echo "\n<!-- LM_SORT_DEBUG_V22 -->\n";
+    echo "<!-- ORDERBY: " . esc_html($wp_query->get('orderby')) . " -->\n";
+    echo "<!-- REQUEST: " . esc_html($wp_query->request) . " -->\n";
 }, 999999);
+

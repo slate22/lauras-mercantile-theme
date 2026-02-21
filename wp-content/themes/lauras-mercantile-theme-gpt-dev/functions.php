@@ -828,22 +828,39 @@ add_filter('posts_clauses', function($clauses, $query) {
     $is_product_query = (
         $post_type === 'product' || 
         (is_array($post_type) && in_array('product', $post_type)) ||
-        (function_exists('is_shop') && is_shop()) ||
-        (function_exists('is_product_category') && is_product_category())
+        $query->is_post_type_archive('product') ||
+        $query->is_tax('product_cat')
     );
 
     if ($is_product_query) {
-        $clauses['orderby'] = lm_apply_mushroom_priority_sql($clauses['orderby']);
+        global $wpdb;
+        $mushrooms_slug = 'functional-mushrooms';
+        $tippens_slug   = 'joe-tippens-protocol-products';
+        $cbd_slugs      = array('cbd-products-and-bundles', 'full-spectrum-cbd-oil', 'mf-hemp-extracts', 'cbd-for-dogs');
+        $cbd_slugs_str  = "'" . implode("','", $cbd_slugs) . "'";
+        $turmeric_ids   = "166466, 139017, 166471, 166473, 163552, 165372, 166474";
+
+        $priority_sql = "(CASE 
+            WHEN (SELECT COUNT(*) FROM {$wpdb->term_relationships} tr JOIN {$wpdb->term_taxonomy} tt ON tr.term_taxonomy_id = tt.term_taxonomy_id JOIN {$wpdb->terms} t ON tt.term_id = t.term_id WHERE tr.object_id = {$wpdb->posts}.ID AND t.slug = '$mushrooms_slug') > 0 THEN 10
+            WHEN (SELECT COUNT(*) FROM {$wpdb->term_relationships} tr JOIN {$wpdb->term_taxonomy} tt ON tr.term_taxonomy_id = tt.term_taxonomy_id JOIN {$wpdb->terms} t ON tt.term_id = t.term_id WHERE tr.object_id = {$wpdb->posts}.ID AND t.slug = '$tippens_slug') > 0 THEN 15
+            WHEN (SELECT COUNT(*) FROM {$wpdb->term_relationships} tr JOIN {$wpdb->term_taxonomy} tt ON tr.term_taxonomy_id = tt.term_taxonomy_id JOIN {$wpdb->terms} t ON tt.term_id = t.term_id WHERE tr.object_id = {$wpdb->posts}.ID AND t.slug IN ($cbd_slugs_str)) > 0 THEN 20
+            WHEN {$wpdb->posts}.post_title LIKE '%Turmeric%' OR {$wpdb->posts}.post_title LIKE '%Curcumin%' OR {$wpdb->posts}.ID IN ($turmeric_ids) THEN 30
+            ELSE 40 END) ASC";
+
+        if (empty($clauses['orderby'])) {
+            $clauses['orderby'] = "$priority_sql, {$wpdb->posts}.ID DESC";
+        } else {
+            $clauses['orderby'] = "$priority_sql, " . $clauses['orderby'];
+        }
     }
     return $clauses;
-}, 9999999, 2);
+}, 20, 2);
 
 // 3. Hook into WooCommerce Orderby Args (Bypasses many plugins)
 add_filter('woocommerce_get_catalog_ordering_args', function($args) {
-    // If no specific orderby is in URL, force our custom default
-    if (!isset($_GET['orderby'])) {
-        $args['orderby'] = 'ID'; // Use ID as base
-        $args['order'] = 'DESC'; // Newest first
+    if (!isset($_GET['orderby']) || $_GET['orderby'] === 'popularity' || $_GET['orderby'] === 'menu_order') {
+        $args['orderby'] = 'menu_order';
+        $args['order'] = 'ASC';
     }
     return $args;
 }, 999999);
@@ -902,5 +919,4 @@ add_action('wp_footer', function() {
     global $wp_query;
     echo "<!-- V19_ACTIVE -->";
     echo "<!-- CURRENT_ORDERBY: " . esc_html($wp_query->get('orderby')) . " -->";
-    echo "<!-- SQL_ORDERBY: " . esc_html($wp_query->request) . " -->";
 }, 999999);

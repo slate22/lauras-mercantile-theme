@@ -835,23 +835,27 @@ add_filter('posts_clauses', function($clauses, $query) {
 
     if ($is_product_query) {
         global $wpdb;
-        $mushrooms_slug = 'functional-mushrooms';
-        $tippens_slug   = 'joe-tippens-protocol-products';
-        $cbd_slugs      = array('cbd-products-and-bundles', 'full-spectrum-cbd-oil', 'mf-hemp-extracts', 'cbd-for-dogs');
-        $cbd_slugs_str  = "'" . implode("','", $cbd_slugs) . "'";
-        $turmeric_ids   = "166466, 139017, 166471, 166473, 163552, 165372, 166474";
+        
+        // Priority 10: Functional Mushrooms
+        $mushroom_ids = "928, 318, 320, 322, 119878, 150671";
+        // Priority 15: Joe Tippens Protocol
+        $tippens_ids = "156147, 157471, 157876, 158060, 158199, 158314";
+        // Priority 20: CBD
+        $cbd_ids = "223, 327, 264, 238, 258, 318, 113826, 150315, 150318"; // Note: some might overlap, CASE handles first-match
+        // Priority 30: Turmeric
+        $turmeric_ids = "166466, 139017, 166471, 166473, 163552, 165372, 166474";
 
         $priority_sql = "(CASE 
-            WHEN (SELECT COUNT(*) FROM {$wpdb->term_relationships} tr JOIN {$wpdb->term_taxonomy} tt ON tr.term_taxonomy_id = tt.term_taxonomy_id JOIN {$wpdb->terms} t ON tt.term_id = t.term_id WHERE tr.object_id = {$wpdb->posts}.ID AND t.slug = '$mushrooms_slug') > 0 THEN 10
-            WHEN (SELECT COUNT(*) FROM {$wpdb->term_relationships} tr JOIN {$wpdb->term_taxonomy} tt ON tr.term_taxonomy_id = tt.term_taxonomy_id JOIN {$wpdb->terms} t ON tt.term_id = t.term_id WHERE tr.object_id = {$wpdb->posts}.ID AND t.slug = '$tippens_slug') > 0 THEN 15
-            WHEN (SELECT COUNT(*) FROM {$wpdb->term_relationships} tr JOIN {$wpdb->term_taxonomy} tt ON tr.term_taxonomy_id = tt.term_taxonomy_id JOIN {$wpdb->terms} t ON tt.term_id = t.term_id WHERE tr.object_id = {$wpdb->posts}.ID AND t.slug IN ($cbd_slugs_str)) > 0 THEN 20
-            WHEN {$wpdb->posts}.post_title LIKE '%Turmeric%' OR {$wpdb->posts}.post_title LIKE '%Curcumin%' OR {$wpdb->posts}.ID IN ($turmeric_ids) THEN 30
+            WHEN {$wpdb->posts}.ID IN ($mushroom_ids) OR {$wpdb->posts}.post_title LIKE '%Mushroom%' THEN 10
+            WHEN {$wpdb->posts}.ID IN ($tippens_ids) OR {$wpdb->posts}.post_title LIKE '%ONCO-ADJUNCT%' THEN 15
+            WHEN {$wpdb->posts}.ID IN ($cbd_ids) OR {$wpdb->posts}.post_title LIKE '%CBD%' OR {$wpdb->posts}.post_title LIKE '%Hemp Extract%' THEN 20
+            WHEN {$wpdb->posts}.ID IN ($turmeric_ids) OR {$wpdb->posts}.post_title LIKE '%Turmeric%' OR {$wpdb->posts}.post_title LIKE '%Curcumin%' THEN 30
             ELSE 40 END) ASC";
 
         if (empty($clauses['orderby'])) {
             $clauses['orderby'] = "$priority_sql, {$wpdb->posts}.ID DESC";
         } else {
-            // Prepend our priority to WHATEVER else is there
+            // Prepend our priority and make sure it's the dominant sort
             $clauses['orderby'] = "$priority_sql, " . $clauses['orderby'];
         }
     }

@@ -820,43 +820,38 @@ function lm_apply_mushroom_priority_sql($orderby) {
     return "$priority_sql, $orderby";
 }
 
-// 2. Hook into WP_Query via posts_orderby (Exclusive override)
+// 2. Hook into WP_Query via posts_orderby (Aggressive Early Override)
 add_filter('posts_orderby', function($orderby, $query) {
     if (is_admin()) return $orderby;
     
-    // Check if it's a product query
+    // Check for product query accurately
     $post_type = $query->get('post_type');
-    $is_product_query = (
-        $post_type === 'product' || 
-        (is_array($post_type) && in_array('product', $post_type)) ||
-        (function_exists('is_shop') && is_shop()) ||
-        (function_exists('is_product_category') && is_product_category())
-    );
+    $is_product = ($post_type === 'product' || (is_array($post_type) && in_array('product', $post_type)));
+    
+    if (!$is_product && ! (function_exists('is_shop') && is_shop())) {
+         return $orderby;
+    }
 
-    if ($is_product_query) {
-        global $wpdb;
-        
-        // Priority IDs
-        $mushroom_ids = "928, 318, 320, 322, 119878, 150671";
-        $tippens_ids = "156147, 157471, 157876, 158060, 158199, 158314";
-        $cbd_ids = "327, 264, 238, 258, 113826, 150315, 150318"; // Removed 223
-        $turmeric_ids = "166466, 139017, 166471, 166473, 163552, 165372, 166474, 223"; // Added 223 for test
+    global $wpdb;
+    
+    // Priority IDs
+    $mushroom_ids = "928, 318, 320, 322, 119878, 150671";
+    $tippens_ids = "156147, 157471, 157876, 158060, 158199, 158314";
+    $cbd_ids = "223, 327, 264, 238, 258, 113826, 150315, 150318";
+    $turmeric_ids = "166466, 139017, 166471, 166473, 163552, 165372, 166474";
 
-        $priority_sql = "(CASE 
-            WHEN {$wpdb->posts}.ID IN ($mushroom_ids) OR {$wpdb->posts}.post_title LIKE '%Mushroom%' THEN 10
-            WHEN {$wpdb->posts}.ID IN ($tippens_ids) OR {$wpdb->posts}.post_title LIKE '%ONCO-ADJUNCT%' THEN 15
-            WHEN {$wpdb->posts}.ID IN ($cbd_ids) OR ({$wpdb->posts}.post_title LIKE '%CBD%' AND {$wpdb->posts}.ID != 223) THEN 20
-            WHEN {$wpdb->posts}.ID IN ($turmeric_ids) OR {$wpdb->posts}.post_title LIKE '%Turmeric%' OR {$wpdb->posts}.post_title LIKE '%Curcumin%' THEN 30
-            ELSE 40 END) ASC";
+    $priority_sql = "(CASE 
+        WHEN {$wpdb->posts}.ID IN ($mushroom_ids) OR {$wpdb->posts}.post_title LIKE '%Mushroom%' THEN 10
+        WHEN {$wpdb->posts}.ID IN ($tippens_ids) OR {$wpdb->posts}.post_title LIKE '%ONCO-ADJUNCT%' THEN 15
+        WHEN {$wpdb->posts}.ID IN ($cbd_ids) OR {$wpdb->posts}.post_title LIKE '%CBD%' OR {$wpdb->posts}.post_title LIKE '%Hemp Extract%' THEN 20
+        WHEN {$wpdb->posts}.ID IN ($turmeric_ids) OR {$wpdb->posts}.post_title LIKE '%Turmeric%' OR {$wpdb->posts}.post_title LIKE '%Curcumin%' THEN 30
+        ELSE 40 END) ASC";
 
-        // EXCLUSIVE override: Don't allow anything else to sort before our priority
-        if (!empty($orderby)) {
-             return "$priority_sql, $orderby";
-        }
+    if (empty($orderby)) {
         return "$priority_sql, {$wpdb->posts}.ID DESC";
     }
-    return $orderby;
-}, 9999999, 2);
+    return "$priority_sql, $orderby";
+}, 1, 2);
 
 // 3. Hook into WooCommerce Setting and Args
 add_action('init', function() {
@@ -926,12 +921,12 @@ add_action('pre_get_posts', function($query) {
 
 // 8. Update Debug Banner
 add_action('wp_head', function() {
-    echo "<div style='position:fixed; top:0; left:0; background:red; color:white; padding:5px; z-index:99999; pointer-events:none;'>DEBUG: V20</div>";
+    echo "<div style='position:fixed; top:0; left:0; background:red; color:white; padding:5px; z-index:99999; pointer-events:none;'>DEBUG: V21</div>";
 }, 1);
 
 add_action('wp_footer', function() {
     global $wp_query;
-    echo "<!-- V20_ACTIVE -->";
+    echo "<!-- V21_ACTIVE -->";
     echo "<!-- CURRENT_ORDERBY: " . esc_html($wp_query->get('orderby')) . " -->";
     echo "<!-- SQL_QUERY: " . esc_html($wp_query->request) . " -->";
 }, 999999);

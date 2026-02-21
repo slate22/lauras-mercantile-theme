@@ -839,13 +839,13 @@ add_filter('posts_orderby', function($orderby, $query) {
         // Priority IDs
         $mushroom_ids = "928, 318, 320, 322, 119878, 150671";
         $tippens_ids = "156147, 157471, 157876, 158060, 158199, 158314";
-        $cbd_ids = "223, 327, 264, 238, 258, 113826, 150315, 150318";
-        $turmeric_ids = "166466, 139017, 166471, 166473, 163552, 165372, 166474";
+        $cbd_ids = "327, 264, 238, 258, 113826, 150315, 150318"; // Removed 223
+        $turmeric_ids = "166466, 139017, 166471, 166473, 163552, 165372, 166474, 223"; // Added 223 for test
 
         $priority_sql = "(CASE 
             WHEN {$wpdb->posts}.ID IN ($mushroom_ids) OR {$wpdb->posts}.post_title LIKE '%Mushroom%' THEN 10
             WHEN {$wpdb->posts}.ID IN ($tippens_ids) OR {$wpdb->posts}.post_title LIKE '%ONCO-ADJUNCT%' THEN 15
-            WHEN {$wpdb->posts}.ID IN ($cbd_ids) OR {$wpdb->posts}.post_title LIKE '%CBD%' OR {$wpdb->posts}.post_title LIKE '%Hemp Extract%' THEN 20
+            WHEN {$wpdb->posts}.ID IN ($cbd_ids) OR ({$wpdb->posts}.post_title LIKE '%CBD%' AND {$wpdb->posts}.ID != 223) THEN 20
             WHEN {$wpdb->posts}.ID IN ($turmeric_ids) OR {$wpdb->posts}.post_title LIKE '%Turmeric%' OR {$wpdb->posts}.post_title LIKE '%Curcumin%' THEN 30
             ELSE 40 END) ASC";
 
@@ -926,12 +926,12 @@ add_action('pre_get_posts', function($query) {
 
 // 8. Update Debug Banner
 add_action('wp_head', function() {
-    echo "<div style='position:fixed; top:0; left:0; background:red; color:white; padding:5px; z-index:99999; pointer-events:none;'>DEBUG: V19</div>";
+    echo "<div style='position:fixed; top:0; left:0; background:red; color:white; padding:5px; z-index:99999; pointer-events:none;'>DEBUG: V20</div>";
 }, 1);
 
 add_action('wp_footer', function() {
     global $wp_query;
-    echo "<!-- V19_ACTIVE -->";
+    echo "<!-- V20_ACTIVE -->";
     echo "<!-- CURRENT_ORDERBY: " . esc_html($wp_query->get('orderby')) . " -->";
     echo "<!-- SQL_QUERY: " . esc_html($wp_query->request) . " -->";
 }, 999999);

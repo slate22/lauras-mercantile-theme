@@ -829,7 +829,8 @@ add_filter('posts_clauses', function($clauses, $query) {
         $post_type === 'product' || 
         (is_array($post_type) && in_array('product', $post_type)) ||
         $query->is_post_type_archive('product') ||
-        $query->is_tax('product_cat')
+        $query->is_tax('product_cat') ||
+        $query->is_tax('product_tag')
     );
 
     if ($is_product_query) {
@@ -850,15 +851,22 @@ add_filter('posts_clauses', function($clauses, $query) {
         if (empty($clauses['orderby'])) {
             $clauses['orderby'] = "$priority_sql, {$wpdb->posts}.ID DESC";
         } else {
+            // Prepend our priority to WHATEVER else is there (including popularity sales)
             $clauses['orderby'] = "$priority_sql, " . $clauses['orderby'];
         }
     }
     return $clauses;
-}, 20, 2);
+}, 9999999, 2);
 
-// 3. Hook into WooCommerce Orderby Args (Bypasses many plugins)
+// 3. Hook into WooCommerce Setting and Args
+add_action('init', function() {
+    if (get_option('woocommerce_default_catalog_orderby') !== 'menu_order') {
+        update_option('woocommerce_default_catalog_orderby', 'menu_order');
+    }
+});
+
 add_filter('woocommerce_get_catalog_ordering_args', function($args) {
-    if (!isset($_GET['orderby']) || $_GET['orderby'] === 'popularity' || $_GET['orderby'] === 'menu_order') {
+    if (!isset($_GET['orderby'])) {
         $args['orderby'] = 'menu_order';
         $args['order'] = 'ASC';
     }

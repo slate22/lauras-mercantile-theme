@@ -824,13 +824,14 @@ function lm_apply_mushroom_priority_sql($orderby) {
 add_filter('posts_clauses', function($clauses, $query) {
     if (is_admin()) return $clauses;
     
-    $post_type = $query->get('post_type');
+    // Check if it's a product query more broadly
     $is_product_query = (
-        $post_type === 'product' || 
-        (is_array($post_type) && in_array('product', $post_type)) ||
+        $query->get('post_type') === 'product' || 
+        (is_array($query->get('post_type')) && in_array('product', $query->get('post_type'))) ||
         $query->is_post_type_archive('product') ||
         $query->is_tax('product_cat') ||
-        $query->is_tax('product_tag')
+        $query->is_tax('product_tag') ||
+        (function_exists('is_shop') && is_shop())
     );
 
     if ($is_product_query) {
@@ -851,7 +852,7 @@ add_filter('posts_clauses', function($clauses, $query) {
         if (empty($clauses['orderby'])) {
             $clauses['orderby'] = "$priority_sql, {$wpdb->posts}.ID DESC";
         } else {
-            // Prepend our priority to WHATEVER else is there (including popularity sales)
+            // Prepend our priority to WHATEVER else is there
             $clauses['orderby'] = "$priority_sql, " . $clauses['orderby'];
         }
     }
@@ -864,6 +865,10 @@ add_action('init', function() {
         update_option('woocommerce_default_catalog_orderby', 'menu_order');
     }
 });
+
+add_filter('woocommerce_default_catalog_orderby', function($sortby) {
+    return 'menu_order';
+}, 999999);
 
 add_filter('woocommerce_get_catalog_ordering_args', function($args) {
     if (!isset($_GET['orderby'])) {
@@ -915,6 +920,8 @@ add_action('pre_get_posts', function($query) {
     if (is_admin() || !$query->is_main_query()) return;
     if (function_exists('is_shop') && (is_shop() || is_product_category() || is_product_tag())) {
         $query->set('posts_per_page', -1);
+        $query->set('orderby', 'menu_order');
+        $query->set('order', 'ASC');
     }
 }, 9999);
 
